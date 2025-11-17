@@ -1,0 +1,74 @@
+[
+  {
+    "id": "SYN001",
+    "name": "风寒表证",
+    "category": "外感病证",
+    "symptoms": ["恶寒", "发热", "无汗", "头痛", "身痛", "鼻塞", "流清涕"],
+    "tongue": "舌苔薄白",
+    "pulse": "浮紧",
+    "treatment_principle": "辛温解表，宣肺散寒"
+  },
+  {
+    "id": "SYN002",
+    "name": "风热表证",
+    "category": "外感病证",
+    "symptoms": ["发热", "微恶风寒", "汗出", "头痛", "咽红肿痛", "口渴"],
+    "tongue": "舌尖红，苔薄黄",
+    "pulse": "浮数",
+    "treatment_principle": "辛凉解表，清热宣肺"
+  },
+  {
+    "id": "SYN003",
+    "name": "肝气郁结证",
+    "category": "气血津液病证",
+    "symptoms": ["胸胁胀痛", "情志抑郁", "善太息", "嗳气", "食欲不振"],
+    "tongue": "舌红，苔薄白",
+    "pulse": "弦",
+    "treatment_principle": "疏肝理气，解郁和胃"
+  },
+  {
+    "id": "SYN004",
+    "name": "脾气虚证",
+    "category": "脏腑病证",
+    "symptoms": ["食欲不振", "腹胀", "便溏", "神疲乏力", "面色萎黄"],
+    "tongue": "舌淡，苔白",
+    "pulse": "缓弱",
+    "treatment_principle": "健脾益气"
+  },
+  {
+    "id": "SYN005",
+    "name": "肾阴虚证",
+    "category": "脏腑病证",
+    "symptoms": ["腰膝酸软", "头晕耳鸣", "失眠多梦", "潮热盗汗", "五心烦热"],
+    "tongue": "舌红少苔",
+    "pulse": "细数",
+    "treatment_principle": "滋阴补肾"
+  },
+  {
+    "id": "SYN006",
+    "name": "肾阳虚证",
+    "category": "脏腑病证",
+    "symptoms": ["腰膝酸冷", "畏寒肢冷", "小便清长", "夜尿频多", "阳痿早泄"],
+    "tongue": "舌淡胖，苔白",
+    "pulse": "沉迟",
+    "treatment_principle": "温补肾阳"
+  },
+  {
+    "id": "SYN007",
+    "name": "肝阳上亢证",
+    "category": "脏腑病证",
+    "symptoms": ["头晕", "头痛", "面红目赤", "急躁易怒", "失眠"],
+    "tongue": "舌红，苔黄",
+    "pulse": "弦数",
+    "treatment_principle": "平肝潜阳，清热熄风"
+  },
+  {
+    "id": "SYN008",
+    "name": "痰湿中阻证",
+    "category": "气血津液病证",
+    "symptoms": ["胸闷", "脘痞", "恶心", "痰多", "头重如裹", "身重"],
+    "tongue": "舌淡胖，苔白腻",
+    "pulse": "滑",
+    "treatment_principle": "燥湿化痰，理气和中"
+  }
+]

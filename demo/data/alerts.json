@@ -1,0 +1,147 @@
+{
+  "epidemic_alerts": [
+    {
+      "id": "EA001",
+      "alert_level": 3,
+      "disease": "新型流感变异株",
+      "date": "2025-11-17",
+      "affected_regions": ["马来西亚", "新加坡", "印尼"],
+      "local_cases": 45,
+      "trend": "上升",
+      "symptoms": ["高热（39°C以上）", "剧烈头痛", "全身肌肉酸痛", "咳嗽", "咽痛"],
+      "tcm_protocol": {
+        "name": "新型流感中医诊疗方案（2025版）",
+        "source": "国家中医药管理局",
+        "stages": [
+          {
+            "stage": "初期",
+            "syndrome": "风热犯卫证",
+            "symptoms": ["发热", "微恶寒", "咽红", "咳嗽"],
+            "tongue": "舌红，苔薄白",
+            "pulse": "脉浮数",
+            "formula": {
+              "name": "银翘散加减",
+              "composition": [
+                {"herb": "金银花", "dosage": "15g"},
+                {"herb": "连翘", "dosage": "15g"},
+                {"herb": "薄荷", "dosage": "6g"},
+                {"herb": "荆芥", "dosage": "10g"},
+                {"herb": "牛蒡子", "dosage": "10g"},
+                {"herb": "桔梗", "dosage": "10g"},
+                {"herb": "甘草", "dosage": "6g"}
+              ]
+            }
+          },
+          {
+            "stage": "中期",
+            "syndrome": "热毒壅肺证",
+            "symptoms": ["高热", "咳嗽", "痰黄", "气促"],
+            "tongue": "舌红，苔黄腻",
+            "pulse": "脉滑数",
+            "formula": {
+              "name": "麻杏石甘汤加减",
+              "composition": [
+                {"herb": "麻黄", "dosage": "6g"},
+                {"herb": "杏仁", "dosage": "10g"},
+                {"herb": "石膏", "dosage": "30g"},
+                {"herb": "甘草", "dosage": "6g"},
+                {"herb": "黄芩", "dosage": "10g"},
+                {"herb": "鱼腥草", "dosage": "15g"}
+              ]
+            }
+          }
+        ],
+        "prevention": {
+          "formula": "玉屏风散加板蓝根",
+          "moxibustion": ["足三里", "关元", "气海"],
+          "lifestyle": ["保持室内通风", "勤洗手", "避免人群聚集"]
+        }
+      }
+    },
+    {
+      "id": "EA002",
+      "alert_level": 2,
+      "disease": "登革热",
+      "date": "2025-11-10",
+      "affected_regions": ["雪兰莪", "吉隆坡"],
+      "local_cases": 128,
+      "trend": "稳定",
+      "symptoms": ["高热", "头痛", "肌肉关节痛", "皮疹", "出血倾向"],
+      "tcm_protocol": {
+        "name": "登革热中医诊疗方案",
+        "source": "马来西亚中医总会",
+        "stages": [
+          {
+            "stage": "发热期",
+            "syndrome": "卫气同病证",
+            "formula": {
+              "name": "银翘散合白虎汤",
+              "composition": [
+                {"herb": "金银花", "dosage": "15g"},
+                {"herb": "连翘", "dosage": "15g"},
+                {"herb": "石膏", "dosage": "30g"},
+                {"herb": "知母", "dosage": "10g"}
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "knowledge_updates": [
+    {
+      "id": "KU001",
+      "type": "中药数据库",
+      "current_version": "3.5.2",
+      "new_version": "3.6.0",
+      "date": "2025-11-15",
+      "priority": "normal",
+      "highlights": [
+        "新增15种中药数据",
+        "更新42种中药现代研究信息",
+        "完善药物相互作用数据"
+      ],
+      "size_mb": 12.5
+    },
+    {
+      "id": "KU002",
+      "type": "方剂数据库",
+      "current_version": "2.8.1",
+      "new_version": "2.9.0",
+      "date": "2025-11-14",
+      "priority": "normal",
+      "highlights": [
+        "新增古方32首",
+        "更新配伍研究数据",
+        "新增临床应用指南"
+      ],
+      "size_mb": 8.3
+    },
+    {
+      "id": "KU003",
+      "type": "穴位数据库",
+      "current_version": "1.5.0",
+      "new_version": "1.6.0",
+      "date": "2025-11-12",
+      "priority": "normal",
+      "highlights": [
+        "更新穴位高清图片",
+        "新增3D人体模型",
+        "完善穴位配伍数据"
+      ],
+      "size_mb": 45.2
+    }
+  ],
+  "safety_alerts": [
+    {
+      "id": "SA001",
+      "type": "药物安全警告",
+      "date": "2025-11-16",
+      "priority": "high",
+      "drug": "何首乌",
+      "alert_type": "肝毒性警告",
+      "details": "最新研究发现长期大剂量使用可能导致肝损伤",
+      "action": "建议限制剂量不超过6g/日，疗程不超过4周，定期监测肝功能"
+    }
+  ]
+}

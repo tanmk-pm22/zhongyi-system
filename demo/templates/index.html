@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI增强中医诊疗系统 - 演示版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        .module-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .module-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .module-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .module-features {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .module-features li {
+            list-style: none;
+            padding: 5px 0;
+            color: #888;
+            font-size: 0.9em;
+        }
+        .module-features li::before {
+            content: "✓ ";
+            color: #4CAF50;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+            opacity: 0.8;
+        }
+        .badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .system-status {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            color: white;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .status-ok {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI增强中医诊疗系统</h1>
+            <p>符合马来西亚卫生部标准的智能中医诊疗平台</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">演示版本 v1.0</p>
+        </div>
+
+        <div class="modules">
+            <a href="/diagnosis" class="module-card">
+                <div class="module-icon">🔍</div>
+                <h3>AI辅助诊断</h3>
+                <p>智能分析望闻问切，自动推荐证型，分析病因病机</p>
+                <ul class="module-features">
+                    <li>四诊信息采集</li>
+                    <li>AI病因病机分析</li>
+                    <li>证型智能推荐</li>
+                    <li>建议问诊方向</li>
+                </ul>
+            </a>
+
+            <a href="/prescription" class="module-card">
+                <div class="module-icon">💊</div>
+                <h3>AI辅助开方</h3>
+                <p>基于辨证论治推荐方剂，提供现代研究支持</p>
+                <ul class="module-features">
+                    <li>方剂智能推荐</li>
+                    <li>加减变化建议</li>
+                    <li>安全性检查</li>
+                    <li>现代研究证据</li>
+                </ul>
+            </a>
+
+            <a href="/acupuncture" class="module-card">
+                <div class="module-icon">📍</div>
+                <h3>AI针灸推拿</h3>
+                <p>穴位智能推荐，提供定位图和治疗方案</p>
+                <ul class="module-features">
+                    <li>穴位智能推荐</li>
+                    <li>穴位定位图</li>
+                    <li>配伍建议</li>
+                    <li>经典依据</li>
+                </ul>
+            </a>
+
+            <a href="/alerts" class="module-card">
+                <div class="module-icon">🔔</div>
+                <h3>预警与更新 <span class="badge">3</span></h3>
+                <p>传染病预警、知识库更新提醒</p>
+                <ul class="module-features">
+                    <li>传染病中医方案</li>
+                    <li>知识库在线更新</li>
+                    <li>药物安全警告</li>
+                    <li>智能提醒</li>
+                </ul>
+            </a>
+        </div>
+
+        <div class="system-status">
+            <h3 style="margin-bottom: 15px;">系统状态</h3>
+            <div class="status-item">
+                <span>中药数据库</span>
+                <span class="status-ok">● 版本 3.5.2</span>
+            </div>
+            <div class="status-item">
+                <span>方剂数据库</span>
+                <span class="status-ok">● 版本 2.8.1</span>
+            </div>
+            <div class="status-item">
+                <span>穴位数据库</span>
+                <span class="status-ok">● 版本 1.5.0</span>
+            </div>
+            <div class="status-item">
+                <span>AI引擎</span>
+                <span class="status-ok">● 在线</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>AI增强中医诊疗系统 - 演示版</p>
+            <p style="margin-top: 5px; font-size: 0.9em;">本系统仅供演示，不可用于实际临床诊疗</p>
+        </div>
+    </div>
+</body>
+</html>

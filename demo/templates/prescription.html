@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI辅助开方 - 中医诊疗系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+        .header h1 { font-size: 1.5em; }
+        .header a { color: white; text-decoration: none; opacity: 0.8; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 500; color: #555; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover { background: #5a6fd6; }
+        .formula-card {
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .formula-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .formula-name {
+            font-size: 1.5em;
+            color: #667eea;
+        }
+        .formula-source {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .composition-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .composition-table th, .composition-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .composition-table th {
+            background: #f8f9fa;
+            color: #666;
+        }
+        .role-jun { color: #e74c3c; font-weight: bold; }
+        .role-chen { color: #f39c12; }
+        .role-zuo { color: #3498db; }
+        .role-shi { color: #2ecc71; }
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .warning-box.danger {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .warning-item {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        .warning-icon { margin-right: 10px; }
+        .modification-item {
+            background: #e8f4fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .research-box {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .chip {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 15px;
+            margin: 3px;
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+        .chip:hover { background: #bbdefb; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        .loading { text-align: center; padding: 40px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← 返回首页</a>
+        <h1 style="margin-top: 10px;">💊 AI辅助开方</h1>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h3>诊断信息</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>证型</label>
+                    <input type="text" id="syndrome" placeholder="例如：风寒表证">
+                    <div style="margin-top: 5px;">
+                        <span class="chip" onclick="setSyndrome('风寒表证')">风寒表证</span>
+                        <span class="chip" onclick="setSyndrome('风热表证')">风热表证</span>
+                        <span class="chip" onclick="setSyndrome('肝气郁结')">肝气郁结</span>
+                        <span class="chip" onclick="setSyndrome('脾气虚')">脾气虚</span>
+                        <span class="chip" onclick="setSyndrome('肾阴虚')">肾阴虚</span>
+                        <span class="chip" onclick="setSyndrome('肝阳上亢')">肝阳上亢</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>兼症</label>
+                    <input type="text" id="additionalSymptoms" placeholder="例如：头痛，咳嗽">
+                </div>
+            </div>
+            <button class="btn" onclick="getRecommendation()">🤖 AI推荐方剂</button>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            ⏳ AI正在分析推荐中...
+        </div>
+
+        <div id="resultSection" style="display: none;">
+            <div class="formula-card">
+                <div class="formula-header">
+                    <div>
+                        <span class="formula-name" id="formulaName"></span>
+                        <span class="formula-source" id="formulaSource"></span>
+                    </div>
+                    <span id="matchScore" style="background: #4CAF50; color: white; padding: 5px 10px; border-radius: 5px;"></span>
+                </div>
+
+                <p id="formulaFunctions" style="color: #666; margin-bottom: 15px;"></p>
+
+                <h4 style="margin-bottom: 10px;">方剂组成</h4>
+                <table class="composition-table">
+                    <thead>
+                        <tr>
+                            <th>药物</th>
+                            <th>剂量</th>
+                            <th>角色</th>
+                        </tr>
+                    </thead>
+                    <tbody id="compositionBody">
+                    </tbody>
+                </table>
+
+                <p id="formulaUsage" style="color: #666; font-style: italic;"></p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>💡 加减建议</h3>
+                    <div id="modifications"></div>
+                </div>
+
+                <div class="card">
+                    <h3>⚠️ 安全检查</h3>
+                    <div id="safetyWarnings"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 现代研究支持</h3>
+                <div class="research-box">
+                    <div id="modernResearch"></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="/acupuncture" class="btn" style="text-decoration: none;">
+                    进入针灸推拿 →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load previous diagnosis if available
+        window.onload = function() {
+            const diagnosis = localStorage.getItem('tcm_diagnosis');
+            if (diagnosis) {
+                const data = JSON.parse(diagnosis);
+                document.getElementById('syndrome').value = data.primary_syndrome || '';
+            }
+        };
+
+        function setSyndrome(value) {
+            document.getElementById('syndrome').value = value;
+        }
+
+        async function getRecommendation() {
+            const syndrome = document.getElementById('syndrome').value;
+            const additionalSymptoms = document.getElementById('additionalSymptoms').value;
+
+            if (!syndrome) {
+                alert('请输入证型');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
+
+            try {
+                const response = await fetch('/api/ai/prescription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        syndrome: syndrome,
+                        symptoms: additionalSymptoms.split(/[,，、]/).map(s => s.trim()).filter(s => s)
+                    })
+                });
+
+                const result = await response.json();
+                displayResult(result);
+            } catch (error) {
+                alert('获取推荐失败：' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function displayResult(result) {
+            document.getElementById('resultSection').style.display = 'block';
+
+            const formula = result.primary_formula;
+            if (!formula) {
+                alert('未找到匹配的方剂');
+                return;
+            }
+
+            // Formula info
+            document.getElementById('formulaName').textContent = formula.name;
+            document.getElementById('formulaSource').textContent = `出处：${formula.source}`;
+            document.getElementById('matchScore').textContent = `匹配度 ${result.match_score}%`;
+            document.getElementById('formulaFunctions').textContent = `功效：${formula.functions.join('、')}`;
+            document.getElementById('formulaUsage').textContent = `用法：${formula.usage}`;
+
+            // Composition
+            const tbody = document.getElementById('compositionBody');
+            tbody.innerHTML = '';
+            for (const item of formula.composition) {
+                let roleClass = '';
+                if (item.role === '君') roleClass = 'role-jun';
+                else if (item.role === '臣') roleClass = 'role-chen';
+                else if (item.role === '佐') roleClass = 'role-zuo';
+                else if (item.role === '使') roleClass = 'role-shi';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.herb}</td>
+                        <td>${item.dosage}</td>
+                        <td class="${roleClass}">${item.role}</td>
+                    </tr>
+                `;
+            }
+
+            // Modifications
+            const modsDiv = document.getElementById('modifications');
+            modsDiv.innerHTML = '';
+            if (result.modifications && result.modifications.length > 0) {
+                for (const mod of result.modifications) {
+                    let herbsHtml = mod.add_herbs.map(h => `+${h.herb} ${h.dosage} (${h.reason})`).join('<br>');
+                    modsDiv.innerHTML += `
+                        <div class="modification-item">
+                            <strong>${mod.condition}</strong><br>
+                            ${herbsHtml}
+                        </div>
+                    `;
+                }
+            } else {
+                modsDiv.innerHTML = '<p style="color: #666;">暂无加减建议</p>';
+            }
+
+            // Safety warnings
+            const warningsDiv = document.getElementById('safetyWarnings');
+            warningsDiv.innerHTML = '';
+            if (result.safety_warnings && result.safety_warnings.length > 0) {
+                let warningClass = result.safety_warnings.some(w => w.severity === 'high') ? 'danger' : '';
+                warningsDiv.innerHTML = `<div class="warning-box ${warningClass}">`;
+                for (const warning of result.safety_warnings) {
+                    let icon = warning.severity === 'high' ? '🔴' : '🟡';
+                    warningsDiv.innerHTML += `
+                        <div class="warning-item">
+                            <span class="warning-icon">${icon}</span>
+                            <span><strong>${warning.herb}</strong>：${warning.warning}</span>
+                        </div>
+                    `;
+                }
+                warningsDiv.innerHTML += '</div>';
+            } else {
+                warningsDiv.innerHTML = '<p style="color: #4CAF50;">✅ 未发现安全问题</p>';
+            }
+
+            // Modern research
+            const researchDiv = document.getElementById('modernResearch');
+            const research = result.modern_research;
+            researchDiv.innerHTML = `
+                <p><strong>药理研究：</strong>${research.pharmacology.join('；')}</p>
+                <p><strong>临床研究：</strong>${research.clinical_studies.join('；')}</p>
+                <p><strong>证据等级：</strong>${research.evidence_level}</p>
+            `;
+
+            // Store for next page
+            localStorage.setItem('tcm_prescription', JSON.stringify(result));
+        }
+    </script>
+</body>
+</html>

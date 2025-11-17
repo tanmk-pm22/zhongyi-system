@@ -1,0 +1,133 @@
+[
+  {
+    "id": "F001",
+    "name": "麻黄汤",
+    "pinyin": "Ma Huang Tang",
+    "source": "《伤寒论》",
+    "category": "解表剂",
+    "functions": ["发汗解表", "宣肺平喘"],
+    "indications": ["外感风寒表实证"],
+    "composition": [
+      {"herb": "麻黄", "dosage": "9g", "role": "君"},
+      {"herb": "桂枝", "dosage": "6g", "role": "臣"},
+      {"herb": "杏仁", "dosage": "9g", "role": "佐"},
+      {"herb": "炙甘草", "dosage": "3g", "role": "使"}
+    ],
+    "usage": "水煎服，日一剂，分二次温服"
+  },
+  {
+    "id": "F002",
+    "name": "桂枝汤",
+    "pinyin": "Gui Zhi Tang",
+    "source": "《伤寒论》",
+    "category": "解表剂",
+    "functions": ["解肌发表", "调和营卫"],
+    "indications": ["外感风寒表虚证"],
+    "composition": [
+      {"herb": "桂枝", "dosage": "9g", "role": "君"},
+      {"herb": "白芍", "dosage": "9g", "role": "臣"},
+      {"herb": "生姜", "dosage": "9g", "role": "佐"},
+      {"herb": "大枣", "dosage": "3枚", "role": "佐"},
+      {"herb": "炙甘草", "dosage": "6g", "role": "使"}
+    ],
+    "usage": "水煎服，服后啜热稀粥"
+  },
+  {
+    "id": "F003",
+    "name": "银翘散",
+    "pinyin": "Yin Qiao San",
+    "source": "《温病条辨》",
+    "category": "解表剂",
+    "functions": ["辛凉透表", "清热解毒"],
+    "indications": ["风热表证", "温病初起"],
+    "composition": [
+      {"herb": "金银花", "dosage": "15g", "role": "君"},
+      {"herb": "连翘", "dosage": "15g", "role": "君"},
+      {"herb": "薄荷", "dosage": "6g", "role": "臣"},
+      {"herb": "荆芥", "dosage": "6g", "role": "臣"},
+      {"herb": "牛蒡子", "dosage": "9g", "role": "佐"},
+      {"herb": "桔梗", "dosage": "6g", "role": "佐"},
+      {"herb": "竹叶", "dosage": "6g", "role": "佐"},
+      {"herb": "芦根", "dosage": "15g", "role": "佐"},
+      {"herb": "甘草", "dosage": "3g", "role": "使"}
+    ],
+    "usage": "水煎服，日一剂"
+  },
+  {
+    "id": "F004",
+    "name": "逍遥散",
+    "pinyin": "Xiao Yao San",
+    "source": "《太平惠民和剂局方》",
+    "category": "和解剂",
+    "functions": ["疏肝解郁", "健脾养血"],
+    "indications": ["肝郁脾虚证"],
+    "composition": [
+      {"herb": "柴胡", "dosage": "9g", "role": "君"},
+      {"herb": "当归", "dosage": "9g", "role": "臣"},
+      {"herb": "白芍", "dosage": "9g", "role": "臣"},
+      {"herb": "白术", "dosage": "9g", "role": "佐"},
+      {"herb": "茯苓", "dosage": "9g", "role": "佐"},
+      {"herb": "薄荷", "dosage": "3g", "role": "佐"},
+      {"herb": "生姜", "dosage": "3g", "role": "佐"},
+      {"herb": "炙甘草", "dosage": "6g", "role": "使"}
+    ],
+    "usage": "水煎服，日一剂"
+  },
+  {
+    "id": "F005",
+    "name": "四君子汤",
+    "pinyin": "Si Jun Zi Tang",
+    "source": "《太平惠民和剂局方》",
+    "category": "补益剂",
+    "functions": ["益气健脾"],
+    "indications": ["脾胃气虚证"],
+    "composition": [
+      {"herb": "人参", "dosage": "9g", "role": "君"},
+      {"herb": "白术", "dosage": "9g", "role": "臣"},
+      {"herb": "茯苓", "dosage": "9g", "role": "佐"},
+      {"herb": "炙甘草", "dosage": "6g", "role": "使"}
+    ],
+    "usage": "水煎服，日一剂"
+  },
+  {
+    "id": "F006",
+    "name": "六味地黄丸",
+    "pinyin": "Liu Wei Di Huang Wan",
+    "source": "《小儿药证直诀》",
+    "category": "补益剂",
+    "functions": ["滋阴补肾"],
+    "indications": ["肾阴虚证"],
+    "composition": [
+      {"herb": "熟地黄", "dosage": "24g", "role": "君"},
+      {"herb": "山茱萸", "dosage": "12g", "role": "臣"},
+      {"herb": "山药", "dosage": "12g", "role": "臣"},
+      {"herb": "泽泻", "dosage": "9g", "role": "佐"},
+      {"herb": "茯苓", "dosage": "9g", "role": "佐"},
+      {"herb": "牡丹皮", "dosage": "9g", "role": "佐"}
+    ],
+    "usage": "水煎服或制丸服用"
+  },
+  {
+    "id": "F007",
+    "name": "天麻钩藤饮",
+    "pinyin": "Tian Ma Gou Teng Yin",
+    "source": "《杂病证治新义》",
+    "category": "治风剂",
+    "functions": ["平肝熄风", "清热活血", "补益肝肾"],
+    "indications": ["肝阳上亢", "肝风上扰证"],
+    "composition": [
+      {"herb": "天麻", "dosage": "9g", "role": "君"},
+      {"herb": "钩藤", "dosage": "12g", "role": "君"},
+      {"herb": "石决明", "dosage": "18g", "role": "臣"},
+      {"herb": "栀子", "dosage": "9g", "role": "佐"},
+      {"herb": "黄芩", "dosage": "9g", "role": "佐"},
+      {"herb": "牛膝", "dosage": "12g", "role": "佐"},
+      {"herb": "杜仲", "dosage": "9g", "role": "佐"},
+      {"herb": "益母草", "dosage": "9g", "role": "佐"},
+      {"herb": "桑寄生", "dosage": "9g", "role": "佐"},
+      {"herb": "夜交藤", "dosage": "9g", "role": "佐"},
+      {"herb": "茯神", "dosage": "9g", "role": "佐"}
+    ],
+    "usage": "水煎服，日一剂"
+  }
+]

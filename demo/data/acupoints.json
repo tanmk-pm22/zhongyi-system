@@ -1,0 +1,206 @@
+[
+  {
+    "id": "AP001",
+    "name_chinese": "合谷",
+    "name_pinyin": "He Gu",
+    "code": "LI4",
+    "meridian": "手阳明大肠经",
+    "location": "手背第1、2掌骨间，第2掌骨桡侧中点处",
+    "functions": ["镇静止痛", "通经活络", "清热解表"],
+    "indications": ["头痛", "牙痛", "咽喉肿痛", "感冒", "面瘫"],
+    "needling": {
+      "depth": "0.5-1寸",
+      "angle": "直刺",
+      "sensation": "酸胀感向指端放散"
+    },
+    "cautions": ["孕妇禁针"],
+    "image_url": "/static/images/acupoints/LI4.png"
+  },
+  {
+    "id": "AP002",
+    "name_chinese": "太冲",
+    "name_pinyin": "Tai Chong",
+    "code": "LR3",
+    "meridian": "足厥阴肝经",
+    "location": "足背第1、2跖骨结合部之前凹陷中",
+    "functions": ["疏肝理气", "平肝熄风", "清热利湿"],
+    "indications": ["头痛", "眩晕", "高血压", "胁痛", "月经不调"],
+    "needling": {
+      "depth": "0.5-0.8寸",
+      "angle": "直刺",
+      "sensation": "酸胀感"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/LR3.png"
+  },
+  {
+    "id": "AP003",
+    "name_chinese": "足三里",
+    "name_pinyin": "Zu San Li",
+    "code": "ST36",
+    "meridian": "足阳明胃经",
+    "location": "犊鼻下3寸，胫骨前嵴外一横指",
+    "functions": ["健脾和胃", "扶正培元", "通经活络"],
+    "indications": ["胃痛", "腹胀", "泄泻", "便秘", "虚劳", "下肢痿痹"],
+    "needling": {
+      "depth": "1-2寸",
+      "angle": "直刺",
+      "sensation": "酸胀感向足背放散"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/ST36.png"
+  },
+  {
+    "id": "AP004",
+    "name_chinese": "三阴交",
+    "name_pinyin": "San Yin Jiao",
+    "code": "SP6",
+    "meridian": "足太阴脾经",
+    "location": "内踝尖上3寸，胫骨内侧缘后方",
+    "functions": ["健脾利湿", "调补肝肾", "行气活血"],
+    "indications": ["月经不调", "带下", "遗精", "阳痿", "失眠", "下肢痿痹"],
+    "needling": {
+      "depth": "1-1.5寸",
+      "angle": "直刺",
+      "sensation": "酸胀感"
+    },
+    "cautions": ["孕妇禁针"],
+    "image_url": "/static/images/acupoints/SP6.png"
+  },
+  {
+    "id": "AP005",
+    "name_chinese": "内关",
+    "name_pinyin": "Nei Guan",
+    "code": "PC6",
+    "meridian": "手厥阴心包经",
+    "location": "腕横纹上2寸，掌长肌腱与桡侧腕屈肌腱之间",
+    "functions": ["宁心安神", "理气止痛", "和胃降逆"],
+    "indications": ["心痛", "心悸", "胸闷", "胃痛", "呕吐", "失眠"],
+    "needling": {
+      "depth": "0.5-1寸",
+      "angle": "直刺",
+      "sensation": "酸麻感向指端放散"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/PC6.png"
+  },
+  {
+    "id": "AP006",
+    "name_chinese": "风池",
+    "name_pinyin": "Feng Chi",
+    "code": "GB20",
+    "meridian": "足少阳胆经",
+    "location": "胸锁乳突肌与斜方肌上端之间凹陷中",
+    "functions": ["疏风清热", "开窍醒脑", "明目聪耳"],
+    "indications": ["头痛", "眩晕", "颈项强痛", "感冒", "目赤肿痛"],
+    "needling": {
+      "depth": "0.8-1.2寸",
+      "angle": "向鼻尖方向斜刺",
+      "sensation": "酸胀感"
+    },
+    "cautions": ["针刺不可过深"],
+    "image_url": "/static/images/acupoints/GB20.png"
+  },
+  {
+    "id": "AP007",
+    "name_chinese": "列缺",
+    "name_pinyin": "Lie Que",
+    "code": "LU7",
+    "meridian": "手太阴肺经",
+    "location": "桡骨茎突上方，腕横纹上1.5寸",
+    "functions": ["宣肺解表", "通经活络", "利水通淋"],
+    "indications": ["头痛", "咳嗽", "气喘", "咽喉肿痛", "手腕痛"],
+    "needling": {
+      "depth": "0.5-0.8寸",
+      "angle": "向上斜刺",
+      "sensation": "酸胀感"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/LU7.png"
+  },
+  {
+    "id": "AP008",
+    "name_chinese": "曲池",
+    "name_pinyin": "Qu Chi",
+    "code": "LI11",
+    "meridian": "手阳明大肠经",
+    "location": "屈肘，肘横纹外侧端与肱骨外上髁连线中点",
+    "functions": ["清热解表", "疏经通络", "调和气血"],
+    "indications": ["发热", "高血压", "咽喉肿痛", "上肢不遂", "皮肤病"],
+    "needling": {
+      "depth": "1-1.5寸",
+      "angle": "直刺",
+      "sensation": "酸胀感"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/LI11.png"
+  },
+  {
+    "id": "AP009",
+    "name_chinese": "太溪",
+    "name_pinyin": "Tai Xi",
+    "code": "KI3",
+    "meridian": "足少阴肾经",
+    "location": "内踝尖与跟腱之间凹陷中",
+    "functions": ["滋阴益肾", "壮阳强腰"],
+    "indications": ["腰痛", "失眠", "遗精", "月经不调", "耳鸣", "咽喉肿痛"],
+    "needling": {
+      "depth": "0.5-0.8寸",
+      "angle": "直刺",
+      "sensation": "酸麻感"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/KI3.png"
+  },
+  {
+    "id": "AP010",
+    "name_chinese": "肾俞",
+    "name_pinyin": "Shen Shu",
+    "code": "BL23",
+    "meridian": "足太阳膀胱经",
+    "location": "第2腰椎棘突下，旁开1.5寸",
+    "functions": ["补肾助阳", "强腰利水"],
+    "indications": ["腰痛", "遗精", "阳痿", "月经不调", "耳鸣", "水肿"],
+    "needling": {
+      "depth": "0.8-1寸",
+      "angle": "直刺",
+      "sensation": "酸胀感向腰部放散"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/BL23.png"
+  },
+  {
+    "id": "AP011",
+    "name_chinese": "期门",
+    "name_pinyin": "Qi Men",
+    "code": "LR14",
+    "meridian": "足厥阴肝经",
+    "location": "乳头直下，第6肋间隙",
+    "functions": ["疏肝理气", "活血化瘀"],
+    "indications": ["胸胁痛", "腹胀", "呃逆", "乳痈"],
+    "needling": {
+      "depth": "0.5-0.8寸",
+      "angle": "斜刺或平刺",
+      "sensation": "酸胀感"
+    },
+    "cautions": ["不可深刺，以免伤及内脏"],
+    "image_url": "/static/images/acupoints/LR14.png"
+  },
+  {
+    "id": "AP012",
+    "name_chinese": "阳陵泉",
+    "name_pinyin": "Yang Ling Quan",
+    "code": "GB34",
+    "meridian": "足少阳胆经",
+    "location": "腓骨小头前下方凹陷中",
+    "functions": ["疏肝利胆", "舒筋活络"],
+    "indications": ["胁痛", "口苦", "黄疸", "膝痛", "下肢痿痹"],
+    "needling": {
+      "depth": "1-1.5寸",
+      "angle": "直刺",
+      "sensation": "酸胀感向下放散"
+    },
+    "cautions": [],
+    "image_url": "/static/images/acupoints/GB34.png"
+  }
+]

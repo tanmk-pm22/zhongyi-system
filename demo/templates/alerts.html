@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预警与更新 - 中医诊疗系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+        .header h1 { font-size: 1.5em; }
+        .header a { color: white; text-decoration: none; opacity: 0.8; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .alert-card {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .alert-level-3 {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+        }
+        .alert-level-2 {
+            background: #fff8e1;
+            border-left: 5px solid #ffc107;
+        }
+        .alert-level-1 {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+        }
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .alert-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .alert-badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: white;
+        }
+        .badge-level-3 { background: #ff9800; }
+        .badge-level-2 { background: #ffc107; color: #333; }
+        .badge-level-1 { background: #2196f3; }
+        .alert-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .symptoms-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .symptom-tag {
+            background: #fff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            border: 1px solid #ddd;
+        }
+        .tcm-protocol {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .protocol-stage {
+            background: white;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #667eea;
+        }
+        .formula-composition {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .herb-item {
+            background: #e8f5e9;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+        .update-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .update-info h4 { margin-bottom: 5px; color: #333; }
+        .update-info p { color: #666; font-size: 0.9em; }
+        .update-highlights {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover { background: #5a6fd6; }
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn-secondary:hover { background: #d0d0d0; }
+        .safety-alert {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        .collapsible::after {
+            content: ' ▼';
+            font-size: 0.8em;
+        }
+        .collapsible.active::after {
+            content: ' ▲';
+        }
+        .collapse-content {
+            display: none;
+            margin-top: 15px;
+        }
+        .collapse-content.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← 返回首页</a>
+        <h1 style="margin-top: 10px;">🔔 预警与更新中心</h1>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h3>⚠️ 传染病预警</h3>
+            <div id="epidemicAlerts"></div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>📦 知识库更新</h3>
+                <div id="knowledgeUpdates"></div>
+            </div>
+
+            <div class="card">
+                <h3>🔴 药物安全警告</h3>
+                <div id="safetyAlerts"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = async function() {
+            try {
+                const response = await fetch('/api/alerts');
+                const data = await response.json();
+                displayAlerts(data);
+            } catch (error) {
+                console.error('Failed to load alerts:', error);
+            }
+        };
+
+        function displayAlerts(data) {
+            // Epidemic alerts
+            const epidemicDiv = document.getElementById('epidemicAlerts');
+            epidemicDiv.innerHTML = '';
+
+            for (const alert of data.epidemic_alerts || []) {
+                const levelClass = `alert-level-${alert.alert_level}`;
+                const badgeClass = `badge-level-${alert.alert_level}`;
+
+                let symptomsHtml = '';
+                for (const symptom of alert.symptoms || []) {
+                    symptomsHtml += `<span class="symptom-tag">${symptom}</span>`;
+                }
+
+                let protocolHtml = '';
+                if (alert.tcm_protocol) {
+                    const protocol = alert.tcm_protocol;
+                    protocolHtml = `
+                        <div class="tcm-protocol">
+                            <h4 class="collapsible" onclick="toggleCollapse(this)">
+                                📋 ${protocol.name}
+                            </h4>
+                            <div class="collapse-content">
+                                <p style="color: #666; font-size: 0.9em;">来源：${protocol.source}</p>
+                    `;
+
+                    for (const stage of protocol.stages || []) {
+                        let herbsHtml = '';
+                        for (const herb of stage.formula.composition || []) {
+                            herbsHtml += `<span class="herb-item">${herb.herb} ${herb.dosage}</span>`;
+                        }
+
+                        protocolHtml += `
+                            <div class="protocol-stage">
+                                <strong>${stage.stage} - ${stage.syndrome}</strong>
+                                <p style="font-size: 0.9em; color: #666; margin: 5px 0;">
+                                    症状：${stage.symptoms.join('、')}
+                                </p>
+                                <p style="font-size: 0.9em;"><strong>推荐方剂：</strong>${stage.formula.name}</p>
+                                <div class="formula-composition">${herbsHtml}</div>
+                            </div>
+                        `;
+                    }
+
+                    if (protocol.prevention) {
+                        protocolHtml += `
+                            <div class="protocol-stage">
+                                <strong>🛡️ 预防方案</strong>
+                                <p style="font-size: 0.9em;">预防方：${protocol.prevention.formula}</p>
+                                <p style="font-size: 0.9em;">艾灸穴位：${protocol.prevention.moxibustion.join('、')}</p>
+                            </div>
+                        `;
+                    }
+
+                    protocolHtml += '</div></div>';
+                }
+
+                epidemicDiv.innerHTML += `
+                    <div class="alert-card ${levelClass}">
+                        <div class="alert-header">
+                            <span class="alert-title">${alert.disease}</span>
+                            <span class="alert-badge ${badgeClass}">等级 ${alert.alert_level}</span>
+                        </div>
+                        <div class="alert-meta">
+                            📅 ${alert.date} &nbsp;&nbsp;
+                            📍 ${alert.affected_regions.join('、')} &nbsp;&nbsp;
+                            📊 本地病例：${alert.local_cases}例 (${alert.trend})
+                        </div>
+                        <div class="symptoms-list">${symptomsHtml}</div>
+                        ${protocolHtml}
+                        <div style="margin-top: 15px;">
+                            <button class="btn" onclick="alert('处方已导入')">一键导入处方</button>
+                            <button class="btn btn-secondary">下载完整PDF</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Knowledge updates
+            const updatesDiv = document.getElementById('knowledgeUpdates');
+            updatesDiv.innerHTML = '';
+
+            for (const update of data.knowledge_updates || []) {
+                updatesDiv.innerHTML += `
+                    <div class="update-card">
+                        <div class="update-info">
+                            <h4>${update.type}</h4>
+                            <p>版本 ${update.current_version} → ${update.new_version}</p>
+                            <div class="update-highlights">
+                                ${update.highlights.slice(0, 2).join('；')}
+                            </div>
+                        </div>
+                        <button class="btn" onclick="alert('开始更新...')">更新</button>
+                    </div>
+                `;
+            }
+
+            // Safety alerts
+            const safetyDiv = document.getElementById('safetyAlerts');
+            safetyDiv.innerHTML = '';
+
+            for (const alert of data.safety_alerts || []) {
+                safetyDiv.innerHTML += `
+                    <div class="safety-alert">
+                        <h4>⚠️ ${alert.drug} - ${alert.alert_type}</h4>
+                        <p style="margin: 10px 0; color: #666;">${alert.details}</p>
+                        <p><strong>建议措施：</strong>${alert.action}</p>
+                        <p style="color: #888; font-size: 0.85em; margin-top: 10px;">发布日期：${alert.date}</p>
+                    </div>
+                `;
+            }
+
+            if (data.safety_alerts.length === 0) {
+                safetyDiv.innerHTML = '<p style="color: #666;">暂无药物安全警告</p>';
+            }
+        }
+
+        function toggleCollapse(element) {
+            element.classList.toggle('active');
+            const content = element.nextElementSibling;
+            content.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>

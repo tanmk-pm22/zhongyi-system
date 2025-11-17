@@ -1,0 +1,122 @@
+[
+  {
+    "id": "H001",
+    "name_chinese": "麻黄",
+    "name_pinyin": "Ma Huang",
+    "name_latin": "Ephedrae Herba",
+    "category": "解表药",
+    "properties": {
+      "nature": "温",
+      "flavor": ["辛", "微苦"],
+      "meridians": ["肺", "膀胱"]
+    },
+    "functions": ["发汗解表", "宣肺平喘", "利水消肿"],
+    "dosage": "2-10g",
+    "cautions": ["体虚自汗、阴虚盗汗者忌用", "高血压、心脏病慎用"]
+  },
+  {
+    "id": "H002",
+    "name_chinese": "桂枝",
+    "name_pinyin": "Gui Zhi",
+    "name_latin": "Cinnamomi Ramulus",
+    "category": "解表药",
+    "properties": {
+      "nature": "温",
+      "flavor": ["辛", "甘"],
+      "meridians": ["心", "肺", "膀胱"]
+    },
+    "functions": ["发汗解肌", "温通经脉", "助阳化气"],
+    "dosage": "3-10g",
+    "cautions": ["温热病及阴虚火旺者忌用"]
+  },
+  {
+    "id": "H003",
+    "name_chinese": "金银花",
+    "name_pinyin": "Jin Yin Hua",
+    "name_latin": "Lonicerae Japonicae Flos",
+    "category": "清热解毒药",
+    "properties": {
+      "nature": "寒",
+      "flavor": ["甘"],
+      "meridians": ["肺", "心", "胃"]
+    },
+    "functions": ["清热解毒", "疏散风热"],
+    "dosage": "6-15g",
+    "cautions": ["脾胃虚寒者慎用"]
+  },
+  {
+    "id": "H004",
+    "name_chinese": "柴胡",
+    "name_pinyin": "Chai Hu",
+    "name_latin": "Bupleuri Radix",
+    "category": "解表药",
+    "properties": {
+      "nature": "微寒",
+      "flavor": ["辛", "苦"],
+      "meridians": ["肝", "胆", "肺"]
+    },
+    "functions": ["疏散退热", "疏肝解郁", "升举阳气"],
+    "dosage": "3-10g",
+    "cautions": ["肝阳上亢、阴虚火旺者慎用"]
+  },
+  {
+    "id": "H005",
+    "name_chinese": "人参",
+    "name_pinyin": "Ren Shen",
+    "name_latin": "Ginseng Radix et Rhizoma",
+    "category": "补气药",
+    "properties": {
+      "nature": "微温",
+      "flavor": ["甘", "微苦"],
+      "meridians": ["脾", "肺", "心", "肾"]
+    },
+    "functions": ["大补元气", "复脉固脱", "补脾益肺", "生津养血", "安神益智"],
+    "dosage": "3-9g",
+    "cautions": ["实证、热证忌用", "不宜与藜芦同用"]
+  },
+  {
+    "id": "H006",
+    "name_chinese": "熟地黄",
+    "name_pinyin": "Shu Di Huang",
+    "name_latin": "Rehmanniae Radix Praeparata",
+    "category": "补血药",
+    "properties": {
+      "nature": "微温",
+      "flavor": ["甘"],
+      "meridians": ["肝", "肾"]
+    },
+    "functions": ["补血滋阴", "益精填髓"],
+    "dosage": "9-30g",
+    "cautions": ["脾虚泄泻、痰湿内阻者慎用"]
+  },
+  {
+    "id": "H007",
+    "name_chinese": "白术",
+    "name_pinyin": "Bai Zhu",
+    "name_latin": "Atractylodis Macrocephalae Rhizoma",
+    "category": "补气药",
+    "properties": {
+      "nature": "温",
+      "flavor": ["甘", "苦"],
+      "meridians": ["脾", "胃"]
+    },
+    "functions": ["健脾益气", "燥湿利水", "止汗", "安胎"],
+    "dosage": "6-12g",
+    "cautions": ["阴虚内热者慎用"]
+  },
+  {
+    "id": "H008",
+    "name_chinese": "甘草",
+    "name_pinyin": "Gan Cao",
+    "name_latin": "Glycyrrhizae Radix et Rhizoma",
+    "category": "补气药",
+    "properties": {
+      "nature": "平",
+      "flavor": ["甘"],
+      "meridians": ["心", "肺", "脾", "胃"]
+    },
+    "functions": ["补脾益气", "清热解毒", "祛痰止咳", "缓急止痛", "调和诸药"],
+    "dosage": "2-10g",
+    "cautions": ["不宜与甘遂、大戟、海藻、芫花同用", "高血压患者慎用"]
+  }
+]

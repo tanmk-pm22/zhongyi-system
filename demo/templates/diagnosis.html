@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI辅助诊断 - 中医诊疗系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+        .header h1 { font-size: 1.5em; }
+        .header a { color: white; text-decoration: none; opacity: 0.8; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 500; color: #555; }
+        textarea, input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        textarea { min-height: 80px; resize: vertical; }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn:hover { background: #5a6fd6; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-section { display: none; }
+        .result-section.active { display: block; }
+        .syndrome-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .confidence {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 10px;
+        }
+        .analysis-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .analysis-item h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .suggestions-list {
+            list-style: none;
+            padding: 0;
+        }
+        .suggestions-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .suggestions-list li::before {
+            content: "💡 ";
+        }
+        .score-bar {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .score-name { width: 100px; font-size: 0.9em; }
+        .score-value {
+            flex: 1;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .score-fill {
+            height: 100%;
+            background: #667eea;
+            border-radius: 10px;
+        }
+        .loading { text-align: center; padding: 20px; color: #666; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        .chip {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 15px;
+            margin: 3px;
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+        .chip:hover { background: #bbdefb; }
+        .chip.selected { background: #1976d2; color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">← 返回首页</a>
+        <h1 style="margin-top: 10px;">🔍 AI辅助诊断</h1>
+    </div>
+
+    <div class="container">
+        <div class="grid-2">
+            <div>
+                <div class="card">
+                    <h3>四诊信息输入</h3>
+
+                    <div class="form-group">
+                        <label>主诉症状（点击选择或手动输入）</label>
+                        <div style="margin-bottom: 10px;">
+                            <span class="chip" onclick="addSymptom('发热')">发热</span>
+                            <span class="chip" onclick="addSymptom('恶寒')">恶寒</span>
+                            <span class="chip" onclick="addSymptom('头痛')">头痛</span>
+                            <span class="chip" onclick="addSymptom('咳嗽')">咳嗽</span>
+                            <span class="chip" onclick="addSymptom('口干')">口干</span>
+                            <span class="chip" onclick="addSymptom('口苦')">口苦</span>
+                            <span class="chip" onclick="addSymptom('胁痛')">胁痛</span>
+                            <span class="chip" onclick="addSymptom('失眠')">失眠</span>
+                            <span class="chip" onclick="addSymptom('腰酸')">腰酸</span>
+                            <span class="chip" onclick="addSymptom('乏力')">乏力</span>
+                            <span class="chip" onclick="addSymptom('腹胀')">腹胀</span>
+                            <span class="chip" onclick="addSymptom('便秘')">便秘</span>
+                        </div>
+                        <textarea id="symptoms" placeholder="例如：发热3天，恶寒，头痛，无汗，身体酸痛"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>舌象</label>
+                        <input type="text" id="tongue" placeholder="例如：舌红，苔薄黄">
+                        <div style="margin-top: 5px;">
+                            <span class="chip" onclick="setTongue('舌淡，苔薄白')">舌淡苔薄白</span>
+                            <span class="chip" onclick="setTongue('舌红，苔黄')">舌红苔黄</span>
+                            <span class="chip" onclick="setTongue('舌红少苔')">舌红少苔</span>
+                            <span class="chip" onclick="setTongue('舌淡胖，苔白腻')">舌淡胖苔白腻</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>脉象</label>
+                        <input type="text" id="pulse" placeholder="例如：浮数">
+                        <div style="margin-top: 5px;">
+                            <span class="chip" onclick="setPulse('浮紧')">浮紧</span>
+                            <span class="chip" onclick="setPulse('浮数')">浮数</span>
+                            <span class="chip" onclick="setPulse('弦')">弦</span>
+                            <span class="chip" onclick="setPulse('细数')">细数</span>
+                            <span class="chip" onclick="setPulse('沉迟')">沉迟</span>
+                            <span class="chip" onclick="setPulse('滑')">滑</span>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="analyze()">🤖 AI分析</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="card result-section" id="resultSection">
+                    <h3>AI诊断分析结果</h3>
+
+                    <div id="loading" class="loading" style="display: none;">
+                        ⏳ AI正在分析中...
+                    </div>
+
+                    <div id="resultContent">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <span class="syndrome-badge" id="primarySyndrome"></span>
+                            <span class="confidence" id="confidence"></span>
+                        </div>
+
+                        <div class="analysis-item">
+                            <h4>📊 证型评分</h4>
+                            <div id="syndromeScores"></div>
+                        </div>
+
+                        <div class="analysis-item">
+                            <h4>🔬 病因分析</h4>
+                            <p id="etiology"></p>
+                        </div>
+
+                        <div class="analysis-item">
+                            <h4>⚙️ 病机分析</h4>
+                            <p id="pathogenesis"></p>
+                        </div>
+
+                        <div class="analysis-item">
+                            <h4>💊 治则治法</h4>
+                            <p id="treatmentPrinciple"></p>
+                        </div>
+
+                        <div class="analysis-item">
+                            <h4>❓ 建议继续问诊</h4>
+                            <ul class="suggestions-list" id="suggestedInquiries"></ul>
+                        </div>
+
+                        <div style="margin-top: 20px; text-align: center;">
+                            <a href="/prescription" class="btn" style="display: inline-block; width: auto; text-decoration: none;">
+                                进入开方 →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="helpCard">
+                    <h3>使用说明</h3>
+                    <p style="color: #666; line-height: 1.8;">
+                        1. 在左侧输入患者的症状、舌象和脉象<br>
+                        2. 点击"AI分析"按钮<br>
+                        3. 系统将自动分析并推荐证型<br>
+                        4. 根据建议问诊继续完善信息<br>
+                        5. 确认后可进入开方页面
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addSymptom(symptom) {
+            const textarea = document.getElementById('symptoms');
+            if (textarea.value) {
+                textarea.value += '，' + symptom;
+            } else {
+                textarea.value = symptom;
+            }
+        }
+
+        function setTongue(value) {
+            document.getElementById('tongue').value = value;
+        }
+
+        function setPulse(value) {
+            document.getElementById('pulse').value = value;
+        }
+
+        async function analyze() {
+            const symptoms = document.getElementById('symptoms').value;
+            const tongue = document.getElementById('tongue').value;
+            const pulse = document.getElementById('pulse').value;
+
+            if (!symptoms) {
+                alert('请输入症状信息');
+                return;
+            }
+
+            // Show result section and loading
+            document.getElementById('resultSection').classList.add('active');
+            document.getElementById('helpCard').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultContent').style.display = 'none';
+
+            try {
+                const response = await fetch('/api/ai/diagnosis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        symptoms: symptoms.split(/[,，、]/).map(s => s.trim()).filter(s => s),
+                        tongue: tongue,
+                        pulse: pulse
+                    })
+                });
+
+                const result = await response.json();
+                displayResult(result);
+            } catch (error) {
+                alert('分析失败：' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultContent').style.display = 'block';
+            }
+        }
+
+        function displayResult(result) {
+            // Primary syndrome
+            document.getElementById('primarySyndrome').textContent = result.primary_syndrome;
+            document.getElementById('confidence').textContent = `置信度: ${result.confidence}%`;
+
+            // Syndrome scores
+            const scoresDiv = document.getElementById('syndromeScores');
+            scoresDiv.innerHTML = '';
+            const maxScore = Math.max(...Object.values(result.syndrome_scores || {}), 1);
+            for (const [name, score] of Object.entries(result.syndrome_scores || {})) {
+                const percentage = (score / maxScore) * 100;
+                scoresDiv.innerHTML += `
+                    <div class="score-bar">
+                        <span class="score-name">${name}</span>
+                        <div class="score-value">
+                            <div class="score-fill" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Analysis
+            document.getElementById('etiology').textContent = result.etiology_analysis;
+            document.getElementById('pathogenesis').textContent = result.pathogenesis;
+            document.getElementById('treatmentPrinciple').textContent = result.treatment_principle;
+
+            // Suggested inquiries
+            const inquiriesList = document.getElementById('suggestedInquiries');
+            inquiriesList.innerHTML = '';
+            for (const inquiry of result.suggested_inquiries || []) {
+                inquiriesList.innerHTML += `<li>${inquiry}</li>`;
+            }
+
+            // Store for prescription page
+            localStorage.setItem('tcm_diagnosis', JSON.stringify(result));
+        }
+    </script>
+</body>
+</html>
