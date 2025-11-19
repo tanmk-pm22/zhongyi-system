@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ patient.full_name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-person"></i>
+        {{ patient.full_name }}
+        {% if patient.chinese_name %}
+        <small class="text-muted">{{ patient.chinese_name }}</small>
+        {% endif %}
+    </h2>
+    <div>
+        <a href="{% url 'patients:update' patient.pk %}" class="btn btn-outline-primary">
+            <i class="bi bi-pencil"></i> {% trans "Edit" %}
+        </a>
+        <a href="{% url 'patients:record_create' patient.pk %}" class="btn btn-success">
+            <i class="bi bi-file-plus"></i> {% trans "New Record" %}
+        </a>
+        {% if user.is_staff or user.is_admin %}
+        <a href="{% url 'patients:delete' patient.pk %}" class="btn btn-outline-danger">
+            <i class="bi bi-archive"></i> {% trans "Archive" %}
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <!-- Patient Info -->
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Basic Information" %} | 基本信息</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>{% trans "IC/Passport" %}:</strong> {{ patient.ic_number }}</p>
+                        <p><strong>{% trans "Date of Birth" %}:</strong> {{ patient.date_of_birth|date:"Y-m-d" }}</p>
+                        <p><strong>{% trans "Age" %}:</strong> {{ patient.age }} {% trans "years" %}</p>
+                        <p><strong>{% trans "Gender" %}:</strong> {{ patient.get_gender_display }}</p>
+                        <p><strong>{% trans "Blood Type" %}:</strong> {{ patient.get_blood_type_display }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>{% trans "Phone" %}:</strong> {{ patient.phone }}</p>
+                        <p><strong>{% trans "Email" %}:</strong> {{ patient.email|default:"-" }}</p>
+                        <p><strong>{% trans "Address" %}:</strong> {{ patient.address }}</p>
+                        <p><strong>{% trans "Emergency Contact" %}:</strong><br>
+                            {{ patient.emergency_contact_name|default:"-" }} / {{ patient.emergency_contact_phone|default:"-" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical Information -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Medical Information" %} | 医疗信息</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-danger">{% trans "Allergies" %} (过敏史)</h6>
+                        <p class="text-muted">{{ patient.allergies|default:"-"|linebreaks }}</p>
+
+                        <h6>{% trans "Chronic Conditions" %} (慢性疾病)</h6>
+                        <p class="text-muted">{{ patient.chronic_conditions|default:"-"|linebreaks }}</p>
+
+                        <h6>{% trans "Current Medications" %} (目前用药)</h6>
+                        <p class="text-muted">{{ patient.current_medications|default:"-"|linebreaks }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>{% trans "Medical History" %} (病史)</h6>
+                        <p class="text-muted">{{ patient.medical_history|default:"-"|linebreaks }}</p>
+
+                        <h6>{% trans "Family History" %} (家族史)</h6>
+                        <p class="text-muted">{{ patient.family_history|default:"-"|linebreaks }}</p>
+
+                        <h6>{% trans "TCM Constitution" %} (中医体质)</h6>
+                        <p class="text-muted">{{ patient.tcm_constitution|default:"-" }}</p>
+                    </div>
+                </div>
+
+                {% if patient.notes %}
+                <hr>
+                <h6>{% trans "Additional Notes" %}</h6>
+                <p class="text-muted">{{ patient.notes|linebreaks }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Medical Records -->
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{% trans "Medical Records" %} | 病历</h5>
+                <a href="{% url 'patients:record_create' patient.pk %}" class="btn btn-sm btn-success">
+                    <i class="bi bi-plus"></i> {% trans "New" %}
+                </a>
+            </div>
+            <div class="card-body p-0">
+                {% if medical_records %}
+                <div class="list-group list-group-flush">
+                    {% for record in medical_records %}
+                    <a href="{% url 'patients:record_detail' record.pk %}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">
+                                {{ record.visit_date|date:"Y-m-d H:i" }}
+                                <span class="badge bg-secondary">{{ record.get_record_type_display }}</span>
+                            </h6>
+                            <small class="text-muted">{{ record.practitioner.get_full_name }}</small>
+                        </div>
+                        <p class="mb-1 text-muted">{{ record.chief_complaint|truncatewords:30 }}</p>
+                        {% if record.tcm_diagnosis %}
+                        <small class="text-primary">{% trans "Diagnosis" %}: {{ record.tcm_diagnosis|truncatewords:15 }}</small>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-4 mb-0">
+                    {% trans "No medical records yet." %}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-md-4">
+        <!-- QR Code -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "QR Code" %} | 二维码</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="{% url 'patients:qrcode' patient.pk %}" alt="QR Code" class="img-fluid mb-2" style="max-width: 200px;">
+                <p class="small text-muted mb-0">
+                    {% trans "Patient ID" %}: {{ patient.patient_id }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Assigned Practitioner -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Assigned Practitioner" %}</h5>
+            </div>
+            <div class="card-body">
+                {% if patient.assigned_practitioner %}
+                <p class="mb-1"><strong>{{ patient.assigned_practitioner.get_full_name }}</strong></p>
+                <p class="text-muted mb-1">{{ patient.assigned_practitioner.specialization|default:"-" }}</p>
+                <p class="text-muted mb-0 small">{{ patient.assigned_practitioner.clinic_name|default:"-" }}</p>
+                {% else %}
+                <p class="text-muted mb-0">{% trans "Not assigned" %}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Data Consent -->
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Data Consent" %} | 数据同意</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-1">
+                    {% if patient.consent_data_sharing %}
+                    <span class="badge bg-success">{% trans "Consented" %}</span>
+                    {% else %}
+                    <span class="badge bg-warning">{% trans "Not Consented" %}</span>
+                    {% endif %}
+                </p>
+                {% if patient.consent_date %}
+                <p class="text-muted small mb-0">
+                    {% trans "Date" %}: {{ patient.consent_date|date:"Y-m-d" }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

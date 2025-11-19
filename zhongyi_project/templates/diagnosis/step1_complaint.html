@@ -1,0 +1,42 @@
+{% extends 'diagnosis/step_base.html' %}
+{% load i18n %}
+
+{% block title %}诊断 - 第一步 | Diagnosis - Step 1{% endblock %}
+
+{% block step_content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-chat-text me-2"></i>
+            第一步：主诉 | Step 1: Chief Complaint
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle me-2"></i>
+            记录患者的主要症状和主诉。| Record the patient's main complaint and primary symptoms.
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="form-label">主诉 | Chief Complaint *</label>
+                {{ form.chief_complaint }}
+                <small class="text-muted">
+                    包括主要症状、持续时间和严重程度。| Include main symptoms, duration, and severity.
+                </small>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'patients:detail' patient.pk %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x"></i> 取消 | Cancel
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    下一步 | Next <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

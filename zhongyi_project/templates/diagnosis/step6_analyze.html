@@ -1,0 +1,150 @@
+{% extends 'diagnosis/step_base.html' %}
+{% load i18n %}
+
+{% block title %}诊断 - AI分析 | Diagnosis - Analysis{% endblock %}
+
+{% block step_content %}
+<div class="row">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-check-circle me-2"></i>
+                    辨证结论 | Final Diagnosis
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">辨证 | Diagnosis *</label>
+                        {{ form.final_diagnosis }}
+                        <small class="text-muted">根据AI建议和您的临床判断 | Based on AI suggestions and your clinical judgment</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">治则治法 | Treatment Principle</label>
+                        {{ form.treatment_principle }}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">备注 | Additional Notes</label>
+                        {{ form.notes }}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'diagnosis:step5' session.pk %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> 返回 | Back
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-lg"></i> 完成诊断 | Complete
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-robot me-2"></i>
+                    AI建议 | AI Suggestions
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                {% if ai_results %}
+                <div class="list-group list-group-flush">
+                    {% for result in ai_results %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <strong>{{ result.name_en }}</strong>
+                                <br>
+                                <span class="text-muted">{{ result.name_cn }}</span>
+                            </div>
+                            <span class="badge bg-{% if result.confidence >= 70 %}success{% elif result.confidence >= 40 %}warning{% else %}secondary{% endif %} fs-6">
+                                {{ result.confidence }}%
+                            </span>
+                        </div>
+
+                        <div class="small mb-2">
+                            <strong>匹配症状 | Matched:</strong>
+                            {{ result.matched_count }}
+                            {% if result.primary_total > 0 %}
+                            ({{ result.primary_matched }}/{{ result.primary_total }} 主症)
+                            {% endif %}
+                        </div>
+
+                        {% if result.matched_symptoms %}
+                        <div class="mb-2">
+                            {% for symptom in result.matched_symptoms %}
+                            <span class="badge {% if symptom.is_primary %}bg-primary{% else %}bg-light text-dark{% endif %} me-1 mb-1">
+                                {{ symptom.name_cn }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        {% if result.tongue_signs %}
+                        <div class="small text-muted">
+                            <strong>舌象:</strong> {{ result.tongue_signs }}
+                        </div>
+                        {% endif %}
+
+                        {% if result.pulse_signs %}
+                        <div class="small text-muted">
+                            <strong>脉象:</strong> {{ result.pulse_signs }}
+                        </div>
+                        {% endif %}
+
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2"
+                                onclick="useSuggestion('{{ result.name_cn }} ({{ result.name_en }})', '{{ result.treatment_principle|escapejs }}')">
+                            <i class="bi bi-arrow-left-circle"></i> 采用 | Use
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="p-4 text-center text-muted">
+                    <i class="bi bi-exclamation-circle fs-1 mb-2"></i>
+                    <p class="mb-0">未找到匹配证型，请检查症状。| No matching syndromes found.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Summary Card -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">诊断摘要 | Session Summary</h6>
+            </div>
+            <div class="card-body small">
+                <p><strong>主诉:</strong><br>{{ session.chief_complaint|truncatewords:20 }}</p>
+                {% if session.selected_symptoms %}
+                <p><strong>已选症状:</strong> {{ session.selected_symptoms|length }} 个</p>
+                {% endif %}
+                {% if session.tongue_body_color %}
+                <p><strong>舌象:</strong> {{ session.get_tongue_body_color_display }}, {{ session.get_tongue_coating_color_display }} {{ session.get_tongue_coating_texture_display }}</p>
+                {% endif %}
+                {% if session.pulse_overall %}
+                <p class="mb-0"><strong>脉象:</strong> {{ session.pulse_overall }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function useSuggestion(diagnosis, treatment) {
+    document.getElementById('id_final_diagnosis').value = diagnosis;
+    if (treatment) {
+        document.getElementById('id_treatment_principle').value = treatment;
+    }
+}
+</script>
+{% endblock %}

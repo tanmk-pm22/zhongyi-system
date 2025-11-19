@@ -1,0 +1,16 @@
+# Django Core
+Django>=4.2
+djangorestframework>=3.14
+
+# Forms and UI
+django-crispy-forms>=2.1
+crispy-bootstrap5>=2023.10
+
+# Image handling
+Pillow>=10.0
+
+# QR Code generation
+qrcode>=7.4
+
+# Environment variables
+python-dotenv>=1.0

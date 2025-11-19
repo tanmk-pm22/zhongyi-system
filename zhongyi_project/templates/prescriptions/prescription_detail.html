@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}处方详情 | Prescription Detail{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-prescription2"></i>
+        处方详情 | Prescription Detail
+    </h2>
+    <div>
+        {% if user.is_staff or user.role == 'admin' or prescription.practitioner == user %}
+        <a href="{% url 'prescriptions:edit' prescription.pk %}" class="btn btn-outline-primary">
+            <i class="bi bi-pencil"></i> 编辑 | Edit
+        </a>
+        {% endif %}
+        {% if user.is_staff or user.role == 'admin' %}
+        <a href="{% url 'prescriptions:delete' prescription.pk %}" class="btn btn-outline-danger">
+            <i class="bi bi-trash"></i> 删除 | Delete
+        </a>
+        {% endif %}
+        <a href="{% url 'prescriptions:print' prescription.pk %}" class="btn btn-outline-info" target="_blank">
+            <i class="bi bi-printer"></i> 打印 | Print
+        </a>
+        <a href="{% url 'prescriptions:list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回 | Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Prescription Info -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">处方信息 | Prescription Info</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>处方编号 | Number:</strong> {{ prescription.prescription_number }}</p>
+                        <p><strong>患者 | Patient:</strong> {{ prescription.patient.full_name }}</p>
+                        <p><strong>医师 | Practitioner:</strong> {{ prescription.practitioner.get_full_name }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>日期 | Date:</strong> {{ prescription.prescription_date|date:"Y-m-d H:i" }}</p>
+                        <p><strong>剂数 | Doses:</strong> {{ prescription.doses }} 剂</p>
+                        <p><strong>状态 | Status:</strong>
+                            <span class="badge bg-{% if prescription.status == 'completed' %}success{% elif prescription.status == 'confirmed' %}primary{% elif prescription.status == 'dispensed' %}info{% elif prescription.status == 'cancelled' %}danger{% else %}secondary{% endif %}">
+                                {{ prescription.get_status_display }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                {% if prescription.diagnosis %}
+                <hr>
+                <p><strong>诊断 | Diagnosis:</strong></p>
+                <p>{{ prescription.diagnosis }}</p>
+                {% endif %}
+
+                {% if prescription.treatment_principle %}
+                <p><strong>治则治法 | Treatment Principle:</strong></p>
+                <p>{{ prescription.treatment_principle }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Herbs -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">药材组成 | Herbs</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>药材 | Herb</th>
+                            <th>剂量 | Dosage</th>
+                            <th>炮制 | Preparation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in prescription.items.all %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.herb.name_cn }}</strong>
+                                <br><small class="text-muted">{{ item.herb.name_en }}</small>
+                            </td>
+                            <td>{{ item.dosage }}g</td>
+                            <td>{{ item.preparation|default:"-" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">暂无药材</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Decoction Method -->
+        {% if prescription.decoction_method %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">煎服方法 | Decoction Method</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">{{ prescription.decoction_method }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <!-- Advice -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">医嘱 | Advice</h5>
+            </div>
+            <div class="card-body">
+                {% if prescription.dietary_advice %}
+                <p><strong>饮食宜忌 | Dietary:</strong></p>
+                <p>{{ prescription.dietary_advice }}</p>
+                {% endif %}
+
+                {% if prescription.lifestyle_advice %}
+                <p><strong>生活建议 | Lifestyle:</strong></p>
+                <p>{{ prescription.lifestyle_advice }}</p>
+                {% endif %}
+
+                {% if prescription.notes %}
+                <p><strong>备注 | Notes:</strong></p>
+                <p class="mb-0">{{ prescription.notes }}</p>
+                {% endif %}
+
+                {% if not prescription.dietary_advice and not prescription.lifestyle_advice and not prescription.notes %}
+                <p class="text-muted mb-0">暂无医嘱 | No advice</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if prescription.total_price %}
+        <div class="card mt-4">
+            <div class="card-body text-center">
+                <h6 class="text-muted">总价 | Total</h6>
+                <h3 class="text-primary">RM {{ prescription.total_price }}</h3>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

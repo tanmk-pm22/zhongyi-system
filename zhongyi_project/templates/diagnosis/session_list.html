@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Diagnosis Sessions" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-clipboard2-pulse"></i>
+        诊断记录 | Diagnosis Sessions
+    </h2>
+    <a href="{% url 'diagnosis:select_patient' %}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> 新建诊断 | New Diagnosis
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        {% if sessions %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>日期 | Date</th>
+                        <th>患者 | Patient</th>
+                        <th>主诉 | Chief Complaint</th>
+                        <th>诊断 | Diagnosis</th>
+                        <th>状态 | Status</th>
+                        <th>操作 | Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{ session.session_date|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <a href="{% url 'patients:detail' session.patient.pk %}">
+                                {{ session.patient.full_name }}
+                            </a>
+                        </td>
+                        <td>{{ session.chief_complaint|truncatewords:10 }}</td>
+                        <td>{{ session.final_diagnosis|truncatewords:8|default:"-" }}</td>
+                        <td>
+                            {% if session.is_complete %}
+                            <span class="badge bg-success">已完成 | Complete</span>
+                            {% else %}
+                            <span class="badge bg-warning">进行中 | In Progress</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'diagnosis:detail' session.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if is_paginated %}
+        <nav class="d-flex justify-content-center py-3">
+            <ul class="pagination mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                </li>
+                {% endif %}
+                <li class="page-item disabled">
+                    <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-clipboard2 display-1 text-muted mb-3"></i>
+            <h5 class="text-muted">没有诊断记录 | No diagnosis sessions found.</h5>
+            <a href="{% url 'diagnosis:select_patient' %}" class="btn btn-success btn-lg">
+                <i class="bi bi-plus-circle"></i> 开始新诊断 | Start New Diagnosis
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

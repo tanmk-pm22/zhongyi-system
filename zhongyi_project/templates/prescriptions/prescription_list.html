@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}处方列表 | Prescriptions{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-prescription2"></i>
+        处方管理 | Prescriptions
+    </h2>
+    <div>
+        <a href="{% url 'prescriptions:herb_list' %}" class="btn btn-outline-info">
+            <i class="bi bi-flower1"></i> 药材库 | Herbs
+        </a>
+        <a href="{% url 'prescriptions:formula_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-book"></i> 经典方剂 | Formulas
+        </a>
+        <a href="{% url 'prescriptions:select_patient' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> 新建处方 | New
+        </a>
+    </div>
+</div>
+
+{% if prescriptions %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>处方编号 | Number</th>
+                <th>患者 | Patient</th>
+                <th>日期 | Date</th>
+                <th>剂数 | Doses</th>
+                <th>状态 | Status</th>
+                <th>操作 | Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prescription in prescriptions %}
+            <tr>
+                <td>
+                    <a href="{% url 'prescriptions:detail' prescription.pk %}">
+                        {{ prescription.prescription_number }}
+                    </a>
+                </td>
+                <td>{{ prescription.patient.full_name }}</td>
+                <td>{{ prescription.prescription_date|date:"Y-m-d" }}</td>
+                <td>{{ prescription.doses }} 剂</td>
+                <td>
+                    <span class="badge bg-{% if prescription.status == 'completed' %}success{% elif prescription.status == 'confirmed' %}primary{% elif prescription.status == 'dispensed' %}info{% elif prescription.status == 'cancelled' %}danger{% else %}secondary{% endif %}">
+                        {{ prescription.get_status_display }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'prescriptions:detail' prescription.pk %}" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <a href="{% url 'prescriptions:print' prescription.pk %}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                        <i class="bi bi-printer"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle me-2"></i>
+    暂无处方记录。| No prescriptions yet.
+    <a href="{% url 'prescriptions:select_patient' %}" class="alert-link">新建处方 | Create one</a>
+</div>
+{% endif %}
+{% endblock %}

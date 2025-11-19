@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<!-- Progress Bar -->
+<div class="card mb-4">
+    <div class="card-body py-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-muted small">{% trans "Step" %} {{ step }} / {{ total_steps }}</span>
+            <span class="text-muted small">{{ patient.full_name }}</span>
+        </div>
+        <div class="progress" style="height: 8px;">
+            <div class="progress-bar" role="progressbar" style="width: {% widthratio step total_steps 100 %}%"></div>
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+            <small class="{% if step >= 1 %}text-primary fw-bold{% else %}text-muted{% endif %}">1. {% trans "Complaint" %}</small>
+            <small class="{% if step >= 2 %}text-primary fw-bold{% else %}text-muted{% endif %}">2. {% trans "Inspection" %}</small>
+            <small class="{% if step >= 3 %}text-primary fw-bold{% else %}text-muted{% endif %}">3. {% trans "Auscultation" %}</small>
+            <small class="{% if step >= 4 %}text-primary fw-bold{% else %}text-muted{% endif %}">4. {% trans "Inquiry" %}</small>
+            <small class="{% if step >= 5 %}text-primary fw-bold{% else %}text-muted{% endif %}">5. {% trans "Palpation" %}</small>
+            <small class="{% if step >= 6 %}text-primary fw-bold{% else %}text-muted{% endif %}">6. {% trans "Analysis" %}</small>
+        </div>
+    </div>
+</div>
+
+{% block step_content %}{% endblock %}
+{% endblock %}

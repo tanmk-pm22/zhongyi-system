@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% if object %}{% trans "Edit Medical Record" %}{% else %}{% trans "New Medical Record" %}{% endif %}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">
+    <i class="bi bi-file-medical"></i>
+    {% if object %}{% trans "Edit Medical Record" %}{% else %}{% trans "New Medical Record" %}{% endif %}
+</h2>
+
+<div class="alert alert-info">
+    <strong>{% trans "Patient" %}:</strong> {{ patient.full_name }}
+    {% if patient.chinese_name %}({{ patient.chinese_name }}){% endif %}
+    | {{ patient.ic_number }}
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Visit Information -->
+            <h5 class="mb-3">{% trans "Visit Information" %} | 就诊信息</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Record Type" %} *</label>
+                    {{ form.record_type }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Visit Date" %} *</label>
+                    {{ form.visit_date }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">{% trans "Chief Complaint" %} (主诉) *</label>
+                {{ form.chief_complaint }}
+            </div>
+
+            <!-- Four Examinations -->
+            <hr>
+            <h5 class="mb-3">{% trans "Four Examinations" %} (四诊)</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Inspection Notes" %} (望诊)</label>
+                    {{ form.inspection_notes }}
+                    <small class="text-muted">{% trans "Spirit, complexion, tongue, body form" %}</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Tongue Diagnosis" %} (舌诊)</label>
+                    {{ form.tongue_diagnosis }}
+                    <small class="text-muted">{% trans "Tongue body, coating, moisture" %}</small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Auscultation/Olfaction" %} (闻诊)</label>
+                    {{ form.auscultation_notes }}
+                    <small class="text-muted">{% trans "Voice, breath, odors" %}</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Inquiry Notes" %} (问诊)</label>
+                    {{ form.inquiry_notes }}
+                    <small class="text-muted">{% trans "Ten questions, symptoms history" %}</small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Pulse Diagnosis" %} (脉诊)</label>
+                    {{ form.pulse_diagnosis }}
+                    <small class="text-muted">{% trans "Rate, rhythm, strength, depth" %}</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Palpation Notes" %} (切诊)</label>
+                    {{ form.palpation_notes }}
+                    <small class="text-muted">{% trans "Abdominal, point tenderness" %}</small>
+                </div>
+            </div>
+
+            <!-- Diagnosis -->
+            <hr>
+            <h5 class="mb-3">{% trans "Diagnosis" %} | 诊断</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "TCM Diagnosis" %} (中医诊断)</label>
+                    {{ form.tcm_diagnosis }}
+                    <small class="text-muted">{% trans "Pattern/Syndrome identification (辨证)" %}</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Western Diagnosis" %}</label>
+                    {{ form.western_diagnosis }}
+                    <small class="text-muted">{% trans "ICD-10 codes if applicable" %}</small>
+                </div>
+            </div>
+
+            <!-- Treatment -->
+            <hr>
+            <h5 class="mb-3">{% trans "Treatment" %} | 治疗</h5>
+            <div class="mb-3">
+                <label class="form-label">{% trans "Treatment Principle" %} (治则治法)</label>
+                {{ form.treatment_principle }}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Prescription" %} (处方)</label>
+                    {{ form.prescription }}
+                    <small class="text-muted">{% trans "Herbal formula with dosages" %}</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Acupuncture Points" %} (针灸穴位)</label>
+                    {{ form.acupuncture_points }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">{% trans "Other Treatments" %}</label>
+                {{ form.other_treatments }}
+                <small class="text-muted">{% trans "Tuina, cupping, moxibustion, etc." %}</small>
+            </div>
+
+            <!-- Recommendations -->
+            <hr>
+            <h5 class="mb-3">{% trans "Recommendations" %} | 建议</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Lifestyle Advice" %} (生活建议)</label>
+                    {{ form.lifestyle_advice }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Dietary Advice" %} (饮食建议)</label>
+                    {{ form.dietary_advice }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Follow-up Notes" %}</label>
+                    {{ form.follow_up_notes }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Next Appointment" %}</label>
+                    {{ form.next_appointment }}
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'patients:detail' patient.pk %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x"></i> {% trans "Cancel" %}
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> {% trans "Save" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}删除诊断 | Delete Diagnosis{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        确认删除 | Confirm Delete
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        <strong>警告 | Warning:</strong> 此操作无法撤销！| This action cannot be undone!
+                    </div>
+
+                    <p class="lead">
+                        您确定要删除以下诊断记录吗？<br>
+                        Are you sure you want to delete this diagnosis session?
+                    </p>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 30%">患者 | Patient</th>
+                            <td>{{ session.patient.full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>日期 | Date</th>
+                            <td>{{ session.session_date|date:"Y-m-d H:i" }}</td>
+                        </tr>
+                        <tr>
+                            <th>医师 | Practitioner</th>
+                            <td>{{ session.practitioner.get_full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>主诉 | Chief Complaint</th>
+                            <td>{{ session.chief_complaint|truncatewords:30 }}</td>
+                        </tr>
+                        {% if session.final_diagnosis %}
+                        <tr>
+                            <th>辨证 | Diagnosis</th>
+                            <td>{{ session.final_diagnosis }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'diagnosis:detail' session.pk %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> 取消 | Cancel
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> 确认删除 | Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

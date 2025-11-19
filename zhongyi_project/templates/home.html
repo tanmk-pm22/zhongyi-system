@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <i class="bi bi-heart-pulse hero-icon"></i>
+        <h1>{% trans "AI-Enhanced TCM Clinical System" %}</h1>
+        <h2>智能中医临床系统</h2>
+        <p>
+            {% trans "A comprehensive Traditional Chinese Medicine clinical management system compliant with Malaysian healthcare regulations." %}
+        </p>
+
+        {% if user.is_authenticated %}
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{% url 'accounts:dashboard' %}" class="btn btn-light btn-lg">
+                <i class="bi bi-speedometer2"></i> {% trans "Go to Dashboard" %}
+            </a>
+            {% if user.is_practitioner or user.is_admin or user.is_staff %}
+            <a href="{% url 'patients:list' %}" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-people"></i> {% trans "View Patients" %}
+            </a>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{% url 'accounts:login' %}" class="btn btn-light btn-lg">
+                <i class="bi bi-box-arrow-in-right"></i> {% trans "Login" %}
+            </a>
+            <a href="{% url 'accounts:register' %}" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-person-plus"></i> {% trans "Register" %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<!-- Welcome Card for Logged In Users -->
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle mb-3" style="width: 64px; height: 64px;">
+                    <i class="bi bi-person-circle fs-2 text-primary"></i>
+                </div>
+                <h4 class="mb-1">{% trans "Welcome" %}, {{ user.get_full_name|default:user.username }}!</h4>
+                <p class="text-muted mb-0">{{ user.get_role_display }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Access Section -->
+<div class="row justify-content-center mb-5">
+    <div class="col-md-10">
+        <h4 class="text-center mb-4">快速访问 | Quick Access</h4>
+        <div class="row g-3">
+            <div class="col-md-3 col-6">
+                <a href="{% url 'patients:list' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-people fs-1 text-primary mb-2"></i>
+                        <h6 class="mb-0">患者管理</h6>
+                        <small class="text-muted">Patients</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="{% url 'diagnosis:list' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-clipboard2-pulse fs-1 text-success mb-2"></i>
+                        <h6 class="mb-0">诊断系统</h6>
+                        <small class="text-muted">Diagnosis</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="{% url 'accounts:dashboard' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-speedometer2 fs-1 text-info mb-2"></i>
+                        <h6 class="mb-0">控制面板</h6>
+                        <small class="text-muted">Dashboard</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="{% url 'api:api-root' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-code-slash fs-1 text-warning mb-2"></i>
+                        <h6 class="mb-0">接口文档</h6>
+                        <small class="text-muted">API</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Features Section -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card feature-card">
+            <div class="feature-icon primary">
+                <i class="bi bi-people"></i>
+            </div>
+            <h5 class="mb-3">{% trans "Patient Management" %}</h5>
+            <p class="text-muted mb-0">
+                {% trans "Comprehensive patient records with QR code identification and medical history tracking." %}
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card feature-card">
+            <div class="feature-icon secondary">
+                <i class="bi bi-file-medical"></i>
+            </div>
+            <h5 class="mb-3">{% trans "Medical Records" %}</h5>
+            <p class="text-muted mb-0">
+                {% trans "Complete TCM diagnosis documentation including Four Examinations and syndrome differentiation." %}
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card feature-card">
+            <div class="feature-icon accent">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <h5 class="mb-3">{% trans "PDPA Compliant" %}</h5>
+            <p class="text-muted mb-0">
+                {% trans "Fully compliant with Malaysia's Personal Data Protection Act 2010 for secure data handling." %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Features -->
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-10 rounded" style="width: 48px; height: 48px;">
+                            <i class="bi bi-qr-code fs-4 text-info"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-2">{% trans "QR Code Identification" %}</h5>
+                        <p class="text-muted mb-0">{% trans "Quick patient lookup using unique QR codes for efficient clinic workflow." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 rounded" style="width: 48px; height: 48px;">
+                            <i class="bi bi-translate fs-4 text-warning"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-2">{% trans "Bilingual Support" %}</h5>
+                        <p class="text-muted mb-0">{% trans "Full English and Chinese interface for practitioners and patients." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded" style="width: 48px; height: 48px;">
+                            <i class="bi bi-diagram-3 fs-4 text-success"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-2">{% trans "Four Examinations" %} (四诊)</h5>
+                        <p class="text-muted mb-0">{% trans "Structured documentation for inspection, auscultation, inquiry, and palpation." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 rounded" style="width: 48px; height: 48px;">
+                            <i class="bi bi-lock fs-4 text-danger"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-2">{% trans "Secure Access Control" %}</h5>
+                        <p class="text-muted mb-0">{% trans "Role-based permissions for administrators, practitioners, and patients." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

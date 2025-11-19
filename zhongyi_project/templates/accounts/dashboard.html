@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard" %}{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h2>
+        <i class="bi bi-speedometer2"></i>
+        {% trans "Dashboard" %} | 仪表板
+    </h2>
+</div>
+
+<div class="row g-4">
+    <!-- User Info Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-person-circle fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="mb-1">{{ user.get_full_name|default:user.username }}</h5>
+                    <span class="badge bg-primary">{{ user.get_role_display }}</span>
+                </div>
+                <hr>
+                <div class="small">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">{% trans "Email" %}</span>
+                        <span>{{ user.email|default:"-" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">{% trans "Phone" %}</span>
+                        <span>{{ user.phone|default:"-" }}</span>
+                    </div>
+                    {% if user.is_practitioner %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">{% trans "License" %}</span>
+                        <span>{{ user.license_number|default:"-" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">{% trans "Clinic" %}</span>
+                        <span>{{ user.clinic_name|default:"-" }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'accounts:profile' %}" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-pencil"></i> {% trans "Edit Profile" %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_practitioner or user.is_admin or user.is_staff %}
+    <!-- Quick Actions -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-lightning-charge text-warning me-2"></i>
+                {% trans "Quick Actions" %} | 快速操作
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'patients:create' %}" class="btn btn-primary quick-action-btn">
+                        <i class="bi bi-person-plus"></i>
+                        <span>{% trans "New Patient" %}</span>
+                    </a>
+                    <a href="{% url 'patients:list' %}" class="btn btn-outline-primary quick-action-btn">
+                        <i class="bi bi-search"></i>
+                        <span>{% trans "Search Patients" %}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="col-lg-4 col-md-12">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-bar-chart-line text-info me-2"></i>
+                {% trans "Statistics" %} | 统计
+            </div>
+            <div class="card-body">
+                <div class="card stat-card mb-3">
+                    <div class="card-body py-3">
+                        <div class="stat-value">{{ patient_count|default:0 }}</div>
+                        <div class="stat-label">{% trans "Total Patients" %}</div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <small class="text-muted">{% trans "More statistics coming soon" %}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if user.is_practitioner or user.is_admin or user.is_staff %}
+<!-- Recent Patients -->
+<div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>
+            <i class="bi bi-clock-history me-2"></i>
+            {% trans "Recent Patients" %} | 最近患者
+        </span>
+        <a href="{% url 'patients:list' %}" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-arrow-right"></i> {% trans "View All" %}
+        </a>
+    </div>
+    <div class="card-body p-0">
+        {% if patients %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "IC Number" %}</th>
+                        <th>{% trans "Phone" %}</th>
+                        <th>{% trans "Last Updated" %}</th>
+                        <th class="text-end">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td>
+                            <span class="patient-name">{{ patient.full_name }}</span>
+                            {% if patient.chinese_name %}
+                            <br><span class="patient-chinese-name">{{ patient.chinese_name }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ patient.ic_number }}</td>
+                        <td>{{ patient.phone }}</td>
+                        <td>{{ patient.updated_at|date:"Y-m-d H:i" }}</td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'patients:detail' patient.pk %}" class="btn btn-outline-primary" title="{% trans 'View' %}">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'patients:record_create' patient.pk %}" class="btn btn-outline-success" title="{% trans 'New Record' %}">
+                                    <i class="bi bi-file-plus"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>{% trans "No patients found." %}</p>
+            <a href="{% url 'patients:create' %}" class="btn btn-primary">
+                <i class="bi bi-person-plus"></i> {% trans "Add First Patient" %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

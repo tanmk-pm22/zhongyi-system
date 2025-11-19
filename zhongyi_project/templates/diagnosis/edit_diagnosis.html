@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}编辑诊断 | Edit Diagnosis{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-pencil-square"></i>
+        编辑诊断记录 | Edit Diagnosis
+    </h2>
+    <a href="{% url 'diagnosis:detail' session.pk %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> 返回 | Back
+    </a>
+</div>
+
+<div class="alert alert-info">
+    <i class="bi bi-info-circle me-2"></i>
+    <strong>患者 | Patient:</strong> {{ patient.full_name }}
+    {% if patient.chinese_name %}({{ patient.chinese_name }}){% endif %}
+</div>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Basic Information -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">基本信息 | Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">主诉 | Chief Complaint *</label>
+                        <textarea name="chief_complaint" class="form-control" rows="3" required>{{ session.chief_complaint }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">辨证结论 | Final Diagnosis</label>
+                        <textarea name="final_diagnosis" class="form-control" rows="2">{{ session.final_diagnosis }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">治则治法 | Treatment Principle</label>
+                        <textarea name="treatment_principle" class="form-control" rows="2">{{ session.treatment_principle }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">备注 | Notes</label>
+                        <textarea name="notes" class="form-control" rows="2">{{ session.notes }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tongue Diagnosis -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">舌诊 | Tongue Diagnosis</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">舌体颜色 | Body Color</label>
+                            <select name="tongue_body_color" class="form-select">
+                                <option value="">-- 选择 --</option>
+                                <option value="pale" {% if session.tongue_body_color == 'pale' %}selected{% endif %}>淡白 | Pale</option>
+                                <option value="light_red" {% if session.tongue_body_color == 'light_red' %}selected{% endif %}>淡红 | Light Red</option>
+                                <option value="red" {% if session.tongue_body_color == 'red' %}selected{% endif %}>红 | Red</option>
+                                <option value="deep_red" {% if session.tongue_body_color == 'deep_red' %}selected{% endif %}>绛红 | Deep Red</option>
+                                <option value="purple" {% if session.tongue_body_color == 'purple' %}selected{% endif %}>紫 | Purple</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">舌体形状 | Body Shape</label>
+                            <select name="tongue_body_shape" class="form-select">
+                                <option value="">-- 选择 --</option>
+                                <option value="normal" {% if session.tongue_body_shape == 'normal' %}selected{% endif %}>正常 | Normal</option>
+                                <option value="thin" {% if session.tongue_body_shape == 'thin' %}selected{% endif %}>瘦薄 | Thin</option>
+                                <option value="swollen" {% if session.tongue_body_shape == 'swollen' %}selected{% endif %}>胖大 | Swollen</option>
+                                <option value="teeth_marks" {% if session.tongue_body_shape == 'teeth_marks' %}selected{% endif %}>齿痕 | Teeth Marks</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">舌苔颜色 | Coating Color</label>
+                            <select name="tongue_coating_color" class="form-select">
+                                <option value="">-- 选择 --</option>
+                                <option value="white" {% if session.tongue_coating_color == 'white' %}selected{% endif %}>白 | White</option>
+                                <option value="yellow" {% if session.tongue_coating_color == 'yellow' %}selected{% endif %}>黄 | Yellow</option>
+                                <option value="grey" {% if session.tongue_coating_color == 'grey' %}selected{% endif %}>灰 | Grey</option>
+                                <option value="black" {% if session.tongue_coating_color == 'black' %}selected{% endif %}>黑 | Black</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">舌苔质地 | Coating Texture</label>
+                            <select name="tongue_coating_texture" class="form-select">
+                                <option value="">-- 选择 --</option>
+                                <option value="thin" {% if session.tongue_coating_texture == 'thin' %}selected{% endif %}>薄 | Thin</option>
+                                <option value="thick" {% if session.tongue_coating_texture == 'thick' %}selected{% endif %}>厚 | Thick</option>
+                                <option value="greasy" {% if session.tongue_coating_texture == 'greasy' %}selected{% endif %}>腻 | Greasy</option>
+                                <option value="peeled" {% if session.tongue_coating_texture == 'peeled' %}selected{% endif %}>剥落 | Peeled</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pulse -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">脉诊 | Pulse Diagnosis</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">总体脉象 | Overall Pulse</label>
+                        <textarea name="pulse_overall" class="form-control" rows="2">{{ session.pulse_overall }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Symptoms -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">症状 | Symptoms</h5>
+                </div>
+                <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                    {% for category, symptoms in symptoms_by_category.items %}
+                    <h6 class="mt-3 mb-2">{{ category }}</h6>
+                    {% for symptom in symptoms %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="symptoms" value="{{ symptom.code }}" id="symptom_{{ symptom.code }}"
+                               {% if symptom.code in session.selected_symptoms %}checked{% endif %}>
+                        <label class="form-check-label small" for="symptom_{{ symptom.code }}">
+                            {{ symptom.name_cn }} | {{ symptom.name_en }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'diagnosis:detail' session.pk %}" class="btn btn-outline-secondary">
+            <i class="bi bi-x"></i> 取消 | Cancel
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg"></i> 保存更改 | Save Changes
+        </button>
+    </div>
+</form>
+{% endblock %}

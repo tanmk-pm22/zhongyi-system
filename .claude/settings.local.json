@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m venv:*)",
+      "Bash(py:*)",
+      "Bash(where:*)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" -m pip install --upgrade pip)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" \"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\manage.py\" runserver:*)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" \"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\manage.py\" makemigrations:*)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\":*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

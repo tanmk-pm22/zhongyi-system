@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}开具处方 | Create Prescription{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-prescription2"></i>
+        开具处方 | Create Prescription
+    </h2>
+    <a href="{% url 'prescriptions:list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> 返回 | Back
+    </a>
+</div>
+
+<div class="alert alert-info">
+    <i class="bi bi-person me-2"></i>
+    <strong>患者 | Patient:</strong> {{ patient.full_name }}
+    {% if patient.chinese_name %}({{ patient.chinese_name }}){% endif %}
+</div>
+
+<form method="post" id="prescriptionForm">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Prescription Info -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">处方信息 | Prescription Info</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">诊断 | Diagnosis</label>
+                        <textarea name="diagnosis" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">治则治法 | Treatment Principle</label>
+                        <textarea name="treatment_principle" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">剂数 | Number of Doses</label>
+                            <input type="number" name="doses" class="form-control" value="7" min="1" max="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Herbs -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">药材 | Herbs</h5>
+                    <button type="button" class="btn btn-sm btn-success" onclick="addHerbRow()">
+                        <i class="bi bi-plus"></i> 添加药材 | Add Herb
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="herbsContainer">
+                        <!-- Herb rows will be added here -->
+                        <div class="herb-row row mb-2">
+                            <div class="col-md-5">
+                                <select name="herb_id" class="form-select herb-select" onchange="updateHerbInfo(this)">
+                                    <option value="">-- 选择药材 | Select Herb --</option>
+                                    {% for herb in herbs %}
+                                    <option value="{{ herb.pk }}" data-range="{{ herb.dosage_range }}">
+                                        {{ herb.name_cn }} ({{ herb.name_pinyin }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="dosage" class="form-control" placeholder="剂量(克)" step="0.5" min="0">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="preparation" class="form-control" placeholder="炮制方法">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-outline-danger" onclick="removeHerbRow(this)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decoction Method -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">煎服方法 | Decoction Method</h5>
+                </div>
+                <div class="card-body">
+                    <textarea name="decoction_method" class="form-control" rows="3">水煎服，每日一剂，分两次温服。</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Additional Advice -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">医嘱 | Advice</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">饮食宜忌 | Dietary Advice</label>
+                        <textarea name="dietary_advice" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">生活建议 | Lifestyle Advice</label>
+                        <textarea name="lifestyle_advice" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">备注 | Notes</label>
+                        <textarea name="notes" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'prescriptions:list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-x"></i> 取消 | Cancel
+        </a>
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-lg"></i> 创建处方 | Create Prescription
+        </button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function addHerbRow() {
+    const container = document.getElementById('herbsContainer');
+    const row = container.querySelector('.herb-row').cloneNode(true);
+
+    // Clear values
+    row.querySelector('select').value = '';
+    row.querySelectorAll('input').forEach(input => input.value = '');
+
+    container.appendChild(row);
+}
+
+function removeHerbRow(btn) {
+    const container = document.getElementById('herbsContainer');
+    if (container.querySelectorAll('.herb-row').length > 1) {
+        btn.closest('.herb-row').remove();
+    }
+}
+
+function updateHerbInfo(select) {
+    const option = select.options[select.selectedIndex];
+    const range = option.dataset.range;
+    if (range) {
+        // Could show dosage hint here
+    }
+}
+</script>
+{% endblock %}

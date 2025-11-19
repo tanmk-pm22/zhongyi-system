@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% if object %}{% trans "Edit Patient" %}{% else %}{% trans "New Patient" %}{% endif %}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">
+    <i class="bi bi-person-{% if object %}gear{% else %}plus{% endif %}"></i>
+    {% if object %}{% trans "Edit Patient" %} | 编辑患者{% else %}{% trans "New Patient" %} | 新建患者{% endif %}
+</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Basic Information -->
+            <h5 class="mb-3">{% trans "Basic Information" %} | 基本信息</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "First Name" %} *</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "Last Name" %} *</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "Chinese Name" %} (中文姓名)</label>
+                    {{ form.chinese_name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "IC/Passport" %} *</label>
+                    {{ form.ic_number }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "Date of Birth" %} *</label>
+                    {{ form.date_of_birth }}
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label class="form-label">{% trans "Gender" %} *</label>
+                    {{ form.gender }}
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label class="form-label">{% trans "Blood Type" %}</label>
+                    {{ form.blood_type }}
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <hr>
+            <h5 class="mb-3">{% trans "Contact Information" %} | 联系方式</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "Phone" %} *</label>
+                    {{ form.phone }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">{% trans "Email" %}</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">{% trans "Address" %} *</label>
+                {{ form.address }}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Emergency Contact Name" %}</label>
+                    {{ form.emergency_contact_name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Emergency Contact Phone" %}</label>
+                    {{ form.emergency_contact_phone }}
+                </div>
+            </div>
+
+            <!-- Medical Information -->
+            <hr>
+            <h5 class="mb-3">{% trans "Medical Information" %} | 医疗信息</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-danger">{% trans "Allergies" %} (过敏史)</label>
+                    {{ form.allergies }}
+                    <small class="text-muted">{% trans "List all known allergies to medications, herbs, or substances" %}</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Chronic Conditions" %} (慢性疾病)</label>
+                    {{ form.chronic_conditions }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Current Medications" %} (目前用药)</label>
+                    {{ form.current_medications }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Medical History" %} (病史)</label>
+                    {{ form.medical_history }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Family History" %} (家族史)</label>
+                    {{ form.family_history }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "TCM Constitution" %} (中医体质)</label>
+                    {{ form.tcm_constitution }}
+                </div>
+            </div>
+
+            <!-- System -->
+            <hr>
+            <h5 class="mb-3">{% trans "System" %} | 系统</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Assigned Practitioner" %}</label>
+                    {{ form.assigned_practitioner }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Photo" %}</label>
+                    {{ form.photo }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">{% trans "Additional Notes" %}</label>
+                {{ form.notes }}
+            </div>
+
+            <!-- Consent -->
+            <hr>
+            <h5 class="mb-3">{% trans "Data Consent (PDPA 2010)" %} | 数据同意</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-check">
+                        {{ form.consent_data_sharing }}
+                        <label class="form-check-label" for="id_consent_data_sharing">
+                            {% trans "Patient consents to data sharing for medical purposes" %}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{% trans "Consent Date" %}</label>
+                    {{ form.consent_date }}
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% if object %}{% url 'patients:detail' object.pk %}{% else %}{% url 'patients:list' %}{% endif %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x"></i> {% trans "Cancel" %}
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> {% trans "Save" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

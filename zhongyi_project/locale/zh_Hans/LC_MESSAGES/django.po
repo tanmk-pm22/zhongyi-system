@@ -1,0 +1,455 @@
+# Chinese (Simplified) translations for TCM Clinical System
+# Copyright (C) 2024
+# This file is distributed under the same license as the zhongyi_project package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: zhongyi_project 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0800\n"
+"PO-Revision-Date: 2024-01-01 00:00+0800\n"
+"Last-Translator: \n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: Navigation
+msgid "TCM System"
+msgstr "中医系统"
+
+msgid "TCM Clinical System"
+msgstr "中医临床系统"
+
+msgid "Patients"
+msgstr "患者"
+
+msgid "Dashboard"
+msgstr "仪表板"
+
+msgid "Login"
+msgstr "登录"
+
+msgid "Logout"
+msgstr "退出登录"
+
+msgid "Register"
+msgstr "注册"
+
+msgid "Profile"
+msgstr "个人资料"
+
+msgid "Admin"
+msgstr "管理"
+
+#: Common
+msgid "Home"
+msgstr "首页"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "View"
+msgstr "查看"
+
+msgid "View All"
+msgstr "查看全部"
+
+msgid "New"
+msgstr "新建"
+
+msgid "First"
+msgstr "首页"
+
+msgid "Last"
+msgstr "末页"
+
+#: User/Auth
+msgid "Username"
+msgstr "用户名"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Confirm Password"
+msgstr "确认密码"
+
+msgid "Email"
+msgstr "邮箱"
+
+msgid "Phone"
+msgstr "电话"
+
+msgid "First Name"
+msgstr "名"
+
+msgid "Last Name"
+msgstr "姓"
+
+msgid "Register as"
+msgstr "注册类型"
+
+msgid "Administrator (系统管理员)"
+msgstr "系统管理员"
+
+msgid "TCM Practitioner (中医师)"
+msgstr "中医师"
+
+msgid "Patient (患者)"
+msgstr "患者"
+
+#: Patient
+msgid "New Patient"
+msgstr "新建患者"
+
+msgid "Edit Patient"
+msgstr "编辑患者"
+
+msgid "Basic Information"
+msgstr "基本信息"
+
+msgid "Contact Information"
+msgstr "联系方式"
+
+msgid "Medical Information"
+msgstr "医疗信息"
+
+msgid "IC/Passport Number"
+msgstr "身份证/护照号"
+
+msgid "Date of Birth"
+msgstr "出生日期"
+
+msgid "Gender"
+msgstr "性别"
+
+msgid "Age"
+msgstr "年龄"
+
+msgid "years"
+msgstr "岁"
+
+msgid "Blood Type"
+msgstr "血型"
+
+msgid "Address"
+msgstr "地址"
+
+msgid "Emergency Contact Name"
+msgstr "紧急联系人姓名"
+
+msgid "Emergency Contact Phone"
+msgstr "紧急联系人电话"
+
+msgid "Allergies"
+msgstr "过敏史"
+
+msgid "Chronic Conditions"
+msgstr "慢性疾病"
+
+msgid "Current Medications"
+msgstr "目前用药"
+
+msgid "Medical History"
+msgstr "病史"
+
+msgid "Family History"
+msgstr "家族史"
+
+msgid "TCM Constitution"
+msgstr "中医体质"
+
+msgid "Assigned Practitioner"
+msgstr "指定医师"
+
+msgid "QR Code"
+msgstr "二维码"
+
+msgid "Patient ID"
+msgstr "患者ID"
+
+#: Medical Record
+msgid "Medical Records"
+msgstr "病历"
+
+msgid "Medical Record"
+msgstr "病历"
+
+msgid "New Record"
+msgstr "新建病历"
+
+msgid "Visit Date"
+msgstr "就诊日期"
+
+msgid "Record Type"
+msgstr "记录类型"
+
+msgid "Initial Visit (初诊)"
+msgstr "初诊"
+
+msgid "Follow-up (复诊)"
+msgstr "复诊"
+
+msgid "Chief Complaint"
+msgstr "主诉"
+
+msgid "Four Examinations"
+msgstr "四诊"
+
+msgid "Inspection Notes"
+msgstr "望诊"
+
+msgid "Tongue Diagnosis"
+msgstr "舌诊"
+
+msgid "Pulse Diagnosis"
+msgstr "脉诊"
+
+msgid "Inquiry Notes"
+msgstr "问诊"
+
+msgid "TCM Diagnosis"
+msgstr "中医诊断"
+
+msgid "Western Diagnosis"
+msgstr "西医诊断"
+
+msgid "Diagnosis"
+msgstr "诊断"
+
+msgid "Treatment"
+msgstr "治疗"
+
+msgid "Treatment Principle"
+msgstr "治则治法"
+
+msgid "Prescription"
+msgstr "处方"
+
+msgid "Acupuncture Points"
+msgstr "针灸穴位"
+
+msgid "Other Treatments"
+msgstr "其他治疗"
+
+msgid "Recommendations"
+msgstr "建议"
+
+msgid "Lifestyle Advice"
+msgstr "生活建议"
+
+msgid "Dietary Advice"
+msgstr "饮食建议"
+
+msgid "Follow-up Notes"
+msgstr "随访备注"
+
+msgid "Next Appointment"
+msgstr "下次预约"
+
+#: Dashboard
+msgid "Welcome"
+msgstr "欢迎"
+
+msgid "Quick Actions"
+msgstr "快速操作"
+
+msgid "Statistics"
+msgstr "统计"
+
+msgid "Total Patients"
+msgstr "患者总数"
+
+msgid "Recent Patients"
+msgstr "最近患者"
+
+msgid "Edit Profile"
+msgstr "编辑资料"
+
+msgid "License Number"
+msgstr "执照号"
+
+msgid "Specialization"
+msgstr "专业"
+
+msgid "Clinic Name"
+msgstr "诊所名称"
+
+#: Consent
+msgid "Data Consent"
+msgstr "数据同意"
+
+msgid "Consented"
+msgstr "已同意"
+
+msgid "Not Consented"
+msgstr "未同意"
+
+msgid "Date"
+msgstr "日期"
+
+#: Messages
+msgid "Account created successfully! Please login. (账户创建成功！请登录。)"
+msgstr "账户创建成功！请登录。"
+
+msgid "Welcome back! (欢迎回来！)"
+msgstr "欢迎回来！"
+
+msgid "You have been logged out. (您已退出登录。)"
+msgstr "您已退出登录。"
+
+msgid "Profile updated successfully! (个人资料更新成功！)"
+msgstr "个人资料更新成功！"
+
+msgid "Patient created successfully! (患者创建成功！)"
+msgstr "患者创建成功！"
+
+msgid "Patient updated successfully! (患者信息更新成功！)"
+msgstr "患者信息更新成功！"
+
+msgid "Patient archived successfully. (患者已归档。)"
+msgstr "患者已归档。"
+
+msgid "Medical record created successfully! (病历创建成功！)"
+msgstr "病历创建成功！"
+
+msgid "Medical record updated successfully! (病历更新成功！)"
+msgstr "病历更新成功！"
+
+#: Other
+msgid "No patients found."
+msgstr "未找到患者。"
+
+msgid "No medical records yet."
+msgstr "暂无病历。"
+
+msgid "Add First Patient"
+msgstr "添加第一位患者"
+
+msgid "Not assigned"
+msgstr "未分配"
+
+msgid "Practitioner"
+msgstr "医师"
+
+msgid "Last Updated"
+msgstr "最后更新"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Name"
+msgstr "姓名"
+
+msgid "Back to Patient"
+msgstr "返回患者"
+
+msgid "Archive Patient"
+msgstr "归档患者"
+
+msgid "Archive"
+msgstr "归档"
+
+msgid "Are you sure you want to archive this patient?"
+msgstr "确定要归档此患者吗？"
+
+#: Footer
+msgid "Compliant with Malaysia T&CM Act 2016 and PDPA 2010"
+msgstr "符合马来西亚传统与辅助医学法案2016及个人资料保护法2010"
+
+#: Home Page
+msgid "AI-Enhanced TCM Clinical System"
+msgstr "智能中医临床系统"
+
+msgid "A comprehensive Traditional Chinese Medicine clinical management system compliant with Malaysian healthcare regulations."
+msgstr "符合马来西亚医疗法规的综合中医临床管理系统。"
+
+msgid "Go to Dashboard"
+msgstr "进入仪表板"
+
+msgid "View Patients"
+msgstr "查看患者"
+
+msgid "Patient Management"
+msgstr "患者管理"
+
+msgid "Comprehensive patient records with QR code identification and medical history tracking."
+msgstr "具有二维码识别和病史跟踪的综合患者记录。"
+
+msgid "Complete TCM diagnosis documentation including Four Examinations and syndrome differentiation."
+msgstr "完整的中医诊断文档，包括四诊和辨证。"
+
+msgid "PDPA Compliant"
+msgstr "符合PDPA"
+
+msgid "Fully compliant with Malaysia's Personal Data Protection Act 2010 for secure data handling."
+msgstr "完全符合马来西亚2010年个人资料保护法，确保数据安全处理。"
+
+#: Auth
+msgid "Don't have an account?"
+msgstr "没有账户？"
+
+msgid "Register here"
+msgstr "在此注册"
+
+msgid "Already have an account?"
+msgstr "已有账户？"
+
+msgid "Login here"
+msgstr "在此登录"
+
+msgid "Profile Settings"
+msgstr "个人资料设置"
+
+msgid "Save Changes"
+msgstr "保存更改"
+
+msgid "Practitioner Information"
+msgstr "执业信息"
+
+msgid "IC/Passport"
+msgstr "身份证/护照"
+
+msgid "Photo"
+msgstr "照片"
+
+msgid "Profile Photo"
+msgstr "个人照片"
+
+msgid "Additional Notes"
+msgstr "其他备注"
+
+msgid "System"
+msgstr "系统"
+
+msgid "Search Patients"
+msgstr "搜索患者"
+
+msgid "Chinese Name"
+msgstr "中文姓名"
+
+msgid "Male (男)"
+msgstr "男"
+
+msgid "Female (女)"
+msgstr "女"
+
+msgid "Other (其他)"
+msgstr "其他"
+
+msgid "Unknown"
+msgstr "未知"

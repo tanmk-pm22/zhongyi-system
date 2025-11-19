@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Medical Record" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-file-medical"></i>
+        {% trans "Medical Record" %} | 病历
+    </h2>
+    <div>
+        <a href="{% url 'patients:detail' record.patient.pk %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> {% trans "Back to Patient" %}
+        </a>
+        <a href="{% url 'patients:record_update' record.pk %}" class="btn btn-outline-primary">
+            <i class="bi bi-pencil"></i> {% trans "Edit" %}
+        </a>
+    </div>
+</div>
+
+<!-- Patient Info -->
+<div class="alert alert-info">
+    <strong>{% trans "Patient" %}:</strong>
+    <a href="{% url 'patients:detail' record.patient.pk %}">
+        {{ record.patient.full_name }}
+        {% if record.patient.chinese_name %}({{ record.patient.chinese_name }}){% endif %}
+    </a>
+    | {{ record.patient.ic_number }}
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Visit Info -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Visit Information" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>{% trans "Date" %}:</strong><br>
+                        {{ record.visit_date|date:"Y-m-d H:i" }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>{% trans "Type" %}:</strong><br>
+                        {{ record.get_record_type_display }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>{% trans "Practitioner" %}:</strong><br>
+                        {{ record.practitioner.get_full_name }}
+                    </div>
+                </div>
+                <hr>
+                <strong>{% trans "Chief Complaint" %} (主诉):</strong>
+                <p class="mb-0">{{ record.chief_complaint }}</p>
+            </div>
+        </div>
+
+        <!-- Four Examinations -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Four Examinations" %} (四诊)</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <strong>{% trans "Inspection" %} (望诊):</strong>
+                        <p class="text-muted mb-0">{{ record.inspection_notes|default:"-"|linebreaks }}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>{% trans "Tongue Diagnosis" %} (舌诊):</strong>
+                        <p class="text-muted mb-0">{{ record.tongue_diagnosis|default:"-"|linebreaks }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <strong>{% trans "Auscultation/Olfaction" %} (闻诊):</strong>
+                        <p class="text-muted mb-0">{{ record.auscultation_notes|default:"-"|linebreaks }}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>{% trans "Inquiry" %} (问诊):</strong>
+                        <p class="text-muted mb-0">{{ record.inquiry_notes|default:"-"|linebreaks }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>{% trans "Pulse Diagnosis" %} (脉诊):</strong>
+                        <p class="text-muted mb-0">{{ record.pulse_diagnosis|default:"-"|linebreaks }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{% trans "Palpation" %} (切诊):</strong>
+                        <p class="text-muted mb-0">{{ record.palpation_notes|default:"-"|linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnosis -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Diagnosis" %} | 诊断</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>{% trans "TCM Diagnosis" %} (中医诊断):</strong>
+                        <p class="text-muted mb-0">{{ record.tcm_diagnosis|default:"-"|linebreaks }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>{% trans "Western Diagnosis" %}:</strong>
+                        <p class="text-muted mb-0">{{ record.western_diagnosis|default:"-"|linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Treatment -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Treatment" %} | 治疗</h5>
+            </div>
+            <div class="card-body">
+                <strong>{% trans "Treatment Principle" %} (治则治法):</strong>
+                <p class="text-muted">{{ record.treatment_principle|default:"-"|linebreaks }}</p>
+
+                <strong>{% trans "Prescription" %} (处方):</strong>
+                <p class="text-muted">{{ record.prescription|default:"-"|linebreaks }}</p>
+
+                <strong>{% trans "Acupuncture Points" %} (针灸穴位):</strong>
+                <p class="text-muted">{{ record.acupuncture_points|default:"-"|linebreaks }}</p>
+
+                <strong>{% trans "Other Treatments" %}:</strong>
+                <p class="text-muted mb-0">{{ record.other_treatments|default:"-"|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <!-- Recommendations -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Recommendations" %}</h5>
+            </div>
+            <div class="card-body">
+                <strong>{% trans "Lifestyle Advice" %} (生活建议):</strong>
+                <p class="text-muted">{{ record.lifestyle_advice|default:"-"|linebreaks }}</p>
+
+                <strong>{% trans "Dietary Advice" %} (饮食建议):</strong>
+                <p class="text-muted mb-0">{{ record.dietary_advice|default:"-"|linebreaks }}</p>
+            </div>
+        </div>
+
+        <!-- Follow-up -->
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Follow-up" %}</h5>
+            </div>
+            <div class="card-body">
+                <strong>{% trans "Notes" %}:</strong>
+                <p class="text-muted">{{ record.follow_up_notes|default:"-"|linebreaks }}</p>
+
+                {% if record.next_appointment %}
+                <strong>{% trans "Next Appointment" %}:</strong>
+                <p class="text-muted mb-0">{{ record.next_appointment|date:"Y-m-d H:i" }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

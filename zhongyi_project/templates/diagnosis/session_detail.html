@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}诊断详情 | Diagnosis Details{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-clipboard2-pulse"></i>
+        诊断记录 | Diagnosis Session
+    </h2>
+    <div>
+        {% if user.is_staff or user.role == 'admin' or session.practitioner == user %}
+        <a href="{% url 'diagnosis:edit' session.pk %}" class="btn btn-outline-primary">
+            <i class="bi bi-pencil"></i> 编辑 | Edit
+        </a>
+        {% endif %}
+        {% if user.is_staff or user.role == 'admin' %}
+        <a href="{% url 'diagnosis:delete' session.pk %}" class="btn btn-outline-danger">
+            <i class="bi bi-trash"></i> 删除 | Delete
+        </a>
+        {% endif %}
+        <a href="{% url 'patients:detail' session.patient.pk %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回患者 | Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Session Info -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">诊断信息 | Session Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>患者 | Patient:</strong> {{ session.patient.full_name }}</p>
+                        <p><strong>日期 | Date:</strong> {{ session.session_date|date:"Y-m-d H:i" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>医师 | Practitioner:</strong> {{ session.practitioner.get_full_name }}</p>
+                        <p><strong>状态 | Status:</strong>
+                            {% if session.is_complete %}
+                            <span class="badge bg-success">已完成</span>
+                            {% else %}
+                            <span class="badge bg-warning">进行中</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <strong>主诉 | Chief Complaint:</strong>
+                <p>{{ session.chief_complaint }}</p>
+            </div>
+        </div>
+
+        <!-- Four Examinations -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Four Examinations" %} (四诊)</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h6>{% trans "Inspection" %} (望诊)</h6>
+                        <p class="small mb-1"><strong>{% trans "Spirit" %}:</strong> {{ session.spirit_status|default:"-" }}</p>
+                        <p class="small mb-1"><strong>{% trans "Complexion" %}:</strong> {{ session.complexion|default:"-" }}</p>
+                        <p class="small mb-0"><strong>{% trans "Tongue" %}:</strong>
+                            {{ session.get_tongue_body_color_display|default:"" }}
+                            {{ session.get_tongue_coating_color_display|default:"" }}
+                            {{ session.get_tongue_coating_texture_display|default:"-" }}
+                        </p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h6>{% trans "Auscultation" %} (闻诊)</h6>
+                        <p class="small mb-1"><strong>{% trans "Voice" %}:</strong> {{ session.voice_quality|default:"-" }}</p>
+                        <p class="small mb-0"><strong>{% trans "Breath" %}:</strong> {{ session.breath_odor|default:"-" }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h6>{% trans "Inquiry" %} (问诊)</h6>
+                        <p class="small mb-1"><strong>{% trans "Sleep" %}:</strong> {{ session.sleep_quality|default:"-" }}</p>
+                        <p class="small mb-1"><strong>{% trans "Appetite" %}:</strong> {{ session.appetite|default:"-" }}</p>
+                        <p class="small mb-0"><strong>{% trans "Symptoms" %}:</strong> {{ session.selected_symptoms|length }} {% trans "selected" %}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h6>{% trans "Palpation" %} (切诊)</h6>
+                        <p class="small mb-0"><strong>{% trans "Pulse" %}:</strong> {{ session.pulse_overall|default:"-" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Diagnosis -->
+        {% if session.final_diagnosis %}
+        <div class="card tcm-diagnosis">
+            <div class="card-body">
+                <h5 class="mb-3">{% trans "Final Diagnosis" %} (辨证结论)</h5>
+                <p>{{ session.final_diagnosis }}</p>
+
+                {% if session.treatment_principle %}
+                <hr>
+                <strong>{% trans "Treatment Principle" %} (治则治法):</strong>
+                <p class="mb-0">{{ session.treatment_principle }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <!-- AI Suggestions -->
+        {% if session.ai_suggested_syndromes %}
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0">
+                    <i class="bi bi-robot me-2"></i>
+                    {% trans "AI Suggestions" %}
+                </h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for result in session.ai_suggested_syndromes %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <strong>{{ result.name_cn }}</strong>
+                            <span class="badge bg-{% if result.confidence >= 70 %}success{% elif result.confidence >= 40 %}warning{% else %}secondary{% endif %}">
+                                {{ result.confidence }}%
+                            </span>
+                        </div>
+                        <small class="text-muted">{{ result.name_en }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
