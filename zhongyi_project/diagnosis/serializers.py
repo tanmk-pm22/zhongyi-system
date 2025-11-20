@@ -48,23 +48,34 @@ class SyndromeListSerializer(serializers.ModelSerializer):
 
 class DiagnosisSessionSerializer(serializers.ModelSerializer):
     """Serializer for DiagnosisSession model."""
-    patient_name = serializers.CharField(source='patient.user.get_full_name', read_only=True)
+    patient_name = serializers.CharField(source='patient.full_name', read_only=True)
     practitioner_name = serializers.CharField(source='practitioner.get_full_name', read_only=True)
-    status_display = serializers.CharField(source='get_status_display', read_only=True)
 
     class Meta:
         model = DiagnosisSession
         fields = [
             'id', 'patient', 'patient_name', 'practitioner', 'practitioner_name',
-            'chief_complaint', 'history_of_present_illness', 'past_medical_history',
-            'tongue_body_color', 'tongue_coating', 'tongue_shape', 'tongue_moisture',
-            'pulse_rate', 'pulse_rhythm', 'pulse_strength', 'pulse_quality',
-            'inspection_notes', 'auscultation_notes', 'inquiry_notes', 'palpation_notes',
-            'selected_symptoms', 'ai_suggested_syndromes', 'final_diagnosis',
-            'treatment_principle', 'notes', 'status', 'status_display',
+            'session_date', 'chief_complaint',
+            # Inspection (望诊)
+            'spirit_status', 'complexion',
+            'tongue_body_color', 'tongue_body_shape',
+            'tongue_coating_color', 'tongue_coating_texture', 'tongue_notes',
+            # Auscultation (闻诊)
+            'voice_quality', 'breath_odor', 'auscultation_notes',
+            # Inquiry (问诊)
+            'selected_symptoms', 'symptom_details',
+            'sleep_quality', 'appetite', 'thirst',
+            'defecation', 'urination', 'perspiration', 'inquiry_notes',
+            # Palpation (切诊)
+            'pulse_left_cun', 'pulse_left_guan', 'pulse_left_chi',
+            'pulse_right_cun', 'pulse_right_guan', 'pulse_right_chi',
+            'pulse_overall', 'palpation_notes',
+            # Diagnosis results
+            'ai_suggested_syndromes', 'final_diagnosis',
+            'treatment_principle', 'notes', 'is_complete',
             'created_at', 'updated_at'
         ]
-        read_only_fields = ['created_at', 'updated_at', 'ai_suggested_syndromes']
+        read_only_fields = ['created_at', 'updated_at', 'ai_suggested_syndromes', 'session_date']
 
 
 class DiagnosisSessionCreateSerializer(serializers.ModelSerializer):
@@ -73,8 +84,8 @@ class DiagnosisSessionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiagnosisSession
         fields = [
-            'patient', 'chief_complaint', 'history_of_present_illness',
-            'past_medical_history', 'selected_symptoms'
+            'patient', 'chief_complaint', 'selected_symptoms',
+            'symptom_details', 'medical_record'
         ]
 
 
