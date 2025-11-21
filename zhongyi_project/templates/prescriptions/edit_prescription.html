@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}开具处方 | Create Prescription{% endblock %}
+{% block title %}编辑处方 | Edit Prescription{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>
         <i class="bi bi-prescription2"></i>
-        开具处方 | Create Prescription
+        编辑处方 | Edit Prescription
     </h2>
-    <a href="{% url 'prescriptions:list' %}" class="btn btn-outline-secondary">
+    <a href="{% url 'prescriptions:detail' prescription.pk %}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left"></i> 返回 | Back
     </a>
 </div>
@@ -33,18 +33,18 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">诊断 | Diagnosis</label>
-                        <textarea name="diagnosis" class="form-control" rows="2"></textarea>
+                        <textarea name="diagnosis" class="form-control" rows="2">{{ prescription.diagnosis }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">治则治法 | Treatment Principle</label>
-                        <textarea name="treatment_principle" class="form-control" rows="2"></textarea>
+                        <textarea name="treatment_principle" class="form-control" rows="2">{{ prescription.treatment_principle }}</textarea>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">剂数 | Number of Doses</label>
-                            <input type="number" name="doses" class="form-control" value="7" min="1" max="30">
+                            <input type="number" name="doses" class="form-control" value="{{ prescription.doses }}" min="1" max="30">
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,37 @@
                 </div>
                 <div class="card-body">
                     <div id="herbsContainer">
-                        <!-- Herb rows will be added here -->
+                        {% for item in prescription.items.all %}
+                        <div class="herb-row row mb-2">
+                            <div class="col-md-5">
+                                <select name="herb_id" class="form-select herb-select" onchange="updateHerbInfo(this)">
+                                    <option value="">-- 选择药材 | Select Herb --</option>
+                                    {% for herb in herbs %}
+                                    <option value="{{ herb.pk }}" data-range="{{ herb.dosage_range }}"
+                                            {% if herb.pk == item.herb.pk %}selected{% endif %}>
+                                        {{ herb.name_cn }} ({{ herb.name_pinyin }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="dosage" class="form-control" placeholder="剂量(克)"
+                                       step="0.5" min="0" value="{{ item.dosage }}">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="preparation" class="form-control"
+                                       placeholder="炮制方法" value="{{ item.preparation }}">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-outline-danger" onclick="removeHerbRow(this)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% if not prescription.items.exists %}
+                        <!-- Default empty row -->
                         <div class="herb-row row mb-2">
                             <div class="col-md-5">
                                 <select name="herb_id" class="form-select herb-select" onchange="updateHerbInfo(this)">
@@ -84,6 +114,7 @@
                                 </button>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -98,7 +129,47 @@
                 </div>
                 <div class="card-body">
                     <div id="patentMedicinesContainer">
-                        <!-- Patent medicine rows will be added here -->
+                        {% for item in prescription.patent_medicine_items.all %}
+                        <div class="patent-medicine-row row mb-3 p-3 border rounded">
+                            <div class="col-md-6">
+                                <label class="form-label small">药品 | Medicine</label>
+                                <select name="patent_medicine_id" class="form-select" onchange="updatePatentMedicineInfo(this)">
+                                    <option value="">-- 选择中成药 | Select Patent Medicine --</option>
+                                    {% for medicine in patent_medicines %}
+                                    <option value="{{ medicine.pk }}"
+                                            data-dosage="{{ medicine.dosage_instructions }}"
+                                            data-form="{{ medicine.get_dosage_form_display }}"
+                                            data-price="{{ medicine.price_per_box }}"
+                                            {% if medicine.pk == item.medicine.pk %}selected{% endif %}>
+                                        {{ medicine.name_cn }} - {{ medicine.get_dosage_form_display }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">数量 | Quantity</label>
+                                <input type="number" name="patent_quantity" class="form-control"
+                                       placeholder="盒数" min="1" value="{{ item.quantity }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small">总价 | Total</label>
+                                <input type="text" class="form-control patent-total" readonly value="¥{{ item.subtotal }}">
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-outline-danger" onclick="removePatentMedicineRow(this)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <label class="form-label small">用法用量 | Usage Instructions</label>
+                                <textarea name="patent_usage_instructions" class="form-control" rows="2"
+                                          placeholder="如：每次6克，每日2次，温水送服">{{ item.dosage_instruction }}</textarea>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% if not prescription.patent_medicine_items.exists %}
+                        <!-- Default empty row -->
                         <div class="patent-medicine-row row mb-3 p-3 border rounded">
                             <div class="col-md-6">
                                 <label class="form-label small">药品 | Medicine</label>
@@ -132,6 +203,7 @@
                                 <textarea name="patent_usage_instructions" class="form-control" rows="2" placeholder="如：每次6克，每日2次，温水送服"></textarea>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="alert alert-info small mb-0 mt-2">
                         <i class="bi bi-info-circle"></i> 中成药可与草药处方配合使用 | Patent medicines can be used together with herbal prescriptions
@@ -145,46 +217,12 @@
                     <h5 class="mb-0">煎服方法 | Decoction Method</h5>
                 </div>
                 <div class="card-body">
-                    <textarea name="decoction_method" class="form-control" rows="3">水煎服，每日一剂，分两次温服。</textarea>
+                    <textarea name="decoction_method" class="form-control" rows="3">{{ prescription.decoction_method }}</textarea>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <!-- AI Assistant -->
-            <div class="card mb-4 border-primary">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">
-                        <i class="bi bi-robot"></i> AI辅助 | AI Assistant
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <p class="small text-muted mb-3">
-                        基于患者病历获取AI处方建议<br>
-                        Get AI prescription suggestions based on patient records
-                    </p>
-
-                    <button type="button" class="btn btn-primary w-100" onclick="getAISuggestions()">
-                        <i class="bi bi-lightbulb"></i> 获取AI建议 | Get AI Suggestions
-                    </button>
-
-                    <div id="aiSuggestions" class="mt-3" style="display: none;">
-                        <div class="alert alert-info small mb-0">
-                            <div id="aiSuggestionsContent"></div>
-                        </div>
-                    </div>
-
-                    <div id="aiLoading" class="mt-3" style="display: none;">
-                        <div class="text-center">
-                            <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <p class="small mt-2 mb-0">正在分析... | Analyzing...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Additional Advice -->
             <div class="card mb-4">
                 <div class="card-header">
@@ -193,17 +231,17 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">饮食宜忌 | Dietary Advice</label>
-                        <textarea name="dietary_advice" class="form-control" rows="3"></textarea>
+                        <textarea name="dietary_advice" class="form-control" rows="3">{{ prescription.dietary_advice }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">生活建议 | Lifestyle Advice</label>
-                        <textarea name="lifestyle_advice" class="form-control" rows="3"></textarea>
+                        <textarea name="lifestyle_advice" class="form-control" rows="3">{{ prescription.lifestyle_advice }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">备注 | Notes</label>
-                        <textarea name="notes" class="form-control" rows="2"></textarea>
+                        <textarea name="notes" class="form-control" rows="2">{{ prescription.notes }}</textarea>
                     </div>
                 </div>
             </div>
@@ -211,11 +249,11 @@
     </div>
 
     <div class="d-flex justify-content-between">
-        <a href="{% url 'prescriptions:list' %}" class="btn btn-outline-secondary">
+        <a href="{% url 'prescriptions:detail' prescription.pk %}" class="btn btn-outline-secondary">
             <i class="bi bi-x"></i> 取消 | Cancel
         </a>
         <button type="submit" class="btn btn-success">
-            <i class="bi bi-check-lg"></i> 创建处方 | Create Prescription
+            <i class="bi bi-check-lg"></i> 保存更改 | Save Changes
         </button>
     </div>
 </form>
@@ -225,7 +263,8 @@
 <script>
 function addHerbRow() {
     const container = document.getElementById('herbsContainer');
-    const row = container.querySelector('.herb-row').cloneNode(true);
+    const firstRow = container.querySelector('.herb-row');
+    const row = firstRow.cloneNode(true);
 
     // Clear values
     row.querySelector('select').value = '';
@@ -249,105 +288,11 @@ function updateHerbInfo(select) {
     }
 }
 
-async function getAISuggestions() {
-    const loading = document.getElementById('aiLoading');
-    const suggestions = document.getElementById('aiSuggestions');
-    const content = document.getElementById('aiSuggestionsContent');
-
-    // Show loading
-    loading.style.display = 'block';
-    suggestions.style.display = 'none';
-
-    try {
-        // Get diagnosis from patient's latest record (simplified version)
-        const diagnosis = document.querySelector('textarea[name="diagnosis"]').value;
-
-        // For demonstration, use a default syndrome code
-        // In production, this should be extracted from the diagnosis or patient record
-        const syndromeCode = 'SYN001';  // Default to Qi Deficiency
-
-        const response = await fetch('{% url "prescriptions:api_ai_recommend" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify({
-                syndrome_code: syndromeCode,
-                patient_age: {{ patient.age|default:30 }},
-                patient_gender: '{{ patient.gender|default:"M" }}'
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.success && data.recommendation) {
-            const rec = data.recommendation;
-            let html = '';
-
-            if (rec.formula) {
-                html += `<h6><i class="bi bi-book"></i> ${rec.formula}</h6>`;
-                html += `<p class="small mb-2">${rec.functions || ''}</p>`;
-            }
-
-            if (rec.herbs && rec.herbs.length > 0) {
-                html += '<h6 class="mt-3">推荐药材 | Recommended Herbs:</h6>';
-                html += '<div class="list-group list-group-flush">';
-                rec.herbs.forEach(herb => {
-                    html += `<div class="list-group-item p-2 small">`;
-                    html += `<strong>${herb.name}</strong> ${herb.dosage}克`;
-                    if (herb.preparation) {
-                        html += ` <span class="text-muted">(${herb.preparation})</span>`;
-                    }
-                    html += `<button type="button" class="btn btn-xs btn-outline-primary float-end"
-                             onclick="applyHerbSuggestion('${herb.code}', ${herb.dosage}, '${herb.preparation || ''}')">
-                             <i class="bi bi-plus"></i> 添加
-                          </button>`;
-                    html += `</div>`;
-                });
-                html += '</div>';
-            }
-
-            if (rec.modifications && rec.modifications.length > 0) {
-                html += '<h6 class="mt-3">加减建议 | Modifications:</h6>';
-                html += '<ul class="small mb-0">';
-                rec.modifications.forEach(mod => {
-                    html += `<li>${mod}</li>`;
-                });
-                html += '</ul>';
-            }
-
-            if (rec.decoction_method) {
-                html += `<p class="mt-3 small mb-0"><strong>煎服法 | Decoction:</strong><br>${rec.decoction_method}</p>`;
-            }
-
-            html += `<div class="alert alert-warning small mt-3 mb-0">${data.disclaimer}</div>`;
-
-            content.innerHTML = html;
-            suggestions.style.display = 'block';
-        } else {
-            content.innerHTML = '<p class="text-danger mb-0">无法获取AI建议 | Unable to get AI suggestions</p>';
-            suggestions.style.display = 'block';
-        }
-    } catch (error) {
-        console.error('AI Suggestion Error:', error);
-        content.innerHTML = `<p class="text-danger mb-0">错误: ${error.message}</p>`;
-        suggestions.style.display = 'block';
-    } finally {
-        loading.style.display = 'none';
-    }
-}
-
-function applyHerbSuggestion(herbCode, dosage, preparation) {
-    // This is a simplified version - in production would need herb lookup
-    alert(`添加药材: ${herbCode} ${dosage}克\nAdd herb: ${herbCode} ${dosage}g`);
-    // Add logic to actually add herb to the form
-}
-
 // Patent Medicine Functions
 function addPatentMedicineRow() {
     const container = document.getElementById('patentMedicinesContainer');
-    const row = container.querySelector('.patent-medicine-row').cloneNode(true);
+    const firstRow = container.querySelector('.patent-medicine-row');
+    const row = firstRow.cloneNode(true);
 
     // Clear values
     row.querySelector('select').value = '';

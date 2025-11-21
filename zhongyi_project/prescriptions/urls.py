@@ -22,6 +22,11 @@ urlpatterns = [
     path('formulas/', views.FormulaListView.as_view(), name='formula_list'),
     path('formulas/<int:pk>/', views.FormulaDetailView.as_view(), name='formula_detail'),
 
+    # Patent medicines (中成药)
+    path('patent-medicines/', views.PatentMedicineListView.as_view(), name='patentmedicine_list'),
+    path('patent-medicines/<int:pk>/', views.PatentMedicineDetailView.as_view(), name='patentmedicine_detail'),
+
     # API for AJAX
     path('api/herbs/search/', views.api_herb_search, name='api_herb_search'),
+    path('api/ai-recommend/', views.api_ai_prescription_recommend, name='api_ai_recommend'),
 ]

@@ -1,0 +1,164 @@
+[
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 1,
+    "fields": {
+      "name_cn": "解表药",
+      "name_en": "Exterior-Releasing Herbs",
+      "description": "用于治疗外感表证的药物，具有发汗解表、疏散风热或风寒的功效。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 2,
+    "fields": {
+      "name_cn": "清热药",
+      "name_en": "Heat-Clearing Herbs",
+      "description": "用于治疗里热证的药物，具有清热泻火、凉血解毒的功效。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 3,
+    "fields": {
+      "name_cn": "泻下药",
+      "name_en": "Purgative Herbs",
+      "description": "用于通便泻下、攻逐积滞的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 4,
+    "fields": {
+      "name_cn": "祛风湿药",
+      "name_en": "Wind-Dampness Dispelling Herbs",
+      "description": "用于治疗风湿痹证的药物，具有祛风除湿、通络止痛的功效。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 5,
+    "fields": {
+      "name_cn": "化湿药",
+      "name_en": "Dampness-Resolving Herbs",
+      "description": "用于化湿运脾的药物，治疗湿阻中焦证。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 6,
+    "fields": {
+      "name_cn": "利水渗湿药",
+      "name_en": "Water-Draining Herbs",
+      "description": "用于利水消肿、通淋泄浊的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 7,
+    "fields": {
+      "name_cn": "温里药",
+      "name_en": "Interior-Warming Herbs",
+      "description": "用于温中散寒、回阳救逆的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 8,
+    "fields": {
+      "name_cn": "理气药",
+      "name_en": "Qi-Regulating Herbs",
+      "description": "用于行气止痛、破气消积的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 9,
+    "fields": {
+      "name_cn": "消食药",
+      "name_en": "Digestive Herbs",
+      "description": "用于消食化积、健脾开胃的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 10,
+    "fields": {
+      "name_cn": "驱虫药",
+      "name_en": "Anthelmintic Herbs",
+      "description": "用于驱除或杀灭肠道寄生虫的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 11,
+    "fields": {
+      "name_cn": "止血药",
+      "name_en": "Hemostatic Herbs",
+      "description": "用于止血的药物，治疗各种出血证。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 12,
+    "fields": {
+      "name_cn": "活血化瘀药",
+      "name_en": "Blood-Activating Herbs",
+      "description": "用于活血化瘀、消肿止痛的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 13,
+    "fields": {
+      "name_cn": "化痰止咳平喘药",
+      "name_en": "Phlegm-Resolving Herbs",
+      "description": "用于化痰、止咳、平喘的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 14,
+    "fields": {
+      "name_cn": "安神药",
+      "name_en": "Spirit-Calming Herbs",
+      "description": "用于安神定志、治疗心神不宁的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 15,
+    "fields": {
+      "name_cn": "平肝熄风药",
+      "name_en": "Liver-Pacifying Herbs",
+      "description": "用于平肝潜阳、息风止痉的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 16,
+    "fields": {
+      "name_cn": "开窍药",
+      "name_en": "Orifice-Opening Herbs",
+      "description": "用于开窍醒神的药物，治疗闭证神昏。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 17,
+    "fields": {
+      "name_cn": "补虚药",
+      "name_en": "Tonifying Herbs",
+      "description": "用于补益气血阴阳、治疗虚证的药物。"
+    }
+  },
+  {
+    "model": "prescriptions.herbcategory",
+    "pk": 18,
+    "fields": {
+      "name_cn": "收涩药",
+      "name_en": "Astringent Herbs",
+      "description": "用于收敛固涩、治疗滑脱证的药物。"
+    }
+  }
+]

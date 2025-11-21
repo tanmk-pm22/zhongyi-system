@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}经典方剂 | Classic Formulas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-book"></i> 经典方剂 | Classic Formulas</h2>
+            </div>
+
+            <!-- Search -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-10">
+                            <input type="text" name="search" class="form-control"
+                                   placeholder="搜索方剂名称 | Search formula name"
+                                   value="{{ request.GET.search }}">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search"></i> 搜索 | Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Formula List -->
+            <div class="row">
+                {% for formula in object_list %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <span class="badge bg-light text-dark">{{ formula.code }}</span>
+                                {{ formula.name_cn }}
+                            </h5>
+                            <small>{{ formula.name_en }}</small>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="text-muted mb-3">
+                                <i class="bi bi-book-half"></i> 出处 | Source:
+                                <span class="text-dark">{{ formula.source|default:"未记录 | Not recorded" }}</span>
+                            </h6>
+
+                            <div class="mb-3">
+                                <strong>功效 | Functions:</strong>
+                                <p class="text-muted mb-0">{{ formula.functions|truncatewords:20 }}</p>
+                            </div>
+
+                            <div class="mb-3">
+                                <strong>主治 | Indications:</strong>
+                                <p class="text-muted mb-0">{{ formula.indications|truncatewords:20 }}</p>
+                            </div>
+
+                            {% if formula.formula_herbs.count > 0 %}
+                            <div class="mb-2">
+                                <strong>组成 | Composition:</strong>
+                                <span class="badge bg-info">{{ formula.formula_herbs.count }} 味药</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'prescriptions:formula_detail' formula.pk %}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> 查看详情 | View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="bi bi-inbox"></i> 没有找到方剂 | No formulas found
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            上一页 | Previous
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                        <span class="page-link">
+                            第 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} 页
+                        </span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            下一页 | Next
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            <!-- Statistics -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>总计 | Total:</strong> {{ paginator.count }} 个经典方剂 | classic formulas
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -12,7 +12,7 @@ from decimal import Decimal
 from patients.models import Patient
 from .models import (
     Herb, HerbCategory, ClassicFormula,
-    Prescription, PrescriptionItem
+    Prescription, PrescriptionItem, PatentMedicine
 )
 
 
@@ -66,6 +66,7 @@ def create_prescription(request, patient_pk):
     patient = get_object_or_404(Patient, pk=patient_pk)
     herbs = Herb.objects.filter(is_active=True).order_by('name_pinyin', 'name_cn')
     categories = HerbCategory.objects.all()
+    patent_medicines = PatentMedicine.objects.filter(is_active=True).order_by('name_cn')
 
     if request.method == 'POST':
         # Create prescription
@@ -100,6 +101,28 @@ def create_prescription(request, patient_pk):
                 except (Herb.DoesNotExist, ValueError):
                     pass
 
+        # Add patent medicines
+        from .models import PrescriptionPatentMedicine
+        patent_medicine_ids = request.POST.getlist('patent_medicine_id')
+        patent_quantities = request.POST.getlist('patent_quantity')
+        patent_usages = request.POST.getlist('patent_usage_instructions')
+
+        for i, medicine_id in enumerate(patent_medicine_ids):
+            if medicine_id and patent_quantities[i]:
+                try:
+                    medicine = PatentMedicine.objects.get(pk=medicine_id)
+                    quantity = int(patent_quantities[i])
+                    usage = patent_usages[i] if i < len(patent_usages) else medicine.dosage_instructions
+
+                    PrescriptionPatentMedicine.objects.create(
+                        prescription=prescription,
+                        medicine=medicine,
+                        quantity=quantity,
+                        dosage_instruction=usage,
+                    )
+                except (PatentMedicine.DoesNotExist, ValueError):
+                    pass
+
         # Calculate total
         prescription.calculate_total()
         prescription.save()
@@ -111,6 +134,7 @@ def create_prescription(request, patient_pk):
         'patient': patient,
         'herbs': herbs,
         'categories': categories,
+        'patent_medicines': patent_medicines,
     })
 
 
@@ -126,6 +150,7 @@ def edit_prescription(request, pk):
 
     herbs = Herb.objects.filter(is_active=True).order_by('name_pinyin', 'name_cn')
     categories = HerbCategory.objects.all()
+    patent_medicines = PatentMedicine.objects.filter(is_active=True).order_by('name_cn')
 
     if request.method == 'POST':
         # Update prescription info
@@ -139,6 +164,7 @@ def edit_prescription(request, pk):
 
         # Clear existing items and re-add
         prescription.items.all().delete()
+        prescription.patent_medicine_items.all().delete()
 
         # Add herbs
         herb_ids = request.POST.getlist('herb_id')
@@ -159,6 +185,28 @@ def edit_prescription(request, pk):
                 except (Herb.DoesNotExist, ValueError):
                     pass
 
+        # Add patent medicines
+        from .models import PrescriptionPatentMedicine
+        patent_medicine_ids = request.POST.getlist('patent_medicine_id')
+        patent_quantities = request.POST.getlist('patent_quantity')
+        patent_usages = request.POST.getlist('patent_usage_instructions')
+
+        for i, medicine_id in enumerate(patent_medicine_ids):
+            if medicine_id and patent_quantities[i]:
+                try:
+                    medicine = PatentMedicine.objects.get(pk=medicine_id)
+                    quantity = int(patent_quantities[i])
+                    usage = patent_usages[i] if i < len(patent_usages) else medicine.dosage_instructions
+
+                    PrescriptionPatentMedicine.objects.create(
+                        prescription=prescription,
+                        medicine=medicine,
+                        quantity=quantity,
+                        dosage_instruction=usage,
+                    )
+                except (PatentMedicine.DoesNotExist, ValueError):
+                    pass
+
         # Recalculate total
         prescription.calculate_total()
         prescription.save()
@@ -171,6 +219,7 @@ def edit_prescription(request, pk):
         'patient': prescription.patient,
         'herbs': herbs,
         'categories': categories,
+        'patent_medicines': patent_medicines,
     })
 
 
@@ -307,3 +356,92 @@ def api_herb_search(request):
         })
 
     return JsonResponse({'results': results})
+
+
+@login_required
+def api_ai_prescription_recommend(request):
+    """
+    API endpoint for AI prescription recommendations
+    AI处方推荐API接口
+    """
+    from diagnosis.ai_assistant import TCMAIAssistant
+    import json
+
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST method required'}, status=400)
+
+    try:
+        data = json.loads(request.body)
+        syndrome_code = data.get('syndrome_code')
+        patient_age = data.get('patient_age')
+        patient_gender = data.get('patient_gender')
+
+        if not syndrome_code:
+            return JsonResponse({'error': 'syndrome_code is required'}, status=400)
+
+        # Get AI recommendation
+        ai_assistant = TCMAIAssistant()
+        recommendation = ai_assistant.recommend_prescription(
+            syndrome_code=syndrome_code,
+            patient_age=patient_age,
+            patient_gender=patient_gender,
+        )
+
+        return JsonResponse({
+            'success': True,
+            'recommendation': recommendation,
+            'disclaimer': '⚠️ AI建议仅供参考，需要执业医师审核确认 | AI suggestions are for reference only and require practitioner review.',
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+class PatentMedicineListView(LoginRequiredMixin, ListView):
+    """List all patent medicines (中成药)."""
+    model = PatentMedicine
+    template_name = 'prescriptions/patentmedicine_list.html'
+    context_object_name = 'medicines'
+    paginate_by = 20
+
+    def get_queryset(self):
+        queryset = PatentMedicine.objects.filter(is_active=True)
+
+        # Search
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(name_cn__icontains=search) |
+                Q(name_en__icontains=search) |
+                Q(manufacturer__icontains=search)
+            )
+
+        # Filter by dosage form
+        dosage_form = self.request.GET.get('dosage_form')
+        if dosage_form:
+            queryset = queryset.filter(dosage_form=dosage_form)
+
+        # Filter by prescription type
+        prescription_type = self.request.GET.get('prescription_type')
+        if prescription_type:
+            queryset = queryset.filter(prescription_type=prescription_type)
+
+        # Filter by stock status
+        in_stock = self.request.GET.get('in_stock')
+        if in_stock == '1':
+            queryset = queryset.filter(is_in_stock=True)
+
+        return queryset.order_by('name_cn')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dosage_forms'] = PatentMedicine.DosageForm.choices
+        context['prescription_types'] = PatentMedicine.PrescriptionType.choices
+        return context
+
+
+class PatentMedicineDetailView(LoginRequiredMixin, DetailView):
+    """View patent medicine details."""
+    model = PatentMedicine
+    template_name = 'prescriptions/patentmedicine_detail.html'
+    context_object_name = 'medicine'

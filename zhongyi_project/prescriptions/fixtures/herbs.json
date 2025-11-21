@@ -1,0 +1,1383 @@
+[
+  {
+    "model": "prescriptions.herb",
+    "pk": 1,
+    "fields": {
+      "code": "H001",
+      "name_cn": "麻黄",
+      "name_en": "Ephedra",
+      "name_pinyin": "Ma Huang",
+      "name_latin": "Ephedrae Herba",
+      "category": 1,
+      "nature": "warm",
+      "taste": [
+        "pungent",
+        "bitter"
+      ],
+      "meridians": [
+        "lung",
+        "bladder"
+      ],
+      "functions": "发汗解表，宣肺平喘，利水消肿。",
+      "indications": "风寒感冒，胸闷喘咳，风水浮肿。",
+      "contraindications": "体虚自汗、盗汗及肺虚喘咳者忌用。",
+      "dosage_min": "2.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用发汗力强，蜜炙平喘力强。",
+      "price_per_gram": "0.15",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 2,
+    "fields": {
+      "code": "H002",
+      "name_cn": "桂枝",
+      "name_en": "Cinnamon Twig",
+      "name_pinyin": "Gui Zhi",
+      "name_latin": "Cinnamomi Ramulus",
+      "category": 1,
+      "nature": "warm",
+      "taste": [
+        "pungent",
+        "sweet"
+      ],
+      "meridians": [
+        "heart",
+        "lung",
+        "bladder"
+      ],
+      "functions": "发汗解肌，温通经脉，助阳化气。",
+      "indications": "风寒感冒，寒凝血滞诸痛证，痰饮，蓄水证，心悸。",
+      "contraindications": "温热病及阴虚阳盛者忌用，孕妇慎用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.12",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 3,
+    "fields": {
+      "code": "H003",
+      "name_cn": "防风",
+      "name_en": "Saposhnikovia Root",
+      "name_pinyin": "Fang Feng",
+      "name_latin": "Saposhnikoviae Radix",
+      "category": 1,
+      "nature": "warm",
+      "taste": [
+        "pungent",
+        "sweet"
+      ],
+      "meridians": [
+        "bladder",
+        "liver",
+        "spleen"
+      ],
+      "functions": "祛风解表，胜湿止痛，止痉。",
+      "indications": "感冒头痛，风湿痹痛，风疹瘙痒，破伤风。",
+      "contraindications": "阴虚火旺、血虚发痉者慎用。",
+      "dosage_min": "5.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.20",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 4,
+    "fields": {
+      "code": "H004",
+      "name_cn": "荆芥",
+      "name_en": "Schizonepeta",
+      "name_pinyin": "Jing Jie",
+      "name_latin": "Schizonepetae Herba",
+      "category": 1,
+      "nature": "warm",
+      "taste": [
+        "pungent"
+      ],
+      "meridians": [
+        "lung",
+        "liver"
+      ],
+      "functions": "祛风解表，透疹消疮，止血。",
+      "indications": "感冒，头痛，麻疹，风疹，疮疡初起。",
+      "contraindications": "表虚自汗、阴虚头痛忌服。",
+      "dosage_min": "5.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "不宜久煎。炒炭止血。",
+      "price_per_gram": "0.10",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 5,
+    "fields": {
+      "code": "H005",
+      "name_cn": "薄荷",
+      "name_en": "Peppermint",
+      "name_pinyin": "Bo He",
+      "name_latin": "Menthae Herba",
+      "category": 1,
+      "nature": "cool",
+      "taste": [
+        "pungent"
+      ],
+      "meridians": [
+        "lung",
+        "liver"
+      ],
+      "functions": "疏散风热，清利头目，利咽，透疹，疏肝行气。",
+      "indications": "风热感冒，温病初起，头痛目赤，咽喉肿痛，麻疹不透，肝郁气滞。",
+      "contraindications": "体虚多汗者不宜用。",
+      "dosage_min": "3.00",
+      "dosage_max": "6.00",
+      "dosage_unit": "克",
+      "preparation_notes": "后下，不宜久煎。",
+      "price_per_gram": "0.08",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 6,
+    "fields": {
+      "code": "H006",
+      "name_cn": "石膏",
+      "name_en": "Gypsum",
+      "name_pinyin": "Shi Gao",
+      "name_latin": "Gypsum Fibrosum",
+      "category": 2,
+      "nature": "cold",
+      "taste": [
+        "pungent",
+        "sweet"
+      ],
+      "meridians": [
+        "lung",
+        "stomach"
+      ],
+      "functions": "清热泻火，除烦止渴。",
+      "indications": "外感热病，高热烦渴，肺热喘咳，胃火牙痛，头痛。",
+      "contraindications": "脾胃虚寒及阴虚内热者忌用。",
+      "dosage_min": "15.00",
+      "dosage_max": "60.00",
+      "dosage_unit": "克",
+      "preparation_notes": "先煎，打碎。",
+      "price_per_gram": "0.05",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 7,
+    "fields": {
+      "code": "H007",
+      "name_cn": "知母",
+      "name_en": "Anemarrhena",
+      "name_pinyin": "Zhi Mu",
+      "name_latin": "Anemarrhenae Rhizoma",
+      "category": 2,
+      "nature": "cold",
+      "taste": [
+        "bitter",
+        "sweet"
+      ],
+      "meridians": [
+        "lung",
+        "stomach",
+        "kidney"
+      ],
+      "functions": "清热泻火，滋阴润燥。",
+      "indications": "外感热病，高热烦渴，肺热燥咳，骨蒸潮热，内热消渴，肠燥便秘。",
+      "contraindications": "脾虚便溏者不宜用。",
+      "dosage_min": "6.00",
+      "dosage_max": "12.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.25",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 8,
+    "fields": {
+      "code": "H008",
+      "name_cn": "黄芩",
+      "name_en": "Scutellaria Root",
+      "name_pinyin": "Huang Qin",
+      "name_latin": "Scutellariae Radix",
+      "category": 2,
+      "nature": "cold",
+      "taste": [
+        "bitter"
+      ],
+      "meridians": [
+        "lung",
+        "gallbladder",
+        "spleen",
+        "large_intestine",
+        "small_intestine"
+      ],
+      "functions": "清热燥湿，泻火解毒，止血，安胎。",
+      "indications": "湿温、暑湿、胸闷呕恶、湿热痞满、泻痢、黄疸、肺热咳嗽、高热烦渴、血热吐衄、痈肿疮毒、胎动不安。",
+      "contraindications": "脾胃虚寒者忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "清热多生用，安胎多炒用，止血多炒炭用。",
+      "price_per_gram": "0.18",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 9,
+    "fields": {
+      "code": "H009",
+      "name_cn": "黄连",
+      "name_en": "Coptis Root",
+      "name_pinyin": "Huang Lian",
+      "name_latin": "Coptidis Rhizoma",
+      "category": 2,
+      "nature": "cold",
+      "taste": [
+        "bitter"
+      ],
+      "meridians": [
+        "heart",
+        "spleen",
+        "stomach",
+        "gallbladder",
+        "large_intestine"
+      ],
+      "functions": "清热燥湿，泻火解毒。",
+      "indications": "湿热痞满、呕吐吞酸、泻痢、黄疸、高热神昏、心火亢盛、心烦不寐、心悸不宁、血热吐衄、目赤、牙痛、消渴、痈肿疔疮。",
+      "contraindications": "脾胃虚寒者忌用，苦燥伤阴，阴虚津伤者慎用。",
+      "dosage_min": "2.00",
+      "dosage_max": "5.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.80",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 10,
+    "fields": {
+      "code": "H010",
+      "name_cn": "黄柏",
+      "name_en": "Phellodendron Bark",
+      "name_pinyin": "Huang Bai",
+      "name_latin": "Phellodendri Chinensis Cortex",
+      "category": 2,
+      "nature": "cold",
+      "taste": [
+        "bitter"
+      ],
+      "meridians": [
+        "kidney",
+        "bladder",
+        "large_intestine"
+      ],
+      "functions": "清热燥湿，泻火除蒸，解毒疗疮。",
+      "indications": "湿热泻痢、黄疸尿赤、带下阴痒、热淋涩痛、脚气痿蹙、骨蒸劳热、盗汗、遗精、疮疡肿毒、湿疹湿疮。",
+      "contraindications": "脾胃虚寒者忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "12.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.20",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 11,
+    "fields": {
+      "code": "H011",
+      "name_cn": "大黄",
+      "name_en": "Rhubarb",
+      "name_pinyin": "Da Huang",
+      "name_latin": "Rhei Radix et Rhizoma",
+      "category": 3,
+      "nature": "cold",
+      "taste": [
+        "bitter"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "large_intestine",
+        "liver",
+        "heart"
+      ],
+      "functions": "泻下攻积，清热泻火，凉血解毒，逐瘀通经，利湿退黄。",
+      "indications": "实热便秘，积滞腹痛，泻痢不爽，湿热黄疸，血热吐衄，目赤，咽肿，肠痈腹痛，痈肿疔疮，瘀血经闭，跌打损伤。",
+      "contraindications": "妇女怀孕、月经期、哺乳期应忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "泻下力强宜后下，久煎则泻下力减弱。酒炙活血，炒炭止血。",
+      "price_per_gram": "0.12",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 12,
+    "fields": {
+      "code": "H012",
+      "name_cn": "芒硝",
+      "name_en": "Mirabilite",
+      "name_pinyin": "Mang Xiao",
+      "name_latin": "Natrii Sulfas",
+      "category": 3,
+      "nature": "cold",
+      "taste": [
+        "salty",
+        "bitter"
+      ],
+      "meridians": [
+        "stomach",
+        "large_intestine"
+      ],
+      "functions": "泻下通便，润燥软坚，清火消肿。",
+      "indications": "实热积滞，腹满胀痛，大便燥结，肠痈肿痛。",
+      "contraindications": "孕妇忌用，不宜与硫磺同用。",
+      "dosage_min": "6.00",
+      "dosage_max": "12.00",
+      "dosage_unit": "克",
+      "preparation_notes": "冲服或溶入药汁内服。",
+      "price_per_gram": "0.08",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 13,
+    "fields": {
+      "code": "H013",
+      "name_cn": "附子",
+      "name_en": "Prepared Aconite Root",
+      "name_pinyin": "Fu Zi",
+      "name_latin": "Aconiti Lateralis Radix Praeparata",
+      "category": 7,
+      "nature": "hot",
+      "taste": [
+        "pungent",
+        "sweet"
+      ],
+      "meridians": [
+        "heart",
+        "kidney",
+        "spleen"
+      ],
+      "functions": "回阳救逆，补火助阳，散寒止痛。",
+      "indications": "亡阳证，阳虚证，寒凝疼痛。",
+      "contraindications": "阴虚阳亢者忌用，孕妇忌用。不宜与半夏、瓜蒌、贝母、白蔹、白及同用。",
+      "dosage_min": "3.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "先煎30-60分钟以减毒。",
+      "price_per_gram": "0.50",
+      "is_active": true,
+      "is_toxic": true,
+      "requires_processing": true,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 14,
+    "fields": {
+      "code": "H014",
+      "name_cn": "干姜",
+      "name_en": "Dried Ginger",
+      "name_pinyin": "Gan Jiang",
+      "name_latin": "Zingiberis Rhizoma",
+      "category": 7,
+      "nature": "hot",
+      "taste": [
+        "pungent"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "kidney",
+        "heart",
+        "lung"
+      ],
+      "functions": "温中散寒，回阳通脉，温肺化饮。",
+      "indications": "脘腹冷痛，呕吐泄泻，亡阳厥逆，寒饮喘咳。",
+      "contraindications": "阴虚内热、血热妄行者忌用。孕妇慎用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.10",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 15,
+    "fields": {
+      "code": "H015",
+      "name_cn": "肉桂",
+      "name_en": "Cinnamon Bark",
+      "name_pinyin": "Rou Gui",
+      "name_latin": "Cinnamomi Cortex",
+      "category": 7,
+      "nature": "hot",
+      "taste": [
+        "pungent",
+        "sweet"
+      ],
+      "meridians": [
+        "kidney",
+        "spleen",
+        "heart",
+        "liver"
+      ],
+      "functions": "补火助阳，散寒止痛，温通经脉，引火归元。",
+      "indications": "阳痿宫冷，腰膝冷痛，肾虚作喘，虚阳上浮，眩晕目赤，心腹冷痛，虚寒吐泻，寒疝腹痛，痛经经闭。",
+      "contraindications": "阴虚火旺、血热妄行者忌用，孕妇慎用。",
+      "dosage_min": "1.00",
+      "dosage_max": "5.00",
+      "dosage_unit": "克",
+      "preparation_notes": "研末冲服或后下。",
+      "price_per_gram": "0.30",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 16,
+    "fields": {
+      "code": "H016",
+      "name_cn": "陈皮",
+      "name_en": "Tangerine Peel",
+      "name_pinyin": "Chen Pi",
+      "name_latin": "Citri Reticulatae Pericarpium",
+      "category": 8,
+      "nature": "warm",
+      "taste": [
+        "pungent",
+        "bitter"
+      ],
+      "meridians": [
+        "lung",
+        "spleen"
+      ],
+      "functions": "理气健脾，燥湿化痰。",
+      "indications": "脘腹胀满，食少吐泻，咳嗽痰多。",
+      "contraindications": "气虚证、阴虚燥咳、吐血证及舌赤少津者慎用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.15",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 17,
+    "fields": {
+      "code": "H017",
+      "name_cn": "枳实",
+      "name_en": "Immature Bitter Orange",
+      "name_pinyin": "Zhi Shi",
+      "name_latin": "Aurantii Fructus Immaturus",
+      "category": 8,
+      "nature": "cool",
+      "taste": [
+        "bitter",
+        "pungent"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "large_intestine"
+      ],
+      "functions": "破气消积，化痰散痞。",
+      "indications": "积滞内停，痞满胀痛，大便不通，泻痢后重，胸痹，结胸，气滞胸闷，痰阻胸痞。",
+      "contraindications": "孕妇慎用，脾胃虚弱及无实邪者忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.12",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 18,
+    "fields": {
+      "code": "H018",
+      "name_cn": "木香",
+      "name_en": "Costus Root",
+      "name_pinyin": "Mu Xiang",
+      "name_latin": "Aucklandiae Radix",
+      "category": 8,
+      "nature": "warm",
+      "taste": [
+        "pungent",
+        "bitter"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "large_intestine",
+        "gallbladder"
+      ],
+      "functions": "行气止痛，健脾消食。",
+      "indications": "胸脘胀痛，泻痢后重，食积不消，不思饮食。",
+      "contraindications": "阴虚津亏者慎用。",
+      "dosage_min": "3.00",
+      "dosage_max": "6.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用行气力强，煨用止泻力强。",
+      "price_per_gram": "0.25",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 19,
+    "fields": {
+      "code": "H019",
+      "name_cn": "山楂",
+      "name_en": "Hawthorn Berry",
+      "name_pinyin": "Shan Zha",
+      "name_latin": "Crataegi Fructus",
+      "category": 9,
+      "nature": "warm",
+      "taste": [
+        "sour",
+        "sweet"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "liver"
+      ],
+      "functions": "消食健胃，行气散瘀，化浊降脂。",
+      "indications": "肉食积滞，泻痢腹痛，瘀阻胸腹痛，疝气痛，高脂血症。",
+      "contraindications": "脾胃虚弱无积滞者慎用，孕妇慎用。",
+      "dosage_min": "10.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用消食散瘀，炒用止泻。",
+      "price_per_gram": "0.08",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 20,
+    "fields": {
+      "code": "H020",
+      "name_cn": "神曲",
+      "name_en": "Medicated Leaven",
+      "name_pinyin": "Shen Qu",
+      "name_latin": "Massa Medicata Fermentata",
+      "category": 9,
+      "nature": "warm",
+      "taste": [
+        "pungent",
+        "sweet"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach"
+      ],
+      "functions": "消食化积，健脾和胃。",
+      "indications": "饮食停滞，消化不良，脘腹胀满，食欲不振，呕吐泻泄。",
+      "contraindications": "",
+      "dosage_min": "6.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "炒用消食力强。",
+      "price_per_gram": "0.10",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 21,
+    "fields": {
+      "code": "H021",
+      "name_cn": "三七",
+      "name_en": "Notoginseng",
+      "name_pinyin": "San Qi",
+      "name_latin": "Notoginseng Radix et Rhizoma",
+      "category": 11,
+      "nature": "warm",
+      "taste": [
+        "sweet",
+        "bitter"
+      ],
+      "meridians": [
+        "liver",
+        "stomach"
+      ],
+      "functions": "散瘀止血，消肿定痛。",
+      "indications": "咯血，吐血，衄血，便血，崩漏，外伤出血，胸腹刺痛，跌扑肿痛。",
+      "contraindications": "孕妇慎用。",
+      "dosage_min": "3.00",
+      "dosage_max": "9.00",
+      "dosage_unit": "克",
+      "preparation_notes": "研粉吞服1-3克。",
+      "price_per_gram": "1.50",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 22,
+    "fields": {
+      "code": "H022",
+      "name_cn": "丹参",
+      "name_en": "Salvia Root",
+      "name_pinyin": "Dan Shen",
+      "name_latin": "Salviae Miltiorrhizae Radix et Rhizoma",
+      "category": 12,
+      "nature": "cool",
+      "taste": [
+        "bitter"
+      ],
+      "meridians": [
+        "heart",
+        "pericardium",
+        "liver"
+      ],
+      "functions": "活血祛瘀，通经止痛，清心除烦，凉血消痈。",
+      "indications": "胸痹心痛，脘腹胁痛，癥瘕积聚，热痹疼痛，心烦不眠，月经不调，痛经经闭，疮疡肿痛。",
+      "contraindications": "孕妇慎用，无瘀血者忌用。",
+      "dosage_min": "10.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.35",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 23,
+    "fields": {
+      "code": "H023",
+      "name_cn": "川芎",
+      "name_en": "Szechuan Lovage Root",
+      "name_pinyin": "Chuan Xiong",
+      "name_latin": "Chuanxiong Rhizoma",
+      "category": 12,
+      "nature": "warm",
+      "taste": [
+        "pungent"
+      ],
+      "meridians": [
+        "liver",
+        "gallbladder",
+        "pericardium"
+      ],
+      "functions": "活血行气，祛风止痛。",
+      "indications": "胸痹心痛，胸胁刺痛，跌扑肿痛，月经不调，经闭痛经，癥瘕腹痛，头痛，风湿痹痛。",
+      "contraindications": "阴虚火旺、舌红口干者慎用，孕妇、月经过多者忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.25",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 24,
+    "fields": {
+      "code": "H024",
+      "name_cn": "半夏",
+      "name_en": "Pinellia",
+      "name_pinyin": "Ban Xia",
+      "name_latin": "Pinelliae Rhizoma",
+      "category": 13,
+      "nature": "warm",
+      "taste": [
+        "pungent"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "lung"
+      ],
+      "functions": "燥湿化痰，降逆止呕，消痞散结。",
+      "indications": "湿痰寒痰，咳喘痰多，痰饮眩悸，风痰眩晕，痰厥头痛，呕吐反胃，胸脘痞闷，梅核气。",
+      "contraindications": "阴虚燥咳、血证、热痰、燥痰忌用。不宜与乌头类药材同用。孕妇慎用。",
+      "dosage_min": "3.00",
+      "dosage_max": "9.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生半夏有毒，一般用制半夏。",
+      "price_per_gram": "0.20",
+      "is_active": true,
+      "is_toxic": true,
+      "requires_processing": true,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 25,
+    "fields": {
+      "code": "H025",
+      "name_cn": "茯苓",
+      "name_en": "Poria",
+      "name_pinyin": "Fu Ling",
+      "name_latin": "Poria",
+      "category": 6,
+      "nature": "neutral",
+      "taste": [
+        "sweet",
+        "bland"
+      ],
+      "meridians": [
+        "heart",
+        "lung",
+        "spleen",
+        "kidney"
+      ],
+      "functions": "利水渗湿，健脾，宁心。",
+      "indications": "水肿尿少，痰饮眩悸，脾虚食少，便溏泄泻，心神不安，惊悸失眠。",
+      "contraindications": "阴虚而无湿热、虚寒滑精者忌服。",
+      "dosage_min": "10.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.15",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 26,
+    "fields": {
+      "code": "H026",
+      "name_cn": "泽泻",
+      "name_en": "Alisma",
+      "name_pinyin": "Ze Xie",
+      "name_latin": "Alismatis Rhizoma",
+      "category": 6,
+      "nature": "cold",
+      "taste": [
+        "sweet",
+        "bland"
+      ],
+      "meridians": [
+        "kidney",
+        "bladder"
+      ],
+      "functions": "利水渗湿，泄热，化浊降脂。",
+      "indications": "小便不利，水肿胀满，泄泻尿少，痰饮眩晕，热淋涩痛，高脂血症。",
+      "contraindications": "肾虚精滑者忌服。",
+      "dosage_min": "6.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.12",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 27,
+    "fields": {
+      "code": "H027",
+      "name_cn": "酸枣仁",
+      "name_en": "Sour Jujube Seed",
+      "name_pinyin": "Suan Zao Ren",
+      "name_latin": "Ziziphi Spinosae Semen",
+      "category": 14,
+      "nature": "neutral",
+      "taste": [
+        "sweet",
+        "sour"
+      ],
+      "meridians": [
+        "liver",
+        "gallbladder",
+        "heart"
+      ],
+      "functions": "养心补肝，宁心安神，敛汗，生津。",
+      "indications": "虚烦失眠，惊悸多梦，体虚多汗，津伤口渴。",
+      "contraindications": "有实邪郁火者忌用。",
+      "dosage_min": "10.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "捣碎入煎。生用多用于失眠，炒用收敛止汗。",
+      "price_per_gram": "0.60",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 28,
+    "fields": {
+      "code": "H028",
+      "name_cn": "人参",
+      "name_en": "Ginseng",
+      "name_pinyin": "Ren Shen",
+      "name_latin": "Ginseng Radix et Rhizoma",
+      "category": 17,
+      "nature": "warm",
+      "taste": [
+        "sweet",
+        "bitter"
+      ],
+      "meridians": [
+        "spleen",
+        "lung",
+        "heart",
+        "kidney"
+      ],
+      "functions": "大补元气，复脉固脱，补脾益肺，生津养血，安神益智。",
+      "indications": "体虚欲脱，肢冷脉微，脾虚食少，肺虚喘咳，津伤口渴，内热消渴，气血亏虚，久病虚羸，惊悸失眠，阳痿宫冷。",
+      "contraindications": "实证、热证而正气不虚者忌用。不宜与藜芦同用。",
+      "dosage_min": "3.00",
+      "dosage_max": "9.00",
+      "dosage_unit": "克",
+      "preparation_notes": "文火另煎兑服。研粉吞服每次1-2克。",
+      "price_per_gram": "2.00",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 29,
+    "fields": {
+      "code": "H029",
+      "name_cn": "黄芪",
+      "name_en": "Astragalus Root",
+      "name_pinyin": "Huang Qi",
+      "name_latin": "Astragali Radix",
+      "category": 17,
+      "nature": "warm",
+      "taste": [
+        "sweet"
+      ],
+      "meridians": [
+        "lung",
+        "spleen"
+      ],
+      "functions": "补气升阳，固表止汗，利水消肿，生津养血，行滞通痹，托毒排脓，敛疮生肌。",
+      "indications": "气虚乏力，食少便溏，中气下陷，久泻脱肛，便血崩漏，表虚自汗，气虚水肿，内热消渴，血虚萎黄，半身不遂，痹痛麻木，痈疽难溃，久溃不敛。",
+      "contraindications": "表实邪盛、气滞湿阻、食积停滞、阴虚阳亢、痈疽初起或溃后热毒尚盛者忌用。",
+      "dosage_min": "9.00",
+      "dosage_max": "30.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用益卫固表、利水消肿；蜜炙补中益气。",
+      "price_per_gram": "0.25",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 30,
+    "fields": {
+      "code": "H030",
+      "name_cn": "白术",
+      "name_en": "White Atractylodes",
+      "name_pinyin": "Bai Zhu",
+      "name_latin": "Atractylodis Macrocephalae Rhizoma",
+      "category": 17,
+      "nature": "warm",
+      "taste": [
+        "bitter",
+        "sweet"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach"
+      ],
+      "functions": "健脾益气，燥湿利水，止汗，安胎。",
+      "indications": "脾虚食少，腹胀泄泻，痰饮眩悸，水肿，自汗，胎动不安。",
+      "contraindications": "阴虚燥渴者忌用。",
+      "dosage_min": "6.00",
+      "dosage_max": "12.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用燥湿利水，炒用健脾止泻。",
+      "price_per_gram": "0.20",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 31,
+    "fields": {
+      "code": "H031",
+      "name_cn": "甘草",
+      "name_en": "Licorice Root",
+      "name_pinyin": "Gan Cao",
+      "name_latin": "Glycyrrhizae Radix et Rhizoma",
+      "category": 17,
+      "nature": "neutral",
+      "taste": [
+        "sweet"
+      ],
+      "meridians": [
+        "heart",
+        "lung",
+        "spleen",
+        "stomach"
+      ],
+      "functions": "补脾益气，清热解毒，祛痰止咳，缓急止痛，调和诸药。",
+      "indications": "脾胃虚弱，倦怠乏力，心悸气短，咳嗽痰多，脘腹、四肢挛急疼痛，痈肿疮毒，缓解药物毒性、烈性。",
+      "contraindications": "湿盛胀满、浮肿者忌用。不宜与海藻、大戟、甘遂、芫花同用。",
+      "dosage_min": "2.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用清热解毒，蜜炙补脾益气。",
+      "price_per_gram": "0.08",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 32,
+    "fields": {
+      "code": "H032",
+      "name_cn": "当归",
+      "name_en": "Chinese Angelica Root",
+      "name_pinyin": "Dang Gui",
+      "name_latin": "Angelicae Sinensis Radix",
+      "category": 17,
+      "nature": "warm",
+      "taste": [
+        "sweet",
+        "pungent"
+      ],
+      "meridians": [
+        "liver",
+        "heart",
+        "spleen"
+      ],
+      "functions": "补血活血，调经止痛，润肠通便。",
+      "indications": "血虚萎黄，眩晕心悸，月经不调，经闭痛经，虚寒腹痛，风湿痹痛，跌扑损伤，痈疽疮疡，肠燥便秘。",
+      "contraindications": "湿盛中满、大便泄泻者忌用。",
+      "dosage_min": "6.00",
+      "dosage_max": "12.00",
+      "dosage_unit": "克",
+      "preparation_notes": "归头止血，归身补血，归尾活血，全当归补血活血。",
+      "price_per_gram": "0.30",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 33,
+    "fields": {
+      "code": "H033",
+      "name_cn": "熟地黄",
+      "name_en": "Prepared Rehmannia",
+      "name_pinyin": "Shu Di Huang",
+      "name_latin": "Rehmanniae Radix Praeparata",
+      "category": 17,
+      "nature": "warm",
+      "taste": [
+        "sweet"
+      ],
+      "meridians": [
+        "liver",
+        "kidney"
+      ],
+      "functions": "补血滋阴，益精填髓。",
+      "indications": "血虚萎黄，心悸怔忡，月经不调，崩漏下血，肝肾阴虚，腰膝酸软，骨蒸潮热，盗汗遗精，内热消渴，眩晕，耳鸣，须发早白。",
+      "contraindications": "脾虚食少、腹满便溏者忌用。",
+      "dosage_min": "9.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.15",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": true,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 34,
+    "fields": {
+      "code": "H034",
+      "name_cn": "白芍",
+      "name_en": "White Peony Root",
+      "name_pinyin": "Bai Shao",
+      "name_latin": "Paeoniae Radix Alba",
+      "category": 17,
+      "nature": "cool",
+      "taste": [
+        "bitter",
+        "sour"
+      ],
+      "meridians": [
+        "liver",
+        "spleen"
+      ],
+      "functions": "养血调经，敛阴止汗，柔肝止痛，平抑肝阳。",
+      "indications": "血虚萎黄，月经不调，自汗，盗汗，胁痛，腹痛，四肢挛痛，头痛眩晕。",
+      "contraindications": "阳衰虚寒之证不宜单独应用。反藜芦。",
+      "dosage_min": "6.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "生用平肝，炒用养血。",
+      "price_per_gram": "0.15",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 35,
+    "fields": {
+      "code": "H035",
+      "name_cn": "生姜",
+      "name_en": "Fresh Ginger",
+      "name_pinyin": "Sheng Jiang",
+      "name_latin": "Zingiberis Rhizoma Recens",
+      "category": 1,
+      "nature": "warm",
+      "taste": [
+        "pungent"
+      ],
+      "meridians": [
+        "lung",
+        "spleen",
+        "stomach"
+      ],
+      "functions": "解表散寒，温中止呕，化痰止咳，解鱼蟹毒。",
+      "indications": "风寒感冒，胃寒呕吐，寒痰咳嗽，鱼蟹中毒。",
+      "contraindications": "阴虚内热及热盛者忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.05",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 36,
+    "fields": {
+      "code": "H036",
+      "name_cn": "大枣",
+      "name_en": "Chinese Date",
+      "name_pinyin": "Da Zao",
+      "name_latin": "Jujubae Fructus",
+      "category": 17,
+      "nature": "warm",
+      "taste": [
+        "sweet"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "heart"
+      ],
+      "functions": "补中益气，养血安神。",
+      "indications": "脾虚食少，乏力便溏，妇人脏躁。",
+      "contraindications": "湿盛脘腹胀满、食积者忌用。",
+      "dosage_min": "6.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "或3-5枚。",
+      "price_per_gram": "0.10",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 37,
+    "fields": {
+      "code": "H037",
+      "name_cn": "柴胡",
+      "name_en": "Bupleurum",
+      "name_pinyin": "Chai Hu",
+      "name_latin": "Bupleuri Radix",
+      "category": 1,
+      "nature": "cool",
+      "taste": [
+        "pungent",
+        "bitter"
+      ],
+      "meridians": [
+        "liver",
+        "gallbladder",
+        "lung"
+      ],
+      "functions": "疏散退热，疏肝解郁，升举阳气。",
+      "indications": "感冒发热，寒热往来，胸胁胀痛，月经不调，子宫脱垂，脱肛。",
+      "contraindications": "真阴亏损、肝阳上升者忌用。",
+      "dosage_min": "3.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.18",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 38,
+    "fields": {
+      "code": "H038",
+      "name_cn": "葛根",
+      "name_en": "Kudzu Root",
+      "name_pinyin": "Ge Gen",
+      "name_latin": "Puerariae Lobatae Radix",
+      "category": 1,
+      "nature": "cool",
+      "taste": [
+        "sweet",
+        "pungent"
+      ],
+      "meridians": [
+        "spleen",
+        "stomach",
+        "lung"
+      ],
+      "functions": "解肌退热，生津止渴，透疹，升阳止泻，通经活络，解酒毒。",
+      "indications": "外感发热头痛，项背强痛，口渴，消渴，麻疹不透，热泻热痢，眩晕头痛，中风偏瘫，胸痹心痛，酒毒伤中。",
+      "contraindications": "表虚多汗者忌用。",
+      "dosage_min": "10.00",
+      "dosage_max": "15.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.12",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 39,
+    "fields": {
+      "code": "H039",
+      "name_cn": "杏仁",
+      "name_en": "Apricot Seed",
+      "name_pinyin": "Xing Ren",
+      "name_latin": "Armeniacae Semen Amarum",
+      "category": 13,
+      "nature": "warm",
+      "taste": [
+        "bitter"
+      ],
+      "meridians": [
+        "lung",
+        "large_intestine"
+      ],
+      "functions": "止咳平喘，润肠通便。",
+      "indications": "咳嗽气喘，肠燥便秘。",
+      "contraindications": "阴虚咳嗽及大便溏泄者慎用。",
+      "dosage_min": "5.00",
+      "dosage_max": "10.00",
+      "dosage_unit": "克",
+      "preparation_notes": "捣碎入煎。",
+      "price_per_gram": "0.15",
+      "is_active": true,
+      "is_toxic": true,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  },
+  {
+    "model": "prescriptions.herb",
+    "pk": 40,
+    "fields": {
+      "code": "H040",
+      "name_cn": "枸杞子",
+      "name_en": "Goji Berry",
+      "name_pinyin": "Gou Qi Zi",
+      "name_latin": "Lycii Fructus",
+      "category": 17,
+      "nature": "neutral",
+      "taste": [
+        "sweet"
+      ],
+      "meridians": [
+        "liver",
+        "kidney"
+      ],
+      "functions": "滋补肝肾，益精明目。",
+      "indications": "虚劳精亏，腰膝酸痛，眩晕耳鸣，阳萎遗精，内热消渴，血虚萎黄，目昏不明。",
+      "contraindications": "外感实热、脾虚泄泻者忌用。",
+      "dosage_min": "6.00",
+      "dosage_max": "12.00",
+      "dosage_unit": "克",
+      "preparation_notes": "",
+      "price_per_gram": "0.25",
+      "is_active": true,
+      "is_toxic": false,
+      "requires_processing": false,
+      "created_at": "2025-11-20T19:33:49.602768",
+      "updated_at": "2025-11-20T19:33:49.602768"
+    }
+  }
+]

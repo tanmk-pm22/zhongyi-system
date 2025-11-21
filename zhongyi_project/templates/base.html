@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% trans "TCM Clinical System" %}{% endblock %} - 中医临床系统</title>
+    <title>{% block title %}中医临床系统 | TCM Clinical System{% endblock %}</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
                 <i class="bi bi-heart-pulse"></i>
-                {% trans "TCM System" %} | 中医系统
+                中医系统 | TCM System
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -34,18 +34,46 @@
                         {% if user.is_practitioner or user.is_admin or user.is_staff %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'patients:list' %}">
-                                <i class="bi bi-people"></i> {% trans "Patients" %}
+                                <i class="bi bi-people"></i> 患者 | Patients
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'diagnosis:list' %}">
-                                <i class="bi bi-clipboard2-pulse"></i> {% trans "Diagnosis" %}
+                                <i class="bi bi-clipboard2-pulse"></i> 诊断 | Diagnosis
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'prescriptions:list' %}">
+                                <i class="bi bi-prescription2"></i> 处方 | Prescriptions
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-book"></i> 药品库 | Medicine Library
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'prescriptions:herb_list' %}">
+                                        <i class="bi bi-flower1"></i> 药材库 | Herbs
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'prescriptions:patentmedicine_list' %}">
+                                        <i class="bi bi-capsule"></i> 中成药 | Patent Medicines
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'prescriptions:formula_list' %}">
+                                        <i class="bi bi-book-half"></i> 经典方剂 | Formulas
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:dashboard' %}">
-                                <i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}
+                                <i class="bi bi-speedometer2"></i> 控制面板 | Dashboard
                             </a>
                         </li>
                     {% endif %}
@@ -88,15 +116,15 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><span class="dropdown-item-text text-muted small">{{ user.get_role_display }}</span></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person"></i> {% trans "Profile" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person"></i> 个人资料 | Profile</a></li>
                             {% if user.is_staff %}
-                            <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-gear"></i> {% trans "Admin" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-gear"></i> 管理后台 | Admin</a></li>
                             {% endif %}
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="post" action="{% url 'accounts:logout' %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> {% trans "Logout" %}</button>
+                                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> 退出登录 | Logout</button>
                                 </form>
                             </li>
                         </ul>
@@ -104,12 +132,12 @@
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:login' %}">
-                            <i class="bi bi-box-arrow-in-right"></i> {% trans "Login" %}
+                            <i class="bi bi-box-arrow-in-right"></i> 登录 | Login
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:register' %}">
-                            <i class="bi bi-person-plus"></i> {% trans "Register" %}
+                            <i class="bi bi-person-plus"></i> 注册 | Register
                         </a>
                     </li>
                     {% endif %}
@@ -139,10 +167,10 @@
     <footer class="bg-light py-4 mt-auto">
         <div class="container text-center text-muted">
             <p class="mb-1">
-                &copy; 2024 {% trans "TCM Clinical System" %} | 中医临床系统
+                &copy; 2024 中医临床系统 | TCM Clinical System
             </p>
             <p class="small mb-0">
-                {% trans "Compliant with Malaysia T&CM Act 2016 and PDPA 2010" %}
+                符合马来西亚传统及辅助医药法令2016和个人资料保护法2010 | Compliant with Malaysia T&CM Act 2016 and PDPA 2010
             </p>
         </div>
     </footer>

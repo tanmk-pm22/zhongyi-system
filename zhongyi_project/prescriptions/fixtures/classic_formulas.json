@@ -1,0 +1,257 @@
+[
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 1,
+    "fields": {
+      "code": "F001",
+      "name_cn": "麻黄汤",
+      "name_en": "Ephedra Decoction",
+      "name_pinyin": "Ma Huang Tang",
+      "source": "《伤寒论》",
+      "composition": "麻黄9g、桂枝6g、杏仁6g、炙甘草3g",
+      "functions": "发汗解表，宣肺平喘。",
+      "indications": "外感风寒表实证。恶寒发热，头身疼痛，无汗而喘，舌苔薄白，脉浮紧。",
+      "contraindications": "本方发汗力强，表虚自汗、体虚外感、新产妇人及失血患者不宜使用。",
+      "modifications": "喘甚加石膏；鼻塞加苍耳子、辛夷；咳嗽加紫苑、款冬花。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 2,
+    "fields": {
+      "code": "F002",
+      "name_cn": "桂枝汤",
+      "name_en": "Cinnamon Twig Decoction",
+      "name_pinyin": "Gui Zhi Tang",
+      "source": "《伤寒论》",
+      "composition": "桂枝9g、白芍9g、炙甘草6g、生姜9g、大枣12枚",
+      "functions": "解肌发表，调和营卫。",
+      "indications": "外感风寒表虚证。发热，汗出，恶风，脉浮缓，或鼻鸣干呕。",
+      "contraindications": "表实无汗、温病初起、湿热内蕴者忌用。",
+      "modifications": "项背强痛加葛根；喘加厚朴、杏仁。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 3,
+    "fields": {
+      "code": "F003",
+      "name_cn": "小柴胡汤",
+      "name_en": "Minor Bupleurum Decoction",
+      "name_pinyin": "Xiao Chai Hu Tang",
+      "source": "《伤寒论》",
+      "composition": "柴胡24g、黄芩9g、人参9g、半夏9g、炙甘草9g、生姜9g、大枣4枚",
+      "functions": "和解少阳。",
+      "indications": "伤寒少阳证。寒热往来，胸胁苦满，默默不欲饮食，心烦喜呕，口苦，咽干，目眩，舌苔薄白，脉弦。",
+      "contraindications": "阴虚血少者忌用。",
+      "modifications": "呕吐加竹茹、陈皮；胁痛甚加川楝子、延胡索。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 4,
+    "fields": {
+      "code": "F004",
+      "name_cn": "四君子汤",
+      "name_en": "Four Gentlemen Decoction",
+      "name_pinyin": "Si Jun Zi Tang",
+      "source": "《太平惠民和剂局方》",
+      "composition": "人参9g、白术9g、茯苓9g、炙甘草6g",
+      "functions": "益气健脾。",
+      "indications": "脾胃气虚证。面色萎白，语声低微，气短乏力，食少便溏，舌淡苔白，脉虚弱。",
+      "contraindications": "",
+      "modifications": "呕吐加半夏；腹胀加陈皮、木香；泄泻重加山药、扁豆。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 5,
+    "fields": {
+      "code": "F005",
+      "name_cn": "四物汤",
+      "name_en": "Four Substances Decoction",
+      "name_pinyin": "Si Wu Tang",
+      "source": "《太平惠民和剂局方》",
+      "composition": "熟地黄12g、当归10g、白芍12g、川芎8g",
+      "functions": "补血和血。",
+      "indications": "营血虚滞证。头晕目眩，心悸失眠，面色无华，妇人月经不调，量少或经闭不行，脐腹作痛，甚或瘕块硬结，舌淡，口唇、爪甲色淡，脉细弦或细涩。",
+      "contraindications": "阴虚发热及血崩气脱者忌用。",
+      "modifications": "血虚甚加阿胶、枸杞子；血瘀甚加桃仁、红花。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 6,
+    "fields": {
+      "code": "F006",
+      "name_cn": "六味地黄丸",
+      "name_en": "Six-Ingredient Rehmannia Pill",
+      "name_pinyin": "Liu Wei Di Huang Wan",
+      "source": "《小儿药证直诀》",
+      "composition": "熟地黄24g、山萸肉12g、山药12g、泽泻9g、牡丹皮9g、茯苓9g",
+      "functions": "滋补肝肾。",
+      "indications": "肝肾阴虚证。腰膝酸软，头晕目眩，耳鸣耳聋，盗汗，遗精，消渴，骨蒸潮热，手足心热，舌燥咽痛，牙齿动摇，足跟作痛，小便淋沥，以及小儿囟门不合，舌红少苔，脉沉细数。",
+      "contraindications": "脾虚泄泻者忌用。",
+      "modifications": "潮热盗汗加知母、黄柏；眩晕加枸杞子、菊花。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 7,
+    "fields": {
+      "code": "F007",
+      "name_cn": "补中益气汤",
+      "name_en": "Tonify the Middle and Augment Qi Decoction",
+      "name_pinyin": "Bu Zhong Yi Qi Tang",
+      "source": "《脾胃论》",
+      "composition": "黄芪18g、人参6g、白术9g、炙甘草9g、当归3g、陈皮6g、升麻6g、柴胡6g",
+      "functions": "补中益气，升阳举陷。",
+      "indications": "脾虚气陷证。饮食减少，体倦肢软，少气懒言，面色萎黄，大便稀溏，脉大而虚软。或脱肛，子宫脱垂，久泻久痢，崩漏等。或气虚发热。",
+      "contraindications": "阴虚发热及内热炽盛者忌用。",
+      "modifications": "头痛加蔓荆子、川芎；腹痛加白芍。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 8,
+    "fields": {
+      "code": "F008",
+      "name_cn": "归脾汤",
+      "name_en": "Restore the Spleen Decoction",
+      "name_pinyin": "Gui Pi Tang",
+      "source": "《济生方》",
+      "composition": "白术9g、当归9g、茯苓9g、黄芪12g、龙眼肉12g、远志6g、酸枣仁12g、木香6g、炙甘草3g、人参6g",
+      "functions": "益气补血，健脾养心。",
+      "indications": "心脾气血两虚证。心悸怔忡，健忘失眠，盗汗，体倦食少，面色萎黄，舌淡，苔薄白，脉细弱。脾不统血证。便血，皮下紫癜，妇女崩漏，月经超前，量多色淡，或淋漓不止，舌淡，脉细弱。",
+      "contraindications": "",
+      "modifications": "崩漏加艾叶炭、阿胶；便血加地榆炭、槐花炭。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 9,
+    "fields": {
+      "code": "F009",
+      "name_cn": "温胆汤",
+      "name_en": "Warm the Gallbladder Decoction",
+      "name_pinyin": "Wen Dan Tang",
+      "source": "《三因极一病证方论》",
+      "composition": "半夏6g、竹茹6g、枳实6g、陈皮9g、茯苓4.5g、炙甘草3g、生姜3片、大枣1枚",
+      "functions": "理气化痰，和胃利胆。",
+      "indications": "胆郁痰扰证。胆怯易惊，头眩心悸，心烦不眠，夜多异梦；或呕恶呃逆，眩晕，癫痫。苔白腻，脉弦滑。",
+      "contraindications": "",
+      "modifications": "心悸不寐加酸枣仁、远志；痰多加胆南星。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 10,
+    "fields": {
+      "code": "F010",
+      "name_cn": "二陈汤",
+      "name_en": "Two-Cured Decoction",
+      "name_pinyin": "Er Chen Tang",
+      "source": "《太平惠民和剂局方》",
+      "composition": "半夏15g、橘红15g、白茯苓9g、炙甘草4.5g",
+      "functions": "燥湿化痰，理气和中。",
+      "indications": "湿痰证。咳嗽痰多，色白易咯，恶心呕吐，胸膈痞闷，肢体困重，或头眩心悸，舌苔白滑或腻，脉滑。",
+      "contraindications": "燥痰、热痰者不宜使用。",
+      "modifications": "寒痰加干姜、细辛；热痰加黄芩、瓜蒌。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 11,
+    "fields": {
+      "code": "F011",
+      "name_cn": "逍遥散",
+      "name_en": "Free and Easy Wanderer Powder",
+      "name_pinyin": "Xiao Yao San",
+      "source": "《太平惠民和剂局方》",
+      "composition": "柴胡9g、当归9g、白芍9g、白术9g、茯苓9g、炙甘草4.5g、薄荷3g、生姜3片",
+      "functions": "疏肝解郁，养血健脾。",
+      "indications": "肝郁血虚脾弱证。两胁作痛，头痛目眩，口燥咽干，神疲食少，或月经不调，乳房胀痛，脉弦而虚。",
+      "contraindications": "",
+      "modifications": "肝郁化火加丹皮、栀子（丹栀逍遥散）；血虚甚加熟地黄。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 12,
+    "fields": {
+      "code": "F012",
+      "name_cn": "血府逐瘀汤",
+      "name_en": "Drive Out Stasis in the Mansion of Blood Decoction",
+      "name_pinyin": "Xue Fu Zhu Yu Tang",
+      "source": "《医林改错》",
+      "composition": "桃仁12g、红花9g、当归9g、生地黄9g、川芎4.5g、赤芍6g、牛膝9g、桔梗4.5g、柴胡3g、枳壳6g、甘草6g",
+      "functions": "活血化瘀，行气止痛。",
+      "indications": "胸中血瘀证。胸痛，头痛，日久不愈，痛如针刺而有定处，或呃逆日久不止，或饮水即呛，干呕，或内热瞀闷，或心悸怔忡，失眠多梦，急躁易怒，入暮潮热，唇暗或两目暗黑，舌质暗红，或舌有瘀斑、瘀点，脉涩或弦紧。",
+      "contraindications": "孕妇忌用。",
+      "modifications": "痛甚加乳香、没药；气滞甚加香附、郁金。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 13,
+    "fields": {
+      "code": "F013",
+      "name_cn": "白虎汤",
+      "name_en": "White Tiger Decoction",
+      "name_pinyin": "Bai Hu Tang",
+      "source": "《伤寒论》",
+      "composition": "石膏50g、知母18g、炙甘草6g、粳米9g",
+      "functions": "清热生津。",
+      "indications": "气分热盛证。壮热面赤，烦渴引饮，汗出恶热，脉洪大有力。",
+      "contraindications": "表证未解的无汗发热，或脉浮弦而细者，血虚发热，或真寒假热者忌用。",
+      "modifications": "气阴两伤加人参（白虎加人参汤）；湿温加苍术（白虎加苍术汤）。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 14,
+    "fields": {
+      "code": "F014",
+      "name_cn": "理中丸",
+      "name_en": "Regulate the Middle Pill",
+      "name_pinyin": "Li Zhong Wan",
+      "source": "《伤寒论》",
+      "composition": "干姜9g、人参9g、白术9g、炙甘草9g",
+      "functions": "温中祛寒，补气健脾。",
+      "indications": "脾胃虚寒证。脘腹疼痛，喜温喜按，呕吐，大便稀溏，脘痞食少，畏寒肢冷，口不渴，舌淡苔白滑，脉沉细或沉迟无力。或阳虚失血。或病后喜唾涎沫。或小儿慢惊，或胸痹由中焦虚寒所致者。",
+      "contraindications": "湿热内蕴中焦及阴虚内热者忌用。",
+      "modifications": "腹痛甚加附子；呕吐甚加半夏、生姜。",
+      "is_active": true
+    }
+  },
+  {
+    "model": "prescriptions.classicformula",
+    "pk": 15,
+    "fields": {
+      "code": "F015",
+      "name_cn": "真武汤",
+      "name_en": "True Warrior Decoction",
+      "name_pinyin": "Zhen Wu Tang",
+      "source": "《伤寒论》",
+      "composition": "茯苓9g、白芍9g、白术6g、生姜9g、附子9g",
+      "functions": "温阳利水。",
+      "indications": "阳虚水泛证。畏寒肢厥，小便不利，心下悸动不宁，头目眩晕，身体筋肉瞤动，站立不稳，四肢沉重疼痛，浮肿，腰以下为甚；或腹痛，泄泻；或咳喘呕逆。舌质淡胖，边有齿痕，舌苔白滑，脉沉细。",
+      "contraindications": "阴虚及热证忌用。",
+      "modifications": "水肿甚加猪苓、泽泻；咳喘加细辛、干姜。",
+      "is_active": true
+    }
+  }
+]

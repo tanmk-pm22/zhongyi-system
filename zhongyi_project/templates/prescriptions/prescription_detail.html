@@ -101,6 +101,40 @@
             </div>
         </div>
 
+        <!-- Patent Medicines -->
+        {% if prescription.patent_medicine_items.exists %}
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">中成药 | Patent Medicines</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>药品 | Medicine</th>
+                            <th>数量 | Quantity</th>
+                            <th>用法 | Usage</th>
+                            <th>金额 | Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in prescription.patent_medicine_items.all %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.medicine.name_cn }}</strong>
+                                <br><small class="text-muted">{{ item.medicine.get_dosage_form_display }}</small>
+                            </td>
+                            <td>{{ item.quantity }} 盒</td>
+                            <td><small>{{ item.dosage_instruction|truncatewords:10 }}</small></td>
+                            <td>¥{{ item.subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
         <!-- Decoction Method -->
         {% if prescription.decoction_method %}
         <div class="card mb-4">
