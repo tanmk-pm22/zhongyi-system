@@ -112,7 +112,7 @@ def create_prescription(request, patient_pk):
                 try:
                     medicine = PatentMedicine.objects.get(pk=medicine_id)
                     quantity = int(patent_quantities[i])
-                    usage = patent_usages[i] if i < len(patent_usages) else medicine.dosage_instructions
+                    usage = patent_usages[i] if i < len(patent_usages) else medicine.dosage_adult
 
                     PrescriptionPatentMedicine.objects.create(
                         prescription=prescription,
@@ -196,7 +196,7 @@ def edit_prescription(request, pk):
                 try:
                     medicine = PatentMedicine.objects.get(pk=medicine_id)
                     quantity = int(patent_quantities[i])
-                    usage = patent_usages[i] if i < len(patent_usages) else medicine.dosage_instructions
+                    usage = patent_usages[i] if i < len(patent_usages) else medicine.dosage_adult
 
                     PrescriptionPatentMedicine.objects.create(
                         prescription=prescription,

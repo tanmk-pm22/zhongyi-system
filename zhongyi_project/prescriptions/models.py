@@ -389,11 +389,19 @@ class Prescription(models.Model):
         super().save(*args, **kwargs)
 
     def calculate_total(self):
-        """Calculate total price based on herbs."""
+        """Calculate total price based on herbs and patent medicines."""
         total = Decimal('0.00')
+
+        # Calculate herb costs
         for item in self.items.all():
             if item.herb.price_per_gram:
                 total += item.herb.price_per_gram * item.dosage * self.doses
+
+        # Calculate patent medicine costs
+        for patent_item in self.patent_medicine_items.all():
+            if patent_item.medicine.price_per_box:
+                total += patent_item.medicine.price_per_box * patent_item.quantity
+
         self.total_price = total
         return total
 
