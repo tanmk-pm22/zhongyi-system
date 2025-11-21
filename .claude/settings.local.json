@@ -23,7 +23,8 @@
       "Bash(del nul 2)",
       "Bash(.gitignore)",
       "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" test_prescription_patent_medicine.py)",
-      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" final_verification.py)"
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" final_verification.py)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" test_urls.py)"
     ],
     "deny": [],
     "ask": []
