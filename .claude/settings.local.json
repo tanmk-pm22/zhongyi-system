@@ -24,7 +24,13 @@
       "Bash(.gitignore)",
       "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" test_prescription_patent_medicine.py)",
       "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" final_verification.py)",
-      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" test_urls.py)"
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" test_urls.py)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" manage.py check --deploy)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" comprehensive_test.py)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" -c \"import sys; sys.stdout.reconfigure(encoding=''utf-8'')\")",
+      "Bash(timeout /t 2 /nobreak)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" manage.py runserver 0.0.0.0:8000)",
+      "Bash(timeout /t 5 /nobreak:*)"
     ],
     "deny": [],
     "ask": []
