@@ -7,10 +7,10 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>
         <i class="bi bi-people"></i>
-        {% trans "Patients" %} | 患者列表
+        患者列表 | Patients
     </h2>
     <a href="{% url 'patients:create' %}" class="btn btn-primary">
-        <i class="bi bi-person-plus"></i> {% trans "New Patient" %}
+        <i class="bi bi-person-plus"></i> 新建患者 | New Patient
     </a>
 </div>
 
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-search"></i> {% trans "Search" %}
+                    <i class="bi bi-search"></i> 搜索 | Search
                 </button>
             </div>
         </form>
@@ -38,13 +38,13 @@
             <table class="table table-hover mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th>{% trans "Name" %}</th>
-                        <th>{% trans "IC Number" %}</th>
-                        <th>{% trans "Gender" %}</th>
-                        <th>{% trans "Phone" %}</th>
-                        <th>{% trans "Practitioner" %}</th>
-                        <th>{% trans "Last Updated" %}</th>
-                        <th>{% trans "Actions" %}</th>
+                        <th>姓名 | Name</th>
+                        <th>身份证号 | IC Number</th>
+                        <th>性别 | Gender</th>
+                        <th>电话 | Phone</th>
+                        <th>主治医师 | Practitioner</th>
+                        <th>最后更新 | Last Updated</th>
+                        <th>操作 | Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,7 +92,7 @@
             <ul class="pagination mb-0">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{% trans "First" %}</a>
+                    <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">首页 | First</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;</a>
@@ -110,7 +110,7 @@
                     <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&raquo;</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{% trans "Last" %}</a>
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">末页 | Last</a>
                 </li>
                 {% endif %}
             </ul>

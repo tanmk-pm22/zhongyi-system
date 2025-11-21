@@ -10,7 +10,7 @@
             <div class="card-body p-4">
                 <h3 class="card-title text-center mb-4">
                     <i class="bi bi-person-plus text-primary"></i>
-                    {% trans "Register" %} | 注册
+                    注册 | Register
                 </h3>
 
                 <form method="post">
@@ -18,17 +18,17 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="id_first_name" class="form-label">{% trans "First Name" %}</label>
+                            <label for="id_first_name" class="form-label">名字 | First Name</label>
                             {{ form.first_name }}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="id_last_name" class="form-label">{% trans "Last Name" %}</label>
+                            <label for="id_last_name" class="form-label">姓氏 | Last Name</label>
                             {{ form.last_name }}
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_username" class="form-label">{% trans "Username" %} *</label>
+                        <label for="id_username" class="form-label">用户名 | Username *</label>
                         {{ form.username }}
                         {% if form.username.errors %}
                         <div class="text-danger small">{{ form.username.errors }}</div>
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_email" class="form-label">{% trans "Email" %} *</label>
+                        <label for="id_email" class="form-label">电子邮箱 | Email *</label>
                         {{ form.email }}
                         {% if form.email.errors %}
                         <div class="text-danger small">{{ form.email.errors }}</div>
@@ -44,12 +44,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_phone" class="form-label">{% trans "Phone" %}</label>
+                        <label for="id_phone" class="form-label">电话 | Phone</label>
                         {{ form.phone }}
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_role" class="form-label">{% trans "Register as" %} *</label>
+                        <label for="id_role" class="form-label">注册身份 | Register as *</label>
                         {{ form.role }}
                         {% if form.role.errors %}
                         <div class="text-danger small">{{ form.role.errors }}</div>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_password1" class="form-label">{% trans "Password" %} *</label>
+                        <label for="id_password1" class="form-label">密码 | Password *</label>
                         {{ form.password1 }}
                         {% if form.password1.errors %}
                         <div class="text-danger small">{{ form.password1.errors }}</div>
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_password2" class="form-label">{% trans "Confirm Password" %} *</label>
+                        <label for="id_password2" class="form-label">确认密码 | Confirm Password *</label>
                         {{ form.password2 }}
                         {% if form.password2.errors %}
                         <div class="text-danger small">{{ form.password2.errors }}</div>
@@ -80,7 +80,7 @@
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
-                            {% trans "Register" %}
+                            注册 | Register
                         </button>
                     </div>
                 </form>
@@ -88,8 +88,8 @@
                 <hr>
 
                 <p class="text-center mb-0">
-                    {% trans "Already have an account?" %}
-                    <a href="{% url 'accounts:login' %}">{% trans "Login here" %}</a>
+                    已有账户？| Already have an account?
+                    <a href="{% url 'accounts:login' %}">在此登录 | Login here</a>
                 </p>
             </div>
         </div>

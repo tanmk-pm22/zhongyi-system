@@ -1,0 +1,542 @@
+[
+  {
+    "model": "diagnosis.symptom",
+    "pk": 1,
+    "fields": {
+      "code": "S001",
+      "name_en": "Fatigue",
+      "name_cn": "疲劳乏力",
+      "category": "general",
+      "description": "感到全身无力，精神不振",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 2,
+    "fields": {
+      "code": "S002",
+      "name_en": "Fever",
+      "name_cn": "发热",
+      "category": "general",
+      "description": "体温升高",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 3,
+    "fields": {
+      "code": "S003",
+      "name_en": "Chills",
+      "name_cn": "恶寒",
+      "category": "general",
+      "description": "畏寒怕冷",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 4,
+    "fields": {
+      "code": "S004",
+      "name_en": "Spontaneous sweating",
+      "name_cn": "自汗",
+      "category": "general",
+      "description": "白天不因劳动而汗出",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 5,
+    "fields": {
+      "code": "S005",
+      "name_en": "Night sweating",
+      "name_cn": "盗汗",
+      "category": "general",
+      "description": "睡眠时出汗，醒则汗止",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 6,
+    "fields": {
+      "code": "S006",
+      "name_en": "Headache",
+      "name_cn": "头痛",
+      "category": "head",
+      "description": "头部疼痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 7,
+    "fields": {
+      "code": "S007",
+      "name_en": "Dizziness",
+      "name_cn": "头晕",
+      "category": "head",
+      "description": "头昏眼花",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 8,
+    "fields": {
+      "code": "S008",
+      "name_en": "Tinnitus",
+      "name_cn": "耳鸣",
+      "category": "head",
+      "description": "耳中有声音",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 9,
+    "fields": {
+      "code": "S009",
+      "name_en": "Blurred vision",
+      "name_cn": "视物模糊",
+      "category": "head",
+      "description": "视力下降，看不清楚",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 10,
+    "fields": {
+      "code": "S010",
+      "name_en": "Dry eyes",
+      "name_cn": "目涩干燥",
+      "category": "head",
+      "description": "眼睛干涩不适",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 11,
+    "fields": {
+      "code": "S011",
+      "name_en": "Sore throat",
+      "name_cn": "咽痛",
+      "category": "head",
+      "description": "咽喉疼痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 12,
+    "fields": {
+      "code": "S012",
+      "name_en": "Nasal congestion",
+      "name_cn": "鼻塞",
+      "category": "head",
+      "description": "鼻孔不通畅",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 13,
+    "fields": {
+      "code": "S013",
+      "name_en": "Cough",
+      "name_cn": "咳嗽",
+      "category": "chest",
+      "description": "咳嗽",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 14,
+    "fields": {
+      "code": "S014",
+      "name_en": "Wheezing",
+      "name_cn": "喘息",
+      "category": "chest",
+      "description": "呼吸急促，喉中有哮鸣音",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 15,
+    "fields": {
+      "code": "S015",
+      "name_en": "Chest tightness",
+      "name_cn": "胸闷",
+      "category": "chest",
+      "description": "胸部憋闷不舒",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 16,
+    "fields": {
+      "code": "S016",
+      "name_en": "Heart palpitations",
+      "name_cn": "心悸",
+      "category": "chest",
+      "description": "心跳加快或不规则",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 17,
+    "fields": {
+      "code": "S017",
+      "name_en": "Abdominal distension",
+      "name_cn": "腹胀",
+      "category": "chest",
+      "description": "腹部胀满不适",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 18,
+    "fields": {
+      "code": "S018",
+      "name_en": "Abdominal pain",
+      "name_cn": "腹痛",
+      "category": "chest",
+      "description": "腹部疼痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 19,
+    "fields": {
+      "code": "S019",
+      "name_en": "Nausea",
+      "name_cn": "恶心",
+      "category": "chest",
+      "description": "欲呕吐感",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 20,
+    "fields": {
+      "code": "S020",
+      "name_en": "Vomiting",
+      "name_cn": "呕吐",
+      "category": "chest",
+      "description": "呕吐",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 21,
+    "fields": {
+      "code": "S021",
+      "name_en": "Lower back pain",
+      "name_cn": "腰痛",
+      "category": "limbs",
+      "description": "腰部酸痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 22,
+    "fields": {
+      "code": "S022",
+      "name_en": "Knee pain",
+      "name_cn": "膝痛",
+      "category": "limbs",
+      "description": "膝关节疼痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 23,
+    "fields": {
+      "code": "S023",
+      "name_en": "Limb numbness",
+      "name_cn": "四肢麻木",
+      "category": "limbs",
+      "description": "四肢麻木不仁",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 24,
+    "fields": {
+      "code": "S024",
+      "name_en": "Cold limbs",
+      "name_cn": "四肢冰冷",
+      "category": "limbs",
+      "description": "四肢冰凉",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 25,
+    "fields": {
+      "code": "S025",
+      "name_en": "Joint pain",
+      "name_cn": "关节疼痛",
+      "category": "limbs",
+      "description": "关节疼痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 26,
+    "fields": {
+      "code": "S026",
+      "name_en": "Insomnia",
+      "name_cn": "失眠",
+      "category": "sleep",
+      "description": "难以入睡或睡眠不实",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 27,
+    "fields": {
+      "code": "S027",
+      "name_en": "Dream-disturbed sleep",
+      "name_cn": "多梦",
+      "category": "sleep",
+      "description": "睡眠中多梦",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 28,
+    "fields": {
+      "code": "S028",
+      "name_en": "Excessive sleep",
+      "name_cn": "嗜睡",
+      "category": "sleep",
+      "description": "睡眠过多",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 29,
+    "fields": {
+      "code": "S029",
+      "name_en": "Poor appetite",
+      "name_cn": "食欲不振",
+      "category": "appetite",
+      "description": "不想吃东西",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 30,
+    "fields": {
+      "code": "S030",
+      "name_en": "Excessive hunger",
+      "name_cn": "多食易饥",
+      "category": "appetite",
+      "description": "吃得多但容易饿",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 31,
+    "fields": {
+      "code": "S031",
+      "name_en": "Thirst with desire for cold drinks",
+      "name_cn": "口渴喜冷饮",
+      "category": "appetite",
+      "description": "口渴想喝凉的",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 32,
+    "fields": {
+      "code": "S032",
+      "name_en": "Thirst with desire for hot drinks",
+      "name_cn": "口渴喜热饮",
+      "category": "appetite",
+      "description": "口渴想喝热的",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 33,
+    "fields": {
+      "code": "S033",
+      "name_en": "Bitter taste",
+      "name_cn": "口苦",
+      "category": "appetite",
+      "description": "口中发苦",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 34,
+    "fields": {
+      "code": "S034",
+      "name_en": "Constipation",
+      "name_cn": "便秘",
+      "category": "urination",
+      "description": "大便秘结不通",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 35,
+    "fields": {
+      "code": "S035",
+      "name_en": "Loose stools",
+      "name_cn": "大便溏薄",
+      "category": "urination",
+      "description": "大便稀溏",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 36,
+    "fields": {
+      "code": "S036",
+      "name_en": "Frequent urination",
+      "name_cn": "小便频数",
+      "category": "urination",
+      "description": "小便次数多",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 37,
+    "fields": {
+      "code": "S037",
+      "name_en": "Scanty dark urine",
+      "name_cn": "小便短赤",
+      "category": "urination",
+      "description": "小便量少色黄",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 38,
+    "fields": {
+      "code": "S038",
+      "name_en": "Irritability",
+      "name_cn": "烦躁易怒",
+      "category": "emotion",
+      "description": "心烦急躁，容易发怒",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 39,
+    "fields": {
+      "code": "S039",
+      "name_en": "Depression",
+      "name_cn": "情绪低落",
+      "category": "emotion",
+      "description": "情绪抑郁",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 40,
+    "fields": {
+      "code": "S040",
+      "name_en": "Anxiety",
+      "name_cn": "焦虑不安",
+      "category": "emotion",
+      "description": "心神不宁，焦虑",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 41,
+    "fields": {
+      "code": "S041",
+      "name_en": "Menstrual irregularity",
+      "name_cn": "月经不调",
+      "category": "gynecology",
+      "description": "月经周期、经量、经色异常",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 42,
+    "fields": {
+      "code": "S042",
+      "name_en": "Dysmenorrhea",
+      "name_cn": "痛经",
+      "category": "gynecology",
+      "description": "经期腹痛",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 43,
+    "fields": {
+      "code": "S043",
+      "name_en": "Pale complexion",
+      "name_cn": "面色苍白",
+      "category": "general",
+      "description": "面色淡白无华",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 44,
+    "fields": {
+      "code": "S044",
+      "name_en": "Shortness of breath",
+      "name_cn": "气短",
+      "category": "chest",
+      "description": "呼吸短促",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.symptom",
+    "pk": 45,
+    "fields": {
+      "code": "S045",
+      "name_en": "Dry mouth",
+      "name_cn": "口干",
+      "category": "appetite",
+      "description": "口中干燥",
+      "is_active": true
+    }
+  }
+]

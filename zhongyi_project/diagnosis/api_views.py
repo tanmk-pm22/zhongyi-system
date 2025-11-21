@@ -3,6 +3,7 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 from .models import Symptom, Syndrome, DiagnosisSession
 from .serializers import (
@@ -15,6 +16,7 @@ from .serializers import (
     SyndromeMatchSerializer,
 )
 from .analysis import analyze_symptoms
+from .ai_assistant import TCMAIAssistant
 
 
 class SymptomViewSet(viewsets.ReadOnlyModelViewSet):
@@ -118,10 +120,10 @@ class DiagnosisSessionViewSet(viewsets.ModelViewSet):
         if patient_id:
             queryset = queryset.filter(patient_id=patient_id)
 
-        # Filter by status
-        status_filter = self.request.query_params.get('status', None)
-        if status_filter:
-            queryset = queryset.filter(status=status_filter)
+        # Filter by completion status
+        is_complete = self.request.query_params.get('is_complete', None)
+        if is_complete is not None:
+            queryset = queryset.filter(is_complete=is_complete.lower() == 'true')
 
         return queryset.order_by('-created_at')
 
@@ -133,20 +135,23 @@ class DiagnosisSessionViewSet(viewsets.ModelViewSet):
         """Run AI analysis on a diagnosis session."""
         session = self.get_object()
 
-        # Prepare tongue data
+        # Prepare tongue data using actual model fields
         tongue_data = {
             'body_color': session.tongue_body_color,
-            'coating': session.tongue_coating,
-            'shape': session.tongue_shape,
-            'moisture': session.tongue_moisture,
+            'body_shape': session.tongue_body_shape,
+            'coating_color': session.tongue_coating_color,
+            'coating_texture': session.tongue_coating_texture,
         }
 
-        # Prepare pulse data
+        # Prepare pulse data using actual model fields
         pulse_data = {
-            'rate': session.pulse_rate,
-            'rhythm': session.pulse_rhythm,
-            'strength': session.pulse_strength,
-            'quality': session.pulse_quality,
+            'left_cun': session.pulse_left_cun,
+            'left_guan': session.pulse_left_guan,
+            'left_chi': session.pulse_left_chi,
+            'right_cun': session.pulse_right_cun,
+            'right_guan': session.pulse_right_guan,
+            'right_chi': session.pulse_right_chi,
+            'overall': session.pulse_overall,
         }
 
         # Run analysis
@@ -166,6 +171,46 @@ class DiagnosisSessionViewSet(viewsets.ModelViewSet):
         })
 
     @action(detail=True, methods=['post'])
+    def ai_assist(self, request, pk=None):
+        """
+        Get AI-powered diagnosis and prescription suggestions
+        获取AI辅助诊断和处方建议
+        """
+        session = self.get_object()
+        ai_assistant = TCMAIAssistant()
+
+        # Prepare diagnosis data
+        diagnosis_data = {
+            'chief_complaint': session.chief_complaint or '',
+            'tongue_body_color': session.tongue_body_color or '',
+            'tongue_coating_color': session.tongue_coating_color or '',
+            'pulse_overall': session.pulse_overall or '',
+            'notes': session.inquiry_notes or '',
+        }
+
+        # Prepare patient data
+        patient_data = None
+        if session.patient:
+            from datetime import date
+            today = date.today()
+            age = today.year - session.patient.date_of_birth.year
+            if today.month < session.patient.date_of_birth.month or \
+               (today.month == session.patient.date_of_birth.month and
+                today.day < session.patient.date_of_birth.day):
+                age -= 1
+
+            patient_data = {
+                'age': age,
+                'gender': session.patient.gender,
+            }
+
+        # Get AI suggestions
+        suggestions = ai_assistant.get_ai_suggestions(diagnosis_data, patient_data)
+        suggestions['timestamp'] = timezone.now().isoformat()
+
+        return Response(suggestions)
+
+    @action(detail=True, methods=['post'])
     def complete(self, request, pk=None):
         """Mark a diagnosis session as completed."""
         session = self.get_object()
@@ -174,7 +219,7 @@ class DiagnosisSessionViewSet(viewsets.ModelViewSet):
 
         session.final_diagnosis = final_diagnosis
         session.treatment_principle = treatment_principle
-        session.status = 'completed'
+        session.is_complete = True
         session.save()
 
         return Response(DiagnosisSessionSerializer(session).data)

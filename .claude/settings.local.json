@@ -1,16 +1,22 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python -m venv:*)",
-      "Bash(py:*)",
-      "Bash(where:*)",
-      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" -m pip install --upgrade pip)",
-      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" \"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\manage.py\" runserver:*)",
-      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" \"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\manage.py\" makemigrations:*)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" \"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\final_verification.py\")",
+      "Bash(python:*)",
+      "Bash(venvScriptspython test_prescription_patent_medicine.py)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" \"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\test_prescription_patent_medicine.py\")",
       "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\":*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(start cmd /k \"venv\\Scripts\\python.exe manage.py runserver\")",
+      "Bash(timeout /t 3:*)",
+      "Bash(nul)",
+      "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" manage.py runserver)",
+      "Bash(ping:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
     ],
     "deny": [],
     "ask": []

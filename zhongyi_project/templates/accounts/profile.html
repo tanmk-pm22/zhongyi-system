@@ -10,7 +10,7 @@
             <div class="card-header">
                 <h5 class="mb-0">
                     <i class="bi bi-person"></i>
-                    {% trans "Profile Settings" %} | 个人资料
+                    个人资料设置 | Profile Settings
                 </h5>
             </div>
             <div class="card-body">
@@ -19,44 +19,44 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "First Name" %}</label>
+                            <label class="form-label">名字 | First Name</label>
                             {{ form.first_name }}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "Last Name" %}</label>
+                            <label class="form-label">姓氏 | Last Name</label>
                             {{ form.last_name }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "Email" %}</label>
+                            <label class="form-label">电子邮箱 | Email</label>
                             {{ form.email }}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "Phone" %}</label>
+                            <label class="form-label">电话 | Phone</label>
                             {{ form.phone }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "IC/Passport" %}</label>
+                            <label class="form-label">身份证/护照 | IC/Passport</label>
                             {{ form.ic_number }}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "Date of Birth" %}</label>
+                            <label class="form-label">出生日期 | Date of Birth</label>
                             {{ form.date_of_birth }}
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">{% trans "Address" %}</label>
+                        <label class="form-label">地址 | Address</label>
                         {{ form.address }}
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">{% trans "Profile Photo" %}</label>
+                        <label class="form-label">个人照片 | Profile Photo</label>
                         {{ form.profile_photo }}
                         {% if user.profile_photo %}
                         <div class="mt-2">
@@ -67,28 +67,28 @@
 
                     {% if user.is_practitioner %}
                     <hr>
-                    <h6 class="mb-3">{% trans "Practitioner Information" %} | 执业信息</h6>
+                    <h6 class="mb-3">执业信息 | Practitioner Information</h6>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "License Number" %}</label>
+                            <label class="form-label">执照号码 | License Number</label>
                             {{ form.license_number }}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">{% trans "Specialization" %}</label>
+                            <label class="form-label">专业领域 | Specialization</label>
                             {{ form.specialization }}
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">{% trans "Clinic Name" %}</label>
+                        <label class="form-label">诊所名称 | Clinic Name</label>
                         {{ form.clinic_name }}
                     </div>
                     {% endif %}
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-check-lg"></i> {% trans "Save Changes" %}
+                            <i class="bi bi-check-lg"></i> 保存更改 | Save Changes
                         </button>
                     </div>
                 </form>

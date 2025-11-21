@@ -1,0 +1,274 @@
+[
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 1,
+    "fields": {
+      "code": "SYN001",
+      "name_en": "Qi Deficiency",
+      "name_cn": "气虚证",
+      "category": "qi",
+      "description": "元气不足，脏腑功能衰退",
+      "etiology": "先天禀赋不足，后天失养，劳倦过度，久病耗损",
+      "clinical_manifestations": "神疲乏力，少气懒言，语声低微，自汗，头晕目眩，心悸，食少，便溏",
+      "tongue_signs": "舌淡苔白",
+      "pulse_signs": "脉虚弱",
+      "treatment_principle": "补气",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 2,
+    "fields": {
+      "code": "SYN002",
+      "name_en": "Qi Stagnation",
+      "name_cn": "气滞证",
+      "category": "qi",
+      "description": "气机郁滞，运行不畅",
+      "etiology": "情志不遂，饮食失调，外邪侵袭，跌仆损伤",
+      "clinical_manifestations": "胸胁、脘腹胀闷疼痛，痛无定处，时轻时重，嗳气，善太息",
+      "tongue_signs": "舌淡苔白",
+      "pulse_signs": "脉弦",
+      "treatment_principle": "行气",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 3,
+    "fields": {
+      "code": "SYN003",
+      "name_en": "Blood Deficiency",
+      "name_cn": "血虚证",
+      "category": "blood",
+      "description": "血液亏虚，脏腑组织失养",
+      "etiology": "失血过多，生血不足，久病耗损",
+      "clinical_manifestations": "面色萎黄或淡白，唇舌色淡，头晕眼花，心悸失眠，手足麻木，妇女月经量少、色淡、延期",
+      "tongue_signs": "舌淡苔薄白",
+      "pulse_signs": "脉细无力",
+      "treatment_principle": "补血",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 4,
+    "fields": {
+      "code": "SYN004",
+      "name_en": "Blood Stasis",
+      "name_cn": "血瘀证",
+      "category": "blood",
+      "description": "血行不畅，瘀血内阻",
+      "etiology": "气滞、气虚、寒凝、热灼、外伤等",
+      "clinical_manifestations": "刺痛，痛有定处，拒按，夜间加重，肿块，出血色暗有血块，面色晦暗，唇舌紫暗，肌肤甲错",
+      "tongue_signs": "舌紫暗或有瘀斑瘀点",
+      "pulse_signs": "脉涩或结代",
+      "treatment_principle": "活血化瘀",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 5,
+    "fields": {
+      "code": "SYN005",
+      "name_en": "Yin Deficiency",
+      "name_cn": "阴虚证",
+      "category": "yin_yang",
+      "description": "阴液亏虚，阴不制阳",
+      "etiology": "热病伤阴，久病耗阴，房劳过度，汗下太过",
+      "clinical_manifestations": "形体消瘦，两颧潮红，口燥咽干，五心烦热，潮热盗汗，小便短黄，大便干结",
+      "tongue_signs": "舌红少苔或无苔",
+      "pulse_signs": "脉细数",
+      "treatment_principle": "滋阴",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 6,
+    "fields": {
+      "code": "SYN006",
+      "name_en": "Yang Deficiency",
+      "name_cn": "阳虚证",
+      "category": "yin_yang",
+      "description": "阳气不足，温煦失职",
+      "etiology": "先天禀赋不足，劳倦内伤，久病耗损",
+      "clinical_manifestations": "畏寒肢冷，面色苍白，神疲乏力，蜷卧喜暖，口淡不渴或喜热饮，小便清长，大便稀溏",
+      "tongue_signs": "舌淡胖嫩苔白滑",
+      "pulse_signs": "脉沉迟无力",
+      "treatment_principle": "温阳",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 7,
+    "fields": {
+      "code": "SYN007",
+      "name_en": "Phlegm-Dampness",
+      "name_cn": "痰湿证",
+      "category": "fluid",
+      "description": "痰湿内盛",
+      "etiology": "外感湿邪，饮食不节，脾失健运",
+      "clinical_manifestations": "形体肥胖，头身困重，胸闷脘痞，痰多，口黏腻，嗜睡",
+      "tongue_signs": "舌淡胖苔白腻",
+      "pulse_signs": "脉滑",
+      "treatment_principle": "燥湿化痰",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 8,
+    "fields": {
+      "code": "SYN008",
+      "name_en": "Dampness-Heat",
+      "name_cn": "湿热证",
+      "category": "fluid",
+      "description": "湿热蕴结",
+      "etiology": "外感湿热，饮食不节，脾虚湿蕴化热",
+      "clinical_manifestations": "身热不扬，汗出不解，脘痞纳呆，恶心呕吐，腹胀，便溏不爽，小便短赤，肢体困重",
+      "tongue_signs": "舌红苔黄腻",
+      "pulse_signs": "脉濡数或滑数",
+      "treatment_principle": "清热利湿",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 9,
+    "fields": {
+      "code": "SYN009",
+      "name_en": "Liver Qi Stagnation",
+      "name_cn": "肝气郁结证",
+      "category": "organ",
+      "description": "肝失疏泄，气机郁滞",
+      "etiology": "情志不遂，抑郁恼怒",
+      "clinical_manifestations": "胸胁或少腹胀痛窜痛，善太息，情志抑郁或易怒，咽部有异物感，妇女乳房胀痛，月经不调",
+      "tongue_signs": "舌淡红苔薄白",
+      "pulse_signs": "脉弦",
+      "treatment_principle": "疏肝理气",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 10,
+    "fields": {
+      "code": "SYN010",
+      "name_en": "Liver Fire Flaming Up",
+      "name_cn": "肝火上炎证",
+      "category": "organ",
+      "description": "肝火上炎于头目",
+      "etiology": "肝郁化火，暴怒伤肝",
+      "clinical_manifestations": "头晕胀痛，面红目赤，口苦口干，急躁易怒，耳鸣如潮，便秘尿黄",
+      "tongue_signs": "舌红苔黄",
+      "pulse_signs": "脉弦数",
+      "treatment_principle": "清肝泻火",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 11,
+    "fields": {
+      "code": "SYN011",
+      "name_en": "Heart Blood Deficiency",
+      "name_cn": "心血虚证",
+      "category": "organ",
+      "description": "心血不足，心失所养",
+      "etiology": "失血过多，久病耗伤，思虑过度",
+      "clinical_manifestations": "心悸怔忡，失眠多梦，健忘，眩晕，面色淡白无华",
+      "tongue_signs": "舌淡苔薄白",
+      "pulse_signs": "脉细弱",
+      "treatment_principle": "养血安神",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 12,
+    "fields": {
+      "code": "SYN012",
+      "name_en": "Spleen Qi Deficiency",
+      "name_cn": "脾气虚证",
+      "category": "organ",
+      "description": "脾气虚弱，运化无力",
+      "etiology": "饮食不节，劳倦过度，思虑伤脾，久病耗损",
+      "clinical_manifestations": "食少纳呆，腹胀便溏，神疲乏力，少气懒言，面色萎黄，肢体浮肿",
+      "tongue_signs": "舌淡苔白",
+      "pulse_signs": "脉缓弱",
+      "treatment_principle": "健脾益气",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 13,
+    "fields": {
+      "code": "SYN013",
+      "name_en": "Kidney Yang Deficiency",
+      "name_cn": "肾阳虚证",
+      "category": "organ",
+      "description": "肾阳虚衰，温煦失职",
+      "etiology": "先天禀赋不足，年老体衰，久病伤阳，房劳过度",
+      "clinical_manifestations": "腰膝酸软冷痛，畏寒肢冷，精神萎靡，小便清长或夜尿多，阳痿早泄，宫寒不孕，五更泄泻",
+      "tongue_signs": "舌淡胖苔白",
+      "pulse_signs": "脉沉迟无力",
+      "treatment_principle": "温补肾阳",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 14,
+    "fields": {
+      "code": "SYN014",
+      "name_en": "Kidney Yin Deficiency",
+      "name_cn": "肾阴虚证",
+      "category": "organ",
+      "description": "肾阴亏虚，虚热内扰",
+      "etiology": "久病伤阴，房劳过度，温热病后期",
+      "clinical_manifestations": "腰膝酸软，头晕耳鸣，失眠多梦，五心烦热，潮热盗汗，遗精早泄，咽干口燥",
+      "tongue_signs": "舌红少苔",
+      "pulse_signs": "脉细数",
+      "treatment_principle": "滋补肾阴",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 15,
+    "fields": {
+      "code": "SYN015",
+      "name_en": "Wind-Cold Exterior Syndrome",
+      "name_cn": "风寒表证",
+      "category": "exterior",
+      "description": "风寒邪气侵袭肌表",
+      "etiology": "外感风寒之邪",
+      "clinical_manifestations": "恶寒重发热轻，无汗，头身疼痛，鼻塞流清涕，咳嗽痰稀白，口不渴",
+      "tongue_signs": "舌淡苔薄白",
+      "pulse_signs": "脉浮紧",
+      "treatment_principle": "辛温解表",
+      "is_active": true
+    }
+  },
+  {
+    "model": "diagnosis.syndrome",
+    "pk": 16,
+    "fields": {
+      "code": "SYN016",
+      "name_en": "Wind-Heat Exterior Syndrome",
+      "name_cn": "风热表证",
+      "category": "exterior",
+      "description": "风热邪气侵袭肌表",
+      "etiology": "外感风热之邪",
+      "clinical_manifestations": "发热重恶寒轻，有汗或少汗，头痛，咽喉肿痛，口渴，咳嗽痰黄稠，鼻塞流黄涕",
+      "tongue_signs": "舌尖红苔薄黄",
+      "pulse_signs": "脉浮数",
+      "treatment_principle": "辛凉解表",
+      "is_active": true
+    }
+  }
+]

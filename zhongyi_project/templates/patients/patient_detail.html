@@ -14,14 +14,17 @@
     </h2>
     <div>
         <a href="{% url 'patients:update' patient.pk %}" class="btn btn-outline-primary">
-            <i class="bi bi-pencil"></i> {% trans "Edit" %}
+            <i class="bi bi-pencil"></i> 编辑 | Edit
         </a>
         <a href="{% url 'patients:record_create' patient.pk %}" class="btn btn-success">
-            <i class="bi bi-file-plus"></i> {% trans "New Record" %}
+            <i class="bi bi-file-plus"></i> 新建病历 | New Record
+        </a>
+        <a href="{% url 'prescriptions:create' patient.pk %}" class="btn btn-primary">
+            <i class="bi bi-prescription2"></i> 开方 | New Prescription
         </a>
         {% if user.is_staff or user.is_admin %}
         <a href="{% url 'patients:delete' patient.pk %}" class="btn btn-outline-danger">
-            <i class="bi bi-archive"></i> {% trans "Archive" %}
+            <i class="bi bi-archive"></i> 归档 | Archive
         </a>
         {% endif %}
     </div>
@@ -32,22 +35,22 @@
     <div class="col-md-8">
         <div class="card shadow-sm mb-4">
             <div class="card-header">
-                <h5 class="mb-0">{% trans "Basic Information" %} | 基本信息</h5>
+                <h5 class="mb-0">基本信息 | Basic Information</h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>{% trans "IC/Passport" %}:</strong> {{ patient.ic_number }}</p>
-                        <p><strong>{% trans "Date of Birth" %}:</strong> {{ patient.date_of_birth|date:"Y-m-d" }}</p>
-                        <p><strong>{% trans "Age" %}:</strong> {{ patient.age }} {% trans "years" %}</p>
-                        <p><strong>{% trans "Gender" %}:</strong> {{ patient.get_gender_display }}</p>
-                        <p><strong>{% trans "Blood Type" %}:</strong> {{ patient.get_blood_type_display }}</p>
+                        <p><strong>身份证/护照 | IC/Passport:</strong> {{ patient.ic_number }}</p>
+                        <p><strong>出生日期 | Date of Birth:</strong> {{ patient.date_of_birth|date:"Y-m-d" }}</p>
+                        <p><strong>年龄 | Age:</strong> {{ patient.age }} 岁</p>
+                        <p><strong>性别 | Gender:</strong> {{ patient.get_gender_display }}</p>
+                        <p><strong>血型 | Blood Type:</strong> {{ patient.get_blood_type_display }}</p>
                     </div>
                     <div class="col-md-6">
-                        <p><strong>{% trans "Phone" %}:</strong> {{ patient.phone }}</p>
-                        <p><strong>{% trans "Email" %}:</strong> {{ patient.email|default:"-" }}</p>
-                        <p><strong>{% trans "Address" %}:</strong> {{ patient.address }}</p>
-                        <p><strong>{% trans "Emergency Contact" %}:</strong><br>
+                        <p><strong>电话 | Phone:</strong> {{ patient.phone }}</p>
+                        <p><strong>电子邮箱 | Email:</strong> {{ patient.email|default:"-" }}</p>
+                        <p><strong>地址 | Address:</strong> {{ patient.address }}</p>
+                        <p><strong>紧急联系人 | Emergency Contact:</strong><br>
                             {{ patient.emergency_contact_name|default:"-" }} / {{ patient.emergency_contact_phone|default:"-" }}
                         </p>
                     </div>
@@ -58,35 +61,35 @@
         <!-- Medical Information -->
         <div class="card shadow-sm mb-4">
             <div class="card-header">
-                <h5 class="mb-0">{% trans "Medical Information" %} | 医疗信息</h5>
+                <h5 class="mb-0">医疗信息 | Medical Information</h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h6 class="text-danger">{% trans "Allergies" %} (过敏史)</h6>
+                        <h6 class="text-danger">过敏史 | Allergies</h6>
                         <p class="text-muted">{{ patient.allergies|default:"-"|linebreaks }}</p>
 
-                        <h6>{% trans "Chronic Conditions" %} (慢性疾病)</h6>
+                        <h6>慢性疾病 | Chronic Conditions</h6>
                         <p class="text-muted">{{ patient.chronic_conditions|default:"-"|linebreaks }}</p>
 
-                        <h6>{% trans "Current Medications" %} (目前用药)</h6>
+                        <h6>目前用药 | Current Medications</h6>
                         <p class="text-muted">{{ patient.current_medications|default:"-"|linebreaks }}</p>
                     </div>
                     <div class="col-md-6">
-                        <h6>{% trans "Medical History" %} (病史)</h6>
+                        <h6>病史 | Medical History</h6>
                         <p class="text-muted">{{ patient.medical_history|default:"-"|linebreaks }}</p>
 
-                        <h6>{% trans "Family History" %} (家族史)</h6>
+                        <h6>家族史 | Family History</h6>
                         <p class="text-muted">{{ patient.family_history|default:"-"|linebreaks }}</p>
 
-                        <h6>{% trans "TCM Constitution" %} (中医体质)</h6>
+                        <h6>中医体质 | TCM Constitution</h6>
                         <p class="text-muted">{{ patient.tcm_constitution|default:"-" }}</p>
                     </div>
                 </div>
 
                 {% if patient.notes %}
                 <hr>
-                <h6>{% trans "Additional Notes" %}</h6>
+                <h6>额外备注 | Additional Notes</h6>
                 <p class="text-muted">{{ patient.notes|linebreaks }}</p>
                 {% endif %}
             </div>
@@ -95,9 +98,9 @@
         <!-- Medical Records -->
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">{% trans "Medical Records" %} | 病历</h5>
+                <h5 class="mb-0">病历记录 | Medical Records</h5>
                 <a href="{% url 'patients:record_create' patient.pk %}" class="btn btn-sm btn-success">
-                    <i class="bi bi-plus"></i> {% trans "New" %}
+                    <i class="bi bi-plus"></i> 新建 | New
                 </a>
             </div>
             <div class="card-body p-0">
@@ -114,14 +117,14 @@
                         </div>
                         <p class="mb-1 text-muted">{{ record.chief_complaint|truncatewords:30 }}</p>
                         {% if record.tcm_diagnosis %}
-                        <small class="text-primary">{% trans "Diagnosis" %}: {{ record.tcm_diagnosis|truncatewords:15 }}</small>
+                        <small class="text-primary">诊断 | Diagnosis: {{ record.tcm_diagnosis|truncatewords:15 }}</small>
                         {% endif %}
                     </a>
                     {% endfor %}
                 </div>
                 {% else %}
                 <p class="text-center text-muted py-4 mb-0">
-                    {% trans "No medical records yet." %}
+                    暂无病历记录 | No medical records yet.
                 </p>
                 {% endif %}
             </div>
@@ -133,12 +136,12 @@
         <!-- QR Code -->
         <div class="card shadow-sm mb-4">
             <div class="card-header">
-                <h5 class="mb-0">{% trans "QR Code" %} | 二维码</h5>
+                <h5 class="mb-0">二维码 | QR Code</h5>
             </div>
             <div class="card-body text-center">
                 <img src="{% url 'patients:qrcode' patient.pk %}" alt="QR Code" class="img-fluid mb-2" style="max-width: 200px;">
                 <p class="small text-muted mb-0">
-                    {% trans "Patient ID" %}: {{ patient.patient_id }}
+                    患者ID | Patient ID: {{ patient.patient_id }}
                 </p>
             </div>
         </div>
@@ -146,7 +149,7 @@
         <!-- Assigned Practitioner -->
         <div class="card shadow-sm mb-4">
             <div class="card-header">
-                <h5 class="mb-0">{% trans "Assigned Practitioner" %}</h5>
+                <h5 class="mb-0">主治医师 | Assigned Practitioner</h5>
             </div>
             <div class="card-body">
                 {% if patient.assigned_practitioner %}
@@ -154,7 +157,7 @@
                 <p class="text-muted mb-1">{{ patient.assigned_practitioner.specialization|default:"-" }}</p>
                 <p class="text-muted mb-0 small">{{ patient.assigned_practitioner.clinic_name|default:"-" }}</p>
                 {% else %}
-                <p class="text-muted mb-0">{% trans "Not assigned" %}</p>
+                <p class="text-muted mb-0">未分配 | Not assigned</p>
                 {% endif %}
             </div>
         </div>
@@ -162,19 +165,19 @@
         <!-- Data Consent -->
         <div class="card shadow-sm">
             <div class="card-header">
-                <h5 class="mb-0">{% trans "Data Consent" %} | 数据同意</h5>
+                <h5 class="mb-0">数据使用同意 | Data Consent</h5>
             </div>
             <div class="card-body">
                 <p class="mb-1">
                     {% if patient.consent_data_sharing %}
-                    <span class="badge bg-success">{% trans "Consented" %}</span>
+                    <span class="badge bg-success">已同意 | Consented</span>
                     {% else %}
-                    <span class="badge bg-warning">{% trans "Not Consented" %}</span>
+                    <span class="badge bg-warning">未同意 | Not Consented</span>
                     {% endif %}
                 </p>
                 {% if patient.consent_date %}
                 <p class="text-muted small mb-0">
-                    {% trans "Date" %}: {{ patient.consent_date|date:"Y-m-d" }}
+                    日期 | Date: {{ patient.consent_date|date:"Y-m-d" }}
                 </p>
                 {% endif %}
             </div>

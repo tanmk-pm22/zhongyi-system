@@ -68,7 +68,8 @@ class PatientDetailView(LoginRequiredMixin, PractitionerRequiredMixin, DetailVie
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['medical_records'] = self.object.medical_records.all()[:10]
+        # Show latest medical records first
+        context['medical_records'] = self.object.medical_records.select_related('practitioner').order_by('-visit_date')[:10]
         return context
 
 

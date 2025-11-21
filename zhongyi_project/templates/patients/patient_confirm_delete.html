@@ -24,7 +24,7 @@
             </div>
             <div class="card-footer d-flex justify-content-between">
                 <a href="{% url 'patients:detail' object.pk %}" class="btn btn-outline-secondary">
-                    <i class="bi bi-x"></i> {% trans "Cancel" %}
+                    <i class="bi bi-x"></i> 取消 | Cancel
                 </a>
                 <form method="post">
                     {% csrf_token %}
