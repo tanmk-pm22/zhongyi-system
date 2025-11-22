@@ -5,7 +5,10 @@
       "Bash(\"C:\\Users\\User\\Documents\\GitHub\\zhongyi-system\\zhongyi_project\\venv\\Scripts\\python.exe\" -X utf8 final_acupuncture_test.py)",
       "Bash(\"../zhongyi_project/venv/Scripts/python.exe\" -X utf8 test_acupoint_library.py)",
       "Bash(\"../zhongyi_project/venv/Scripts/python.exe\" -X utf8 final_acupuncture_test.py)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd complete acupuncture module with AI recommendation system\n\n添加完整的针灸模块，包含以下功能：\n- 针灸治疗记录管理（创建、编辑、查看、删除）\n- 穴位图库系统（10个常用穴位详细资料）\n- AI智能推荐系统（基于主诉和证型推荐穴位）\n- 搜索和筛选功能（按穴位代码、名称、主治、经络）\n- 双语界面（中文 | English）\n\nFeatures:\n- Acupuncture session management (CRUD operations)\n- Acupoint library with 10 common points\n- AI-powered acupoint recommendation system\n- Search and filter by code, name, indications, meridian\n- Bilingual UI (Chinese | English)\n\n包含穴位：合谷(LI4), 足三里(ST36), 太冲(LR3), 内关(PC6), 三阴交(SP6),\n风池(GB20), 百会(GV20), 神门(HT7), 肾俞(BL23), 关元(CV4)\n\n✅ All tests passed\n✅ 所有测试通过\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
