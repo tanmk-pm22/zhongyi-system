@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'patients',
     'diagnosis',
     'prescriptions',
+    'acupuncture',
     'api',
 ]
 

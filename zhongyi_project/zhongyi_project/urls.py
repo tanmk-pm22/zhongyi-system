@@ -21,6 +21,7 @@ urlpatterns += i18n_patterns(
     path('patients/', include('patients.urls')),
     path('diagnosis/', include('diagnosis.urls')),
     path('prescriptions/', include('prescriptions.urls')),
+    path('acupuncture/', include('acupuncture.urls')),
     path('api/', include('api.urls')),
     prefix_default_language=False,
 )

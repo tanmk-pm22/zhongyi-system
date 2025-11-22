@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}穴位图库 | Acupoint Library{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-book"></i> 穴位图库 | Acupoint Library</h2>
+        <div>
+            <a href="{% url 'acupuncture:list' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> 返回治疗记录 | Back to Sessions
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter and Search -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">经络筛选 | Filter by Meridian</label>
+                    <select name="meridian" class="form-select" onchange="this.form.submit()">
+                        <option value="">全部经络 | All Meridians</option>
+                        {% for value, label in meridian_choices %}
+                        <option value="{{ value }}" {% if selected_meridian == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">搜索穴位 | Search Acupoints</label>
+                    <input type="text" name="search" class="form-control"
+                           placeholder="穴位编码、中文名、拼音、功效... | Code, name, indications..."
+                           value="{{ request.GET.search }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> 搜索 | Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Acupoint Grid -->
+    {% if acupoints %}
+    <div class="row">
+        {% for acupoint in acupoints %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm hover-shadow">
+                <a href="{% url 'acupuncture:acupoint_detail' acupoint.code %}" class="text-decoration-none">
+                    {% if acupoint.image_2d %}
+                    <img src="{{ acupoint.image_2d.url }}" class="card-img-top" alt="{{ acupoint.chinese_name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <div class="text-center text-muted">
+                            <i class="bi bi-image" style="font-size: 3rem;"></i>
+                            <p class="mb-0 mt-2">暂无图片 | No Image</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">
+                            {{ acupoint.code }} - {{ acupoint.chinese_name }}
+                        </h5>
+                        <p class="card-text small text-muted">
+                            <strong>拼音 | Pinyin:</strong> {{ acupoint.pinyin_name }}<br>
+                            {% if acupoint.english_name %}
+                            <strong>English:</strong> {{ acupoint.english_name }}<br>
+                            {% endif %}
+                            <strong>经络 | Meridian:</strong> {{ acupoint.get_meridian_display }}
+                        </p>
+                        <p class="card-text small">
+                            <strong>主治 | Indications:</strong><br>
+                            {{ acupoint.indications|truncatewords:15 }}
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-primary">
+                            <i class="bi bi-eye"></i> 查看详情 | View Details
+                        </small>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.meridian %}&meridian={{ request.GET.meridian }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    上一页 | Previous
+                </a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            </li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.meridian %}&meridian={{ request.GET.meridian }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                    下一页 | Next
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <p class="text-muted mt-3">暂无穴位数据 | No acupoints found.</p>
+            <p class="text-muted">请联系管理员添加穴位数据 | Please contact admin to add acupoint data.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.hover-shadow {
+    transition: box-shadow 0.3s ease;
+}
+.hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+</style>
+{% endblock %}

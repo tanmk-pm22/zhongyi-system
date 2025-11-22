@@ -47,6 +47,11 @@
                                 <i class="bi bi-prescription2"></i> 处方 | Prescriptions
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.app_name == 'acupuncture' %}active{% endif %}" href="{% url 'acupuncture:list' %}">
+                                <i class="bi bi-activity"></i> 针灸 | Acupuncture
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-book"></i> 药品库 | Medicine Library

@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}针灸治疗 | Acupuncture Session{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+<h2 class="mb-4">
+    <i class="bi bi-activity"></i> 针灸治疗详情 | Acupuncture Session Details
+</h2>
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{{ session.patient }} - {{ session.session_date }}</h5>
+        <div>
+            <a href="{% url 'acupuncture:update' session.pk %}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-pencil"></i> 编辑 | Edit
+            </a>
+            <a href="{% url 'acupuncture:delete' session.pk %}" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i> 删除 | Delete
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Basic Info -->
+        <h6 class="border-bottom pb-2 mb-3">基本信息 | Basic Information</h6>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <p><strong>患者 | Patient:</strong>
+                    <a href="{% url 'patients:detail' session.patient.pk %}">{{ session.patient }}</a>
+                </p>
+                <p><strong>治疗日期 | Date:</strong> {{ session.session_date|date:"Y年m月d日" }}</p>
+                <p><strong>治疗类型 | Type:</strong>
+                    <span class="badge bg-info">{{ session.get_treatment_type_display }}</span>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>治疗医师 | Practitioner:</strong>
+                    {% if session.assigned_practitioner %}
+                        {{ session.assigned_practitioner.get_full_name }}
+                    {% else %}
+                        <span class="text-muted">-</span>
+                    {% endif %}
+                </p>
+                <p><strong>创建时间 | Created:</strong> {{ session.created_at|date:"Y-m-d H:i" }}</p>
+                <p><strong>更新时间 | Updated:</strong> {{ session.updated_at|date:"Y-m-d H:i" }}</p>
+            </div>
+        </div>
+
+        <!-- Diagnosis -->
+        <h6 class="border-bottom pb-2 mb-3">诊断信息 | Diagnosis</h6>
+        <div class="row mb-4">
+            <div class="col-md-12 mb-3">
+                <p><strong>主诉 | Chief Complaint:</strong></p>
+                <p class="ms-3">{{ session.chief_complaint }}</p>
+            </div>
+            <div class="col-md-12">
+                <p><strong>中医诊断 | TCM Diagnosis:</strong></p>
+                <p class="ms-3">{{ session.tcm_diagnosis }}</p>
+            </div>
+        </div>
+
+        <!-- Treatment -->
+        <h6 class="border-bottom pb-2 mb-3">治疗详情 | Treatment Details</h6>
+        <div class="row mb-4">
+            <div class="col-md-12 mb-3">
+                <p><strong>使用穴位 | Acupoints Used:</strong></p>
+                <p class="ms-3">{{ session.acupoints_used|linebreaksbr }}</p>
+                {% if session.get_acupoints_list %}
+                <div class="ms-3">
+                    {% for point in session.get_acupoints_list %}
+                    <span class="badge bg-secondary me-1">{{ point }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                <p><strong>留针时间 | Retention Time:</strong> {{ session.get_needle_retention_time_display }}</p>
+            </div>
+            {% if session.technique_notes %}
+            <div class="col-md-12 mb-3">
+                <p><strong>手法备注 | Technique Notes:</strong></p>
+                <p class="ms-3">{{ session.technique_notes|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+            <div class="col-md-12">
+                <p><strong>辅助治疗 | Additional Treatments:</strong></p>
+                <div class="ms-3">
+                    {% if session.get_additional_treatments %}
+                        {% for treatment in session.get_additional_treatments %}
+                        <span class="badge bg-success me-1">{{ treatment }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="text-muted">无 | None</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Response -->
+        <h6 class="border-bottom pb-2 mb-3">治疗反应 | Treatment Response</h6>
+        <div class="row mb-4">
+            {% if session.patient_response %}
+            <div class="col-md-6 mb-3">
+                <p><strong>患者反应 | Patient Response:</strong>
+                    <span class="badge
+                        {% if session.patient_response == 'excellent' %}bg-success
+                        {% elif session.patient_response == 'good' %}bg-primary
+                        {% elif session.patient_response == 'fair' %}bg-warning
+                        {% else %}bg-secondary{% endif %}">
+                        {{ session.get_patient_response_display }}
+                    </span>
+                </p>
+            </div>
+            {% endif %}
+            {% if session.treatment_notes %}
+            <div class="col-md-12">
+                <p><strong>治疗备注 | Treatment Notes:</strong></p>
+                <p class="ms-3">{{ session.treatment_notes|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Follow-up -->
+        <h6 class="border-bottom pb-2 mb-3">随访计划 | Follow-up Plan</h6>
+        <div class="row">
+            {% if session.next_session_date %}
+            <div class="col-md-6 mb-3">
+                <p><strong>下次治疗日期 | Next Session:</strong>
+                    <i class="bi bi-calendar-event"></i> {{ session.next_session_date|date:"Y年m月d日" }}
+                </p>
+            </div>
+            {% endif %}
+            {% if session.session_fee %}
+            <div class="col-md-6 mb-3">
+                <p><strong>治疗费用 | Session Fee:</strong> RM {{ session.session_fee }}</p>
+            </div>
+            {% endif %}
+            {% if session.treatment_plan %}
+            <div class="col-md-12">
+                <p><strong>治疗计划 | Treatment Plan:</strong></p>
+                <p class="ms-3">{{ session.treatment_plan|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'acupuncture:list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回列表 | Back to List
+        </a>
+    </div>
+</div>
+</div>
+{% endblock %}

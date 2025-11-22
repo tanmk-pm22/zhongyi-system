@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ acupoint.code }} - {{ acupoint.chinese_name }} | 穴位详情{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="bi bi-geo-alt-fill"></i>
+            {{ acupoint.code }} - {{ acupoint.chinese_name }}
+            <span class="text-muted fs-5">({{ acupoint.pinyin_name }})</span>
+        </h2>
+        <a href="{% url 'acupuncture:library' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回图库 | Back to Library
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Left Column: Images -->
+        <div class="col-md-5">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">穴位图解 | Acupoint Illustrations</h5>
+                </div>
+                <div class="card-body">
+                    {% if acupoint.image_2d or acupoint.image_3d %}
+                    <!-- Image Tabs -->
+                    <ul class="nav nav-tabs mb-3" role="tablist">
+                        {% if acupoint.image_2d %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#image2d" type="button">
+                                2D图片 | 2D Image
+                            </button>
+                        </li>
+                        {% endif %}
+                        {% if acupoint.image_3d %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link {% if not acupoint.image_2d %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#image3d" type="button">
+                                3D图片 | 3D Image
+                            </button>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div class="tab-content">
+                        {% if acupoint.image_2d %}
+                        <div class="tab-pane fade show active" id="image2d">
+                            <img src="{{ acupoint.image_2d.url }}" class="img-fluid rounded" alt="{{ acupoint.chinese_name }} 2D">
+                        </div>
+                        {% endif %}
+                        {% if acupoint.image_3d %}
+                        <div class="tab-pane fade {% if not acupoint.image_2d %}show active{% endif %}" id="image3d">
+                            <img src="{{ acupoint.image_3d.url }}" class="img-fluid rounded" alt="{{ acupoint.chinese_name }} 3D">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-image text-muted" style="font-size: 5rem;"></i>
+                        <p class="text-muted mt-3">暂无图片 | No images available</p>
+                    </div>
+                    {% endif %}
+
+                    {% if acupoint.video_url %}
+                    <div class="mt-3">
+                        <a href="{{ acupoint.video_url }}" target="_blank" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-play-circle"></i> 观看演示视频 | Watch Demo Video
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Details -->
+        <div class="col-md-7">
+            <!-- Basic Info -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">基本信息 | Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">穴位编码 | Code:</dt>
+                        <dd class="col-sm-8"><span class="badge bg-primary fs-6">{{ acupoint.code }}</span></dd>
+
+                        <dt class="col-sm-4">中文名 | Chinese:</dt>
+                        <dd class="col-sm-8">{{ acupoint.chinese_name }}</dd>
+
+                        <dt class="col-sm-4">拼音 | Pinyin:</dt>
+                        <dd class="col-sm-8">{{ acupoint.pinyin_name }}</dd>
+
+                        {% if acupoint.english_name %}
+                        <dt class="col-sm-4">English Name:</dt>
+                        <dd class="col-sm-8">{{ acupoint.english_name }}</dd>
+                        {% endif %}
+
+                        <dt class="col-sm-4">所属经络 | Meridian:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-success">{{ acupoint.get_meridian_display }}</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">定位 | Location</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>中文 | Chinese:</strong></p>
+                    <p class="ms-3">{{ acupoint.location_chinese|linebreaksbr }}</p>
+                    {% if acupoint.location_english %}
+                    <p><strong>English:</strong></p>
+                    <p class="ms-3">{{ acupoint.location_english|linebreaksbr }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Functions and Indications -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">功效与主治 | Functions & Indications</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>功效 | Functions:</strong></p>
+                    <p class="ms-3">{{ acupoint.functions|linebreaksbr }}</p>
+
+                    <hr>
+
+                    <p><strong>主治 | Indications:</strong></p>
+                    <p class="ms-3">{{ acupoint.indications|linebreaksbr }}</p>
+                </div>
+            </div>
+
+            <!-- Needling Techniques -->
+            {% if acupoint.techniques %}
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">针刺方法 | Needling Techniques</h5>
+                </div>
+                <div class="card-body">
+                    {{ acupoint.techniques|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Precautions -->
+            {% if acupoint.precautions %}
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">注意事项 | Precautions</h5>
+                </div>
+                <div class="card-body">
+                    <i class="bi bi-exclamation-triangle text-warning"></i>
+                    {{ acupoint.precautions|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Clinical Notes -->
+            {% if acupoint.clinical_notes %}
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">临床笔记 | Clinical Notes</h5>
+                </div>
+                <div class="card-body">
+                    {{ acupoint.clinical_notes|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

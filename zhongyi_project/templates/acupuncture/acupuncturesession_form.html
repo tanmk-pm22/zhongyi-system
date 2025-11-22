@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% if object %}编辑 | Edit{% else %}新建 | New{% endif %} 针灸治疗 | Acupuncture{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+<h2 class="mb-4">
+    <i class="bi bi-activity"></i>
+    {% if object %}编辑针灸治疗 | Edit Acupuncture Session{% else %}新建针灸治疗 | New Acupuncture Session{% endif %}
+</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Basic Info -->
+            <h5 class="mb-3">基本信息 | Basic Information</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">患者 | Patient *</label>
+                    {{ form.patient }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">治疗日期 | Session Date *</label>
+                    {{ form.session_date }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">治疗类型 | Treatment Type *</label>
+                    {{ form.treatment_type }}
+                </div>
+            </div>
+
+            <!-- Diagnosis -->
+            <hr>
+            <h5 class="mb-3">诊断信息 | Diagnosis</h5>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">主诉 | Chief Complaint *</label>
+                    {{ form.chief_complaint }}
+                    <div class="form-text">患者主要症状和问题 | Main symptoms</div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">中医诊断 | TCM Diagnosis *</label>
+                    {{ form.tcm_diagnosis }}
+                    <div class="form-text">中医辨证诊断 | TCM pattern diagnosis</div>
+                </div>
+            </div>
+
+            <!-- Treatment Details -->
+            <hr>
+            <h5 class="mb-3">治疗详情 | Treatment Details</h5>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">使用穴位 | Acupoints Used *</label>
+                    {{ form.acupoints_used }}
+                    <div class="form-text">例如：合谷(LI4), 太冲(LR3), 足三里(ST36)</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">留针时间 | Retention Time *</label>
+                    {{ form.needle_retention_time }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">手法备注 | Technique Notes</label>
+                    {{ form.technique_notes }}
+                    <div class="form-text">针刺手法、深度、角度等详细说明</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">辅助治疗 | Additional Treatments</label>
+                    <div class="form-check">
+                        {{ form.used_moxibustion }}
+                        <label class="form-check-label" for="{{ form.used_moxibustion.id_for_label }}">
+                            辅助艾灸 | Moxibustion
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        {{ form.used_cupping }}
+                        <label class="form-check-label" for="{{ form.used_cupping.id_for_label }}">
+                            辅助拔罐 | Cupping
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        {{ form.used_tuina }}
+                        <label class="form-check-label" for="{{ form.used_tuina.id_for_label }}">
+                            辅助推拿 | Tuina
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response -->
+            <hr>
+            <h5 class="mb-3">治疗反应 | Treatment Response</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">患者反应 | Patient Response</label>
+                    {{ form.patient_response }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">治疗备注 | Treatment Notes</label>
+                    {{ form.treatment_notes }}
+                    <div class="form-text">患者反应、症状变化、观察要点</div>
+                </div>
+            </div>
+
+            <!-- Follow-up -->
+            <hr>
+            <h5 class="mb-3">随访计划 | Follow-up Plan</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">下次治疗日期 | Next Session Date</label>
+                    {{ form.next_session_date }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">治疗费用 | Session Fee (RM)</label>
+                    {{ form.session_fee }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">治疗计划 | Treatment Plan</label>
+                    {{ form.treatment_plan }}
+                    <div class="form-text">后续治疗计划和建议</div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'acupuncture:list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> 返回 | Back
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> 保存 | Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}
