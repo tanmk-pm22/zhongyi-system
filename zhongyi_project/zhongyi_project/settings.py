@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'prescriptions',
     'acupuncture',
     'api',
+    'website',  # Public website
+    'portal',   # Patient portal
+    'booking',  # Appointment booking system
 ]
 
 MIDDLEWARE = [
