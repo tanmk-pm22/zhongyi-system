@@ -54,6 +54,39 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-heart-pulse"></i> 治疗方法 | Treatments
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'tuina:session_list' %}">
+                                        <i class="bi bi-hand-index-thumb"></i> 推拿治疗 | Tuina
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'cupping:session_list' %}">
+                                        <i class="bi bi-circle"></i> 拔罐治疗 | Cupping
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'constitution:assessment_list' %}">
+                                        <i class="bi bi-person-badge"></i> 体质辨识 | Constitution
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/treatment-course/">
+                                        <i class="bi bi-calendar-range"></i> 疗程管理 | Treatment Course
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'appointments:appointment_list' %}">
+                                        <i class="bi bi-calendar-check"></i> 预约管理 | Appointments
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-book"></i> 药品库 | Medicine Library
                             </a>
                             <ul class="dropdown-menu">

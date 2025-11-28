@@ -377,3 +377,113 @@ class MedicalRecord(models.Model):
 
     def __str__(self):
         return f"{self.patient} - {self.visit_date.strftime('%Y-%m-%d')} ({self.get_record_type_display()})"
+
+
+class MedicalHistoryTimeline(models.Model):
+    """
+    Timeline of medical history events for a patient.
+    记录患者医疗历史时间线事件
+    """
+
+    class EventType(models.TextChoices):
+        DIAGNOSIS = 'diagnosis', _('诊断 | Diagnosis')
+        PRESCRIPTION = 'prescription', _('处方 | Prescription')
+        ACUPUNCTURE = 'acupuncture', _('针灸 | Acupuncture')
+        CUPPING = 'cupping', _('拔罐 | Cupping')
+        TUINA = 'tuina', _('推拿 | Tuina')
+        LAB_TEST = 'lab_test', _('检验 | Lab Test')
+        IMAGING = 'imaging', _('影像 | Imaging')
+        SURGERY = 'surgery', _('手术 | Surgery')
+        HOSPITALIZATION = 'hospitalization', _('住院 | Hospitalization')
+        ALLERGY_REACTION = 'allergy', _('过敏反应 | Allergy Reaction')
+        VACCINATION = 'vaccination', _('疫苗接种 | Vaccination')
+        OTHER = 'other', _('其他 | Other')
+
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name='history_timeline',
+        verbose_name=_('患者 | Patient'),
+    )
+
+    event_type = models.CharField(
+        _('事件类型 | Event Type'),
+        max_length=20,
+        choices=EventType.choices,
+    )
+
+    event_date = models.DateTimeField(
+        _('事件日期 | Event Date'),
+    )
+
+    title = models.CharField(
+        _('标题 | Title'),
+        max_length=200,
+    )
+
+    description = models.TextField(
+        _('描述 | Description'),
+        blank=True,
+    )
+
+    practitioner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='timeline_events',
+        verbose_name=_('医师 | Practitioner'),
+    )
+
+    # Related records
+    medical_record = models.ForeignKey(
+        MedicalRecord,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='timeline_events',
+        verbose_name=_('医疗记录 | Medical Record'),
+    )
+
+    # For linking to other modules
+    related_object_type = models.CharField(
+        _('关联对象类型 | Related Object Type'),
+        max_length=50,
+        blank=True,
+    )
+
+    related_object_id = models.PositiveIntegerField(
+        _('关联对象ID | Related Object ID'),
+        null=True,
+        blank=True,
+    )
+
+    # Severity/Importance
+    is_important = models.BooleanField(
+        _('重要事件 | Important Event'),
+        default=False,
+    )
+
+    # Attachments
+    attachments = models.JSONField(
+        _('附件 | Attachments'),
+        default=list,
+        blank=True,
+    )
+
+    notes = models.TextField(
+        _('备注 | Notes'),
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(_('启用 | Active'), default=True)
+
+    class Meta:
+        verbose_name = _('病史时间线 | Medical History Timeline')
+        verbose_name_plural = _('病史时间线 | Medical History Timeline')
+        ordering = ['-event_date']
+
+    def __str__(self):
+        return f"{self.patient.full_name} - {self.title} ({self.event_date.strftime('%Y-%m-%d')})"

@@ -44,6 +44,11 @@ INSTALLED_APPS = [
     'diagnosis',
     'prescriptions',
     'acupuncture',
+    'constitution',
+    'cupping',
+    'tuina',
+    'treatment_course',
+    'appointments',
     'api',
 ]
 

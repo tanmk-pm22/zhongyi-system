@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>处方打印 | Prescription Print - {{ prescription.prescription_number }}</title>
+    <style>
+        /* Print-specific styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .page-break {
+                page-break-after: always;
+            }
+        }
+
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "SimSun", Arial, sans-serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24pt;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .header .clinic-info {
+            font-size: 10pt;
+            color: #666;
+        }
+
+        /* Prescription info */
+        .prescription-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+
+        .info-item {
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Patient info */
+        .patient-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px solid #34495e;
+            background: #ecf0f1;
+        }
+
+        .patient-info h2 {
+            font-size: 14pt;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #95a5a6;
+            padding-bottom: 5px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 13pt;
+            font-weight: bold;
+            color: #2c3e50;
+            background: #ecf0f1;
+            padding: 8px 12px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 10px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        table th {
+            background: #34495e;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #2c3e50;
+        }
+
+        table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .herb-name-cn {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+
+        .herb-name-en {
+            font-size: 9pt;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Instructions box */
+        .instructions-box {
+            padding: 15px;
+            border: 2px dashed #95a5a6;
+            background: #fdfefe;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box p {
+            margin-bottom: 8px;
+        }
+
+        /* Signature */
+        .signature-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .signature-line {
+            margin-top: 30px;
+            padding-top: 10px;
+        }
+
+        .signature-line p {
+            margin-bottom: 5px;
+        }
+
+        .line {
+            display: inline-block;
+            min-width: 300px;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Print button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14pt;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .print-button:hover {
+            background: #2980b9;
+        }
+
+        .print-button i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Print button -->
+    <button onclick="window.print()" class="print-button no-print">
+        🖨️ 打印 | Print
+    </button>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>中医处方 | TCM Prescription</h1>
+            <div class="clinic-info">
+                <p>Zhongyi TCM Clinic | 中医诊所</p>
+                <p>Traditional Chinese Medicine Prescription</p>
+            </div>
+        </div>
+
+        <!-- Prescription Info -->
+        <div class="prescription-info">
+            <div class="info-item">
+                <span class="info-label">处方编号 | Prescription No.:</span>
+                <span>{{ prescription.prescription_number }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">处方日期 | Date:</span>
+                <span>{{ prescription.prescription_date|date:"Y年m月d日" }} ({{ prescription.prescription_date|date:"Y-m-d" }})</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">医师 | Practitioner:</span>
+                <span>{{ prescription.practitioner.get_full_name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">剂数 | Doses:</span>
+                <span>{{ prescription.doses }} 剂</span>
+            </div>
+        </div>
+
+        <!-- Patient Info -->
+        <div class="patient-info">
+            <h2>患者信息 | Patient Information</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="info-item">
+                    <span class="info-label">姓名 | Name:</span>
+                    <span>{{ prescription.patient.full_name }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">中文名 | Chinese Name:</span>
+                    <span>{{ prescription.patient.chinese_name|default:"N/A" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">性别 | Gender:</span>
+                    <span>{{ prescription.patient.get_gender_display }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">年龄 | Age:</span>
+                    <span>{{ prescription.patient.age }} 岁</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">IC号 | IC No.:</span>
+                    <span>{{ prescription.patient.ic_number }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">电话 | Phone:</span>
+                    <span>{{ prescription.patient.phone }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnosis -->
+        {% if prescription.diagnosis %}
+        <div class="section">
+            <div class="section-title">诊断 | Diagnosis</div>
+            <div class="instructions-box">
+                <p>{{ prescription.diagnosis }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Treatment Principle -->
+        {% if prescription.treatment_principle %}
+        <div class="section">
+            <div class="section-title">治则治法 | Treatment Principle</div>
+            <div class="instructions-box">
+                <p>{{ prescription.treatment_principle }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Herbs -->
+        <div class="section">
+            <div class="section-title">处方药物 | Prescription Herbs</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">序号<br>No.</th>
+                        <th>药材 | Herb</th>
+                        <th style="width: 100px;">剂量(克)<br>Dosage(g)</th>
+                        <th style="width: 120px;">炮制<br>Preparation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in prescription.items.all %}
+                    <tr>
+                        <td style="text-align: center;">{{ forloop.counter }}</td>
+                        <td>
+                            <div class="herb-name-cn">{{ item.herb.name_cn }}</div>
+                            <div class="herb-name-en">{{ item.herb.name_en }}</div>
+                        </td>
+                        <td style="text-align: center;"><strong>{{ item.dosage }}</strong></td>
+                        <td>{{ item.preparation|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Patent Medicines -->
+        {% if prescription.patent_medicine_items.exists %}
+        <div class="section">
+            <div class="section-title">中成药 | Patent Medicines</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">序号<br>No.</th>
+                        <th>药品 | Medicine</th>
+                        <th style="width: 100px;">数量<br>Quantity</th>
+                        <th>用法 | Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in prescription.patent_medicine_items.all %}
+                    <tr>
+                        <td style="text-align: center;">{{ forloop.counter }}</td>
+                        <td>
+                            <div class="herb-name-cn">{{ item.medicine.name_cn }}</div>
+                            <div class="herb-name-en">{{ item.medicine.name_en }}</div>
+                        </td>
+                        <td style="text-align: center;"><strong>{{ item.quantity }} 盒</strong></td>
+                        <td><small>{{ item.dosage_instruction|default:item.medicine.dosage_adult }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <!-- Decoction Method -->
+        <div class="section">
+            <div class="section-title">煎服方法 | Decoction Method</div>
+            <div class="instructions-box">
+                <p><strong>剂数 | Doses:</strong> {{ prescription.doses }} 剂</p>
+                <p><strong>煎煮说明 | Instructions:</strong></p>
+                <p>{{ prescription.decoction_method }}</p>
+            </div>
+        </div>
+
+        <!-- Dietary Advice -->
+        {% if prescription.dietary_advice %}
+        <div class="section">
+            <div class="section-title">饮食宜忌 | Dietary Advice</div>
+            <div class="instructions-box">
+                <p>{{ prescription.dietary_advice }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Lifestyle Advice -->
+        {% if prescription.lifestyle_advice %}
+        <div class="section">
+            <div class="section-title">生活建议 | Lifestyle Advice</div>
+            <div class="instructions-box">
+                <p>{{ prescription.lifestyle_advice }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Notes -->
+        {% if prescription.notes %}
+        <div class="section">
+            <div class="section-title">备注 | Notes</div>
+            <div class="instructions-box">
+                <p>{{ prescription.notes }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Signature -->
+        <div class="signature-section">
+            <div class="signature-line">
+                <p><strong>医师签名 | Practitioner Signature:</strong></p>
+                <br>
+                <p><span class="line"></span></p>
+                <p style="margin-top: 10px;">
+                    <strong>{{ prescription.practitioner.get_full_name }}</strong>
+                </p>
+                <p>{{ prescription.prescription_date|date:"Y年m月d日" }} ({{ prescription.prescription_date|date:"Y-m-d" }})</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; text-align: center; font-size: 9pt; color: #777;">
+            <p>此处方由 Zhongyi TCM 系统生成 | Generated by Zhongyi TCM System</p>
+            <p>打印时间 | Print Time: {{ "now"|date:"Y-m-d H:i:s" }}</p>
+        </div>
+    </div>
+</body>
+</html>

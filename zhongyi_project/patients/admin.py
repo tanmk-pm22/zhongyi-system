@@ -1,7 +1,7 @@
 """Admin configuration for Patient models."""
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import Patient, MedicalRecord
+from .models import Patient, MedicalRecord, MedicalHistoryTimeline
 
 
 class MedicalRecordInline(admin.TabularInline):
@@ -11,6 +11,15 @@ class MedicalRecordInline(admin.TabularInline):
     fields = ('visit_date', 'record_type', 'chief_complaint', 'tcm_diagnosis')
     readonly_fields = ('created_at',)
     ordering = ('-visit_date',)
+
+
+class MedicalHistoryTimelineInline(admin.TabularInline):
+    """Inline timeline events in patient admin."""
+    model = MedicalHistoryTimeline
+    extra = 0
+    fields = ('event_date', 'event_type', 'title', 'is_important')
+    readonly_fields = ('created_at',)
+    ordering = ('-event_date',)
 
 
 @admin.register(Patient)
@@ -58,7 +67,7 @@ class PatientAdmin(admin.ModelAdmin):
         }),
     )
 
-    inlines = [MedicalRecordInline]
+    inlines = [MedicalRecordInline, MedicalHistoryTimelineInline]
 
     def age(self, obj):
         return obj.age
@@ -116,6 +125,45 @@ class MedicalRecordAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
         (_('Timestamps'), {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',),
+        }),
+    )
+
+
+@admin.register(MedicalHistoryTimeline)
+class MedicalHistoryTimelineAdmin(admin.ModelAdmin):
+    """Admin for MedicalHistoryTimeline model."""
+
+    list_display = (
+        'patient', 'event_date', 'event_type', 'title',
+        'is_important', 'practitioner', 'created_at'
+    )
+    list_filter = ('event_type', 'is_important', 'event_date', 'practitioner')
+    search_fields = ('patient__first_name', 'patient__last_name', 'title', 'description')
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ('-event_date',)
+    date_hierarchy = 'event_date'
+
+    fieldsets = (
+        (_('事件信息 | Event Information'), {
+            'fields': ('patient', 'event_type', 'event_date', 'title', 'is_important'),
+        }),
+        (_('详情 | Details'), {
+            'fields': ('description', 'practitioner', 'medical_record'),
+        }),
+        (_('关联 | Related Objects'), {
+            'fields': ('related_object_type', 'related_object_id'),
+            'classes': ('collapse',),
+        }),
+        (_('附件和备注 | Attachments & Notes'), {
+            'fields': ('attachments', 'notes'),
+            'classes': ('collapse',),
+        }),
+        (_('状态 | Status'), {
+            'fields': ('is_active',),
+        }),
+        (_('时间戳 | Timestamps'), {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',),
         }),

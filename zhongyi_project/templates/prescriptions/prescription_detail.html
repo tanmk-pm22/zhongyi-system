@@ -23,6 +23,9 @@
         <a href="{% url 'prescriptions:print' prescription.pk %}" class="btn btn-outline-info" target="_blank">
             <i class="bi bi-printer"></i> 打印 | Print
         </a>
+        <a href="{% url 'prescriptions:export_pdf' prescription.pk %}" class="btn btn-outline-success">
+            <i class="bi bi-file-earmark-pdf"></i> 导出PDF | Export PDF
+        </a>
         <a href="{% url 'prescriptions:list' %}" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> 返回 | Back
         </a>

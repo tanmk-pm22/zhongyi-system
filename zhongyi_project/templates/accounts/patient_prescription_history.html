@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}我的处方 | My Prescriptions{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="bi bi-prescription2"></i>
+            我的处方 | My Prescriptions
+        </h2>
+        <a href="{% url 'accounts:patient_portal' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回门户 | Back to Portal
+        </a>
+    </div>
+
+    <!-- Prescriptions List -->
+    {% if prescriptions %}
+    <div class="row">
+        {% for prescription in prescriptions %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="bi bi-file-medical"></i> {{ prescription.prescription_number }}
+                    </h6>
+                    <span class="badge bg-{% if prescription.status == 'completed' %}success{% elif prescription.status == 'confirmed' %}primary{% elif prescription.status == 'dispensed' %}info{% else %}secondary{% endif %}">
+                        {{ prescription.get_status_display }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <p><strong>日期 | Date:</strong> {{ prescription.prescription_date|date:"Y年m月d日 (Y-m-d)" }}</p>
+                    <p><strong>医师 | Practitioner:</strong> {{ prescription.practitioner.get_full_name }}</p>
+                    <p><strong>剂数 | Doses:</strong> {{ prescription.doses }} 剂</p>
+
+                    {% if prescription.diagnosis %}
+                    <hr>
+                    <p><strong>诊断 | Diagnosis:</strong></p>
+                    <p class="text-muted">{{ prescription.diagnosis|truncatewords:20 }}</p>
+                    {% endif %}
+
+                    <hr>
+                    <p><strong>处方药物 | Herbs:</strong></p>
+                    <ul class="list-unstyled mb-0">
+                        {% for item in prescription.items.all|slice:":5" %}
+                        <li>
+                            <small>
+                                <i class="bi bi-capsule text-success"></i>
+                                {{ item.herb.name_cn }} - {{ item.dosage }}g
+                            </small>
+                        </li>
+                        {% endfor %}
+                        {% if prescription.items.count > 5 %}
+                        <li><small class="text-muted">... 共 {{ prescription.items.count }} 味药材</small></li>
+                        {% endif %}
+                    </ul>
+
+                    {% if prescription.patent_medicine_items.exists %}
+                    <hr>
+                    <p><strong>中成药 | Patent Medicines:</strong></p>
+                    <ul class="list-unstyled mb-0">
+                        {% for item in prescription.patent_medicine_items.all %}
+                        <li>
+                            <small>
+                                <i class="bi bi-capsule-pill text-info"></i>
+                                {{ item.medicine.name_cn }} × {{ item.quantity }}
+                            </small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if prescription.decoction_method %}
+                    <hr>
+                    <p><strong>煎服方法 | Decoction:</strong></p>
+                    <p class="text-muted"><small>{{ prescription.decoction_method|truncatewords:15 }}</small></p>
+                    {% endif %}
+
+                    {% if prescription.dietary_advice %}
+                    <hr>
+                    <p><strong>饮食宜忌 | Dietary Advice:</strong></p>
+                    <p class="text-muted"><small>{{ prescription.dietary_advice|truncatewords:15 }}</small></p>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'prescriptions:detail' prescription.pk %}" class="btn btn-sm btn-outline-info">
+                            <i class="bi bi-eye"></i> 查看详情 | View Details
+                        </a>
+                        <a href="{% url 'prescriptions:print' prescription.pk %}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-printer"></i> 打印 | Print
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <h5><i class="bi bi-inbox"></i></h5>
+        <p class="mb-0">暂无处方记录 | No prescription records found</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

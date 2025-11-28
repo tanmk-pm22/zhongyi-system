@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}就诊历史 | Appointment History{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="bi bi-calendar-check"></i>
+            就诊历史 | Appointment History
+        </h2>
+        <a href="{% url 'accounts:patient_portal' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回门户 | Back to Portal
+        </a>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-4" id="historyTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="medical-records-tab" data-bs-toggle="tab" data-bs-target="#medical-records" type="button" role="tab">
+                <i class="bi bi-file-medical"></i> 医疗记录 | Medical Records
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="diagnosis-tab" data-bs-toggle="tab" data-bs-target="#diagnosis" type="button" role="tab">
+                <i class="bi bi-clipboard2-pulse"></i> 诊断记录 | Diagnosis Records
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="historyTabsContent">
+        <!-- Medical Records Tab -->
+        <div class="tab-pane fade show active" id="medical-records" role="tabpanel">
+            {% if medical_records %}
+            <div class="row">
+                {% for record in medical_records %}
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {{ record.visit_date|date:"Y年m月d日 H:i (Y-m-d H:i)" }}
+                                </h6>
+                                <span class="badge bg-secondary">{{ record.get_record_type_display }}</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <p><strong>医师 | Practitioner:</strong> {{ record.practitioner.get_full_name|default:"N/A" }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <p><strong>主诉 | Chief Complaint:</strong></p>
+                            <p class="text-muted">{{ record.chief_complaint }}</p>
+
+                            {% if record.tcm_diagnosis %}
+                            <hr>
+                            <p><strong>中医诊断 | TCM Diagnosis:</strong></p>
+                            <p class="text-muted">{{ record.tcm_diagnosis|truncatewords:30 }}</p>
+                            {% endif %}
+
+                            {% if record.treatment_principle %}
+                            <p><strong>治则治法 | Treatment Principle:</strong></p>
+                            <p class="text-muted">{{ record.treatment_principle|truncatewords:30 }}</p>
+                            {% endif %}
+
+                            {% if record.prescription %}
+                            <hr>
+                            <p><strong>处方 | Prescription:</strong></p>
+                            <p class="text-muted">{{ record.prescription|truncatewords:20 }}</p>
+                            {% endif %}
+
+                            {% if record.lifestyle_advice or record.dietary_advice %}
+                            <hr>
+                            <div class="row">
+                                {% if record.lifestyle_advice %}
+                                <div class="col-md-6">
+                                    <p><strong>生活建议 | Lifestyle:</strong></p>
+                                    <p class="text-muted"><small>{{ record.lifestyle_advice|truncatewords:15 }}</small></p>
+                                </div>
+                                {% endif %}
+                                {% if record.dietary_advice %}
+                                <div class="col-md-6">
+                                    <p><strong>饮食建议 | Dietary:</strong></p>
+                                    <p class="text-muted"><small>{{ record.dietary_advice|truncatewords:15 }}</small></p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+                            {% if record.next_appointment %}
+                            <hr>
+                            <p class="mb-0">
+                                <i class="bi bi-calendar-plus text-primary"></i>
+                                <strong>下次预约 | Next Appointment:</strong>
+                                {{ record.next_appointment|date:"Y-m-d H:i" }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                <h5><i class="bi bi-inbox"></i></h5>
+                <p class="mb-0">暂无医疗记录 | No medical records found</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Diagnosis Records Tab -->
+        <div class="tab-pane fade" id="diagnosis" role="tabpanel">
+            {% if diagnosis_sessions %}
+            <div class="row">
+                {% for session in diagnosis_sessions %}
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0">
+                                <i class="bi bi-clipboard2-pulse"></i>
+                                {{ session.session_date|date:"Y年m月d日 (Y-m-d)" }}
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>医师 | Practitioner:</strong> {{ session.practitioner.get_full_name }}</p>
+
+                            {% if session.chief_complaint %}
+                            <hr>
+                            <p><strong>主诉 | Chief Complaint:</strong></p>
+                            <p class="text-muted">{{ session.chief_complaint|truncatewords:20 }}</p>
+                            {% endif %}
+
+                            {% if session.syndrome_differentiation %}
+                            <hr>
+                            <p><strong>辨证 | Syndrome:</strong></p>
+                            <p class="text-muted">{{ session.syndrome_differentiation|truncatewords:20 }}</p>
+                            {% endif %}
+
+                            {% if session.tongue_diagnosis %}
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p><strong>舌诊 | Tongue:</strong></p>
+                                    <p class="text-muted"><small>{{ session.tongue_diagnosis|truncatewords:10 }}</small></p>
+                                </div>
+                                {% if session.pulse_diagnosis %}
+                                <div class="col-6">
+                                    <p><strong>脉诊 | Pulse:</strong></p>
+                                    <p class="text-muted"><small>{{ session.pulse_diagnosis|truncatewords:10 }}</small></p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+                            {% if session.treatment_plan %}
+                            <hr>
+                            <p><strong>治疗方案 | Treatment Plan:</strong></p>
+                            <p class="text-muted"><small>{{ session.treatment_plan|truncatewords:15 }}</small></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                <h5><i class="bi bi-inbox"></i></h5>
+                <p class="mb-0">暂无诊断记录 | No diagnosis records found</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

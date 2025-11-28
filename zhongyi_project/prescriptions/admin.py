@@ -2,7 +2,8 @@
 from django.contrib import admin
 from .models import (
     HerbCategory, Herb, ClassicFormula, FormulaHerb,
-    Prescription, PrescriptionItem, PatentMedicine, PrescriptionPatentMedicine
+    Prescription, PrescriptionItem, PatentMedicine, PrescriptionPatentMedicine,
+    DecoctionMethod, PrescriptionTemplate, PrescriptionTemplateItem
 )
 
 
@@ -86,3 +87,29 @@ class PrescriptionAdmin(admin.ModelAdmin):
     date_hierarchy = 'prescription_date'
     inlines = [PrescriptionItemInline, PrescriptionPatentMedicineInline]
     readonly_fields = ['prescription_number', 'prescription_date', 'created_at', 'updated_at']
+
+
+@admin.register(DecoctionMethod)
+class DecoctionMethodAdmin(admin.ModelAdmin):
+    """Admin for Decoction Methods."""
+    list_display = ('name_cn', 'name_en', 'code', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('name_cn', 'name_en', 'code')
+    readonly_fields = ('created_at', 'updated_at')
+
+
+class PrescriptionTemplateItemInline(admin.TabularInline):
+    """Inline template items."""
+    model = PrescriptionTemplateItem
+    extra = 1
+    fields = ('herb', 'dosage', 'preparation', 'is_optional', 'sequence')
+
+
+@admin.register(PrescriptionTemplate)
+class PrescriptionTemplateAdmin(admin.ModelAdmin):
+    """Admin for Prescription Templates."""
+    list_display = ('code', 'name_cn', 'category', 'based_on_formula', 'is_public', 'is_active')
+    list_filter = ('category', 'is_public', 'is_active', 'created_by')
+    search_fields = ('code', 'name_cn', 'name_en', 'description')
+    readonly_fields = ('created_at', 'updated_at')
+    inlines = [PrescriptionTemplateItemInline]

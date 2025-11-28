@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}患者门户 | Patient Portal{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="bi bi-person-circle"></i>
+            患者门户 | Patient Portal
+        </h2>
+        <a href="{% url 'accounts:dashboard' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回 | Back
+        </a>
+    </div>
+
+    <!-- Patient Info Card -->
+    <div class="card mb-4 border-primary">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-person-badge"></i> 个人信息 | Personal Information
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>姓名 | Name:</strong> {{ patient.full_name }}</p>
+                    <p><strong>中文名 | Chinese Name:</strong> {{ patient.chinese_name|default:"N/A" }}</p>
+                    <p><strong>性别 | Gender:</strong> {{ patient.get_gender_display }}</p>
+                    <p><strong>年龄 | Age:</strong> {{ patient.age }} 岁</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>IC号 | IC No.:</strong> {{ patient.ic_number }}</p>
+                    <p><strong>电话 | Phone:</strong> {{ patient.phone }}</p>
+                    <p><strong>中医体质 | TCM Constitution:</strong> {{ patient.tcm_constitution|default:"未评估 | Not assessed" }}</p>
+                    <p><strong>主治医师 | Practitioner:</strong> {{ patient.assigned_practitioner.get_full_name|default:"未指定 | Not assigned" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Row -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-info">
+                <div class="card-body text-center">
+                    <h6 class="card-title">总就诊次数 | Total Visits</h6>
+                    <h2 class="mb-0">{{ total_visits }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body text-center">
+                    <h6 class="card-title">总处方数 | Total Prescriptions</h6>
+                    <h2 class="mb-0">{{ total_prescriptions }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body text-center">
+                    <h6 class="card-title">诊断记录 | Diagnosis Records</h6>
+                    <h2 class="mb-0">{{ total_diagnoses }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body text-center">
+                    <h6 class="card-title">近30天活动 | Recent Activity</h6>
+                    <h2 class="mb-0">{{ recent_activity_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="bi bi-link-45deg"></i> 快速链接 | Quick Links
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="{% url 'accounts:patient_prescriptions' %}" class="list-group-item list-group-item-action">
+                            <i class="bi bi-prescription2 text-success"></i>
+                            我的处方 | My Prescriptions
+                        </a>
+                        <a href="{% url 'accounts:patient_appointments' %}" class="list-group-item list-group-item-action">
+                            <i class="bi bi-calendar-check text-info"></i>
+                            就诊历史 | Appointment History
+                        </a>
+                        <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action">
+                            <i class="bi bi-person-gear text-warning"></i>
+                            个人设置 | Profile Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Tips -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="bi bi-lightbulb"></i> 健康建议 | Health Tips
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if patient.tcm_constitution %}
+                    <p class="mb-2"><strong>体质类型 | Constitution Type:</strong> <span class="badge bg-info">{{ patient.tcm_constitution }}</span></p>
+                    <ul class="list-unstyled">
+                        {% for tip in health_tips %}
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success"></i>
+                            <small>{{ tip }}</small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-muted">请咨询您的医师进行体质评估。| Please consult your practitioner for constitution assessment.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Prescriptions -->
+    {% if recent_prescriptions %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="bi bi-prescription2"></i> 最近处方 | Recent Prescriptions
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>处方编号 | Number</th>
+                            <th>日期 | Date</th>
+                            <th>医师 | Practitioner</th>
+                            <th>剂数 | Doses</th>
+                            <th>状态 | Status</th>
+                            <th>操作 | Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prescription in recent_prescriptions %}
+                        <tr>
+                            <td><strong>{{ prescription.prescription_number }}</strong></td>
+                            <td>{{ prescription.prescription_date|date:"Y-m-d" }}</td>
+                            <td>{{ prescription.practitioner.get_full_name }}</td>
+                            <td>{{ prescription.doses }} 剂</td>
+                            <td>
+                                <span class="badge bg-{% if prescription.status == 'completed' %}success{% elif prescription.status == 'confirmed' %}primary{% else %}secondary{% endif %}">
+                                    {{ prescription.get_status_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{% url 'prescriptions:detail' prescription.pk %}" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-eye"></i> 查看 | View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{% url 'accounts:patient_prescriptions' %}" class="btn btn-sm btn-primary">
+                查看全部 | View All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Recent Medical Records -->
+    {% if recent_records %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="bi bi-file-medical"></i> 最近就诊记录 | Recent Medical Records
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>就诊日期 | Visit Date</th>
+                            <th>类型 | Type</th>
+                            <th>医师 | Practitioner</th>
+                            <th>主诉 | Chief Complaint</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in recent_records %}
+                        <tr>
+                            <td>{{ record.visit_date|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <span class="badge bg-secondary">{{ record.get_record_type_display }}</span>
+                            </td>
+                            <td>{{ record.practitioner.get_full_name }}</td>
+                            <td>{{ record.chief_complaint|truncatewords:10 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{% url 'accounts:patient_appointments' %}" class="btn btn-sm btn-primary">
+                查看全部 | View All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Important Notes -->
+    <div class="alert alert-info" role="alert">
+        <h5 class="alert-heading">
+            <i class="bi bi-info-circle"></i> 重要提示 | Important Notes
+        </h5>
+        <ul class="mb-0">
+            <li>如有任何疑问，请及时联系您的主治医师。| For any questions, please contact your practitioner promptly.</li>
+            <li>请按处方指示服用中药，不可自行增减剂量。| Please follow prescription instructions carefully and do not adjust dosage on your own.</li>
+            <li>如出现不适反应，请立即停药并咨询医师。| If you experience any adverse reactions, stop medication immediately and consult your practitioner.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

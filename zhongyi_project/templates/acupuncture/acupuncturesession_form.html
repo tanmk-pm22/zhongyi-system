@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% if object %}编辑 | Edit{% else %}新建 | New{% endif %} 针灸治疗 | Acupuncture{% endblock %}
 
@@ -51,6 +51,25 @@
             <!-- Treatment Details -->
             <hr>
             <h5 class="mb-3">治疗详情 | Treatment Details</h5>
+
+            <!-- 3D Body Viewer for Acupoint Selection -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h6 class="card-title mb-3">
+                                <i class="bi bi-person-standing"></i> 3D人体图解 - 穴位定位 | 3D Body Diagram - Acupoint Location
+                            </h6>
+                            <div id="acupointViewer" style="height: 500px; border: 1px solid #dee2e6; border-radius: 4px; background: white;"></div>
+                            <div class="small text-muted mt-2">
+                                <i class="bi bi-info-circle"></i>
+                                拖动旋转，滚轮缩放，点击穴位选择 | Drag to rotate, scroll to zoom, click acupoints to select
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12 mb-3">
                     <label class="form-label">使用穴位 | Acupoints Used *</label>
@@ -146,4 +165,68 @@
     </div>
 </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Three.js Library for Real-Time 3D -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// Make THREE and OrbitControls globally available
+window.THREE = THREE;
+window.OrbitControls = OrbitControls;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<!-- Real-Time 3D Anatomy Atlas - 实时3D解剖图谱 -->
+<script src="{% static 'js/realtime-3d-anatomy-atlas.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get acupoints from form if editing existing session
+    const acupointsInput = document.querySelector('[name="acupoints_used"]');
+    let selectedPoints = [];
+
+    if (acupointsInput && acupointsInput.value) {
+        // Parse acupoint codes from text like "合谷(LI4), 足三里(ST36)"
+        const matches = acupointsInput.value.matchAll(/\(([A-Z0-9]+)\)/g);
+        selectedPoints = Array.from(matches, m => m[1]);
+    }
+
+    // Initialize Real-Time 3D Anatomy Atlas for acupuncture
+    const viewer = new RealTime3DAnatomyAtlas('acupointViewer', {
+        mode: 'acupuncture',
+        showAcupoints: true,
+        showMuscles: true,
+        showSkeleton: true,
+        enableLayerPeeling: true,
+        enableRealTimeRotation: false,
+        selectedPoints: selectedPoints
+    });
+
+    // Listen for point selection changes
+    document.getElementById('acupointViewer').addEventListener('pointsSelected', function(e) {
+        console.log('穴位已选择 | Points selected:', e.detail.points);
+
+        // Update form field if exists
+        if (acupointsInput) {
+            // Convert point codes back to display format
+            const pointsText = e.detail.points.join(', ');
+            acupointsInput.value = pointsText;
+        }
+    });
+
+    console.log('✓ 实时3D解剖图谱已初始化 | Real-Time 3D Anatomy Atlas initialized');
+    console.log('✓ Interactive 3D exploration ready');
+});
+</script>
 {% endblock %}

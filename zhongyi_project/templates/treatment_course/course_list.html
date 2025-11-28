@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-calendar-range"></i> 治疗疗程管理 | Treatment Course Management</h2>
+            <p class="text-muted">管理和追踪多次治疗疗程 | Manage and track multi-session treatment courses</p>
+        </div>
+        <div class="col-auto">
+            <a href="#" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> 新建疗程 | New Course
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-success" style="background-color: #f0f9f4; border-color: #198754;">
+                <i class="bi bi-info-circle"></i>
+                <strong>疗程管理系统 | Treatment Course Management System</strong>
+                <p class="mb-0 mt-2">
+                    此模块用于管理需要多次治疗的疗程，追踪治疗进度和效果评估。<br>
+                    This module is for managing treatment courses that require multiple sessions, tracking progress and effectiveness.
+                </p>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-calendar-week text-success"></i> 疗程计划 | Course Planning</h5>
+                            <p class="text-muted small mb-0">设定治疗次数和频率 | Set treatment frequency and sessions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-graph-up text-primary"></i> 进度追踪 | Progress Tracking</h5>
+                            <p class="text-muted small mb-0">记录每次治疗效果 | Record each session effectiveness</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-check-circle text-success"></i> 疗程评估 | Course Evaluation</h5>
+                            <p class="text-muted small mb-0">整体疗效分析 | Overall effectiveness analysis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <i class="bi bi-inbox display-1 text-muted"></i>
+                <p class="text-muted">暂无治疗疗程 | No treatment courses yet</p>
+                <a href="#" class="btn btn-outline-success">
+                    <i class="bi bi-plus-circle"></i> 创建第一个疗程 | Create First Course
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

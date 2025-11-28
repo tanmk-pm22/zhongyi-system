@@ -14,3 +14,7 @@ qrcode>=7.4
 
 # Environment variables
 python-dotenv>=1.0
+
+# PDF and Excel Export
+reportlab>=4.0
+openpyxl>=3.1

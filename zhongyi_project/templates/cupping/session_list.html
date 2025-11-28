@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-circle"></i> 拔罐治疗记录 | Cupping Treatment Sessions</h2>
+            <p class="text-muted">管理和查看所有拔罐治疗记录 | Manage and view all cupping treatment sessions</p>
+        </div>
+        <div class="col-auto">
+            <a href="#" class="btn btn-danger">
+                <i class="bi bi-plus-circle"></i> 新建记录 | New Session
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-danger" style="background-color: #fff5f5; border-color: #dc3545;">
+                <i class="bi bi-info-circle"></i>
+                <strong>拔罐治疗系统 | Cupping Treatment System</strong>
+                <p class="mb-0 mt-2">
+                    此模块用于记录和管理拔罐治疗疗程，包括拔罐部位、技术、时长和治疗反应。<br>
+                    This module is for recording and managing cupping treatment sessions, including cupping locations, techniques, duration, and treatment reactions.
+                </p>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-circle text-danger"></i> 留罐法 | Stationary Cupping</h5>
+                            <p class="text-muted small mb-0">固定拔罐 | Fixed cupping</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-arrow-right-circle text-primary"></i> 走罐法 | Sliding Cupping</h5>
+                            <p class="text-muted small mb-0">推拉拔罐 | Moving cupping</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-lightning text-warning"></i> 闪罐法 | Flash Cupping</h5>
+                            <p class="text-muted small mb-0">快速拔罐 | Quick cupping</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5><i class="bi bi-droplet text-info"></i> 刺络拔罐 | Bloodletting Cupping</h5>
+                            <p class="text-muted small mb-0">放血拔罐 | With bloodletting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <i class="bi bi-inbox display-1 text-muted"></i>
+                <p class="text-muted">暂无拔罐治疗记录 | No cupping sessions yet</p>
+                <a href="#" class="btn btn-outline-danger">
+                    <i class="bi bi-plus-circle"></i> 创建第一条记录 | Create First Session
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

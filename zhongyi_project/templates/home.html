@@ -104,7 +104,60 @@
                 </a>
             </div>
         </div>
-        <div class="row g-3 mt-2">
+
+        <!-- Treatment Methods Section | 治疗方法 -->
+        <h5 class="text-center mb-3 mt-4">治疗方法 | Treatment Methods</h5>
+        <div class="row g-3">
+            <div class="col-md-3 col-6">
+                <a href="{% url 'tuina:session_list' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-hand-index-thumb fs-1 text-info mb-2"></i>
+                        <h6 class="mb-0">推拿治疗</h6>
+                        <small class="text-muted">Tuina/Massage</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="{% url 'cupping:session_list' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-circle fs-1 text-danger mb-2"></i>
+                        <h6 class="mb-0">拔罐治疗</h6>
+                        <small class="text-muted">Cupping</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="{% url 'constitution:assessment_list' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-person-badge fs-1 text-purple mb-2"></i>
+                        <h6 class="mb-0">体质辨识</h6>
+                        <small class="text-muted">Constitution</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="/treatment-course/" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-calendar-range fs-1 text-success mb-2"></i>
+                        <h6 class="mb-0">疗程管理</h6>
+                        <small class="text-muted">Treatment Course</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="{% url 'appointments:appointment_list' %}" class="card text-decoration-none h-100">
+                    <div class="card-body text-center py-4">
+                        <i class="bi bi-calendar-check fs-1 text-primary mb-2"></i>
+                        <h6 class="mb-0">预约管理</h6>
+                        <small class="text-muted">Appointments</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Medicine Library Section | 药品库 -->
+        <h5 class="text-center mb-3 mt-4">药品库 | Medicine Library</h5>
+        <div class="row g-3">
             <div class="col-md-3 col-6">
                 <a href="{% url 'prescriptions:herb_list' %}" class="card text-decoration-none h-100">
                     <div class="card-body text-center py-4">

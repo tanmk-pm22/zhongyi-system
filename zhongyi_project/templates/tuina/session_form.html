@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-hand-index-thumb"></i> {{ title }}</h2>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">患者 | Patient *</label>
+                        {{ form.patient }}
+                        {% if form.patient.errors %}
+                        <div class="text-danger small">{{ form.patient.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗日期 | Session Date *</label>
+                        {{ form.session_date }}
+                        {% if form.session_date.errors %}
+                        <div class="text-danger small">{{ form.session_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">主诉 | Chief Complaint *</label>
+                        {{ form.chief_complaint }}
+                        {% if form.chief_complaint.errors %}
+                        <div class="text-danger small">{{ form.chief_complaint.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">中医诊断 | TCM Diagnosis</label>
+                        {{ form.tcm_diagnosis }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治则 | Treatment Principle</label>
+                        {{ form.treatment_principle }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗重点 | Primary Focus</label>
+                        {{ form.primary_focus }}
+                        <small class="form-text text-muted">例如：颈椎病、腰痛、肩周炎</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗时长(分钟) | Duration (minutes)</label>
+                        {{ form.duration_minutes }}
+                    </div>
+                </div>
+
+                <!-- 3D Body Viewer for Treatment Area Selection -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title mb-3">
+                                    <i class="bi bi-person-standing"></i> 3D人体图解 - 治疗部位 | 3D Body Diagram - Treatment Areas
+                                </h6>
+                                <div id="tuinaViewer" style="height: 500px; border: 1px solid #dee2e6; border-radius: 4px; background: white;"></div>
+                                <div class="small text-muted mt-2">
+                                    <i class="bi bi-info-circle"></i>
+                                    拖动旋转，滚轮缩放，点击部位选择治疗区域 | Drag to rotate, scroll to zoom, click areas to select treatment zones
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="mt-4 mb-3">疼痛评估 | Pain Assessment</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗前疼痛等级 | Pain Level Before (0-10)</label>
+                        {{ form.pain_level_before }}
+                        <small class="form-text text-muted">0=无痛, 10=剧痛</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗后疼痛等级 | Pain Level After (0-10)</label>
+                        {{ form.pain_level_after }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗前活动度 | Mobility Before</label>
+                        {{ form.mobility_before }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">治疗后活动度 | Mobility After</label>
+                        {{ form.mobility_after }}
+                    </div>
+                </div>
+
+                <h5 class="mt-4 mb-3">治疗效果 | Treatment Effect</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">患者感受 | Patient Sensation</label>
+                        {{ form.patient_sensation }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">即时效果 | Immediate Effect</label>
+                        {{ form.immediate_effect }}
+                    </div>
+                </div>
+
+                <h5 class="mt-4 mb-3">建议 | Recommendations</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">家庭练习 | Home Exercises</label>
+                        {{ form.home_exercises }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">生活建议 | Lifestyle Advice</label>
+                        {{ form.lifestyle_advice }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">下次治疗日期 | Next Session Date</label>
+                        {{ form.next_session_date }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">备注 | Notes</label>
+                        {{ form.notes }}
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> 保存 | Save
+                    </button>
+                    <a href="{% url 'tuina:session_list' %}" class="btn btn-secondary">
+                        <i class="bi bi-x-circle"></i> 取消 | Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Three.js Library for Real-Time 3D -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// Make THREE and OrbitControls globally available
+window.THREE = THREE;
+window.OrbitControls = OrbitControls;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<!-- Real-Time 3D Anatomy Atlas - 实时3D解剖图谱 -->
+<script src="{% static 'js/realtime-3d-anatomy-atlas.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get primary focus from form if editing existing session
+    const primaryFocusInput = document.querySelector('[name="primary_focus"]');
+    let selectedAreas = [];
+
+    if (primaryFocusInput && primaryFocusInput.value) {
+        // Map Chinese treatment areas to area codes
+        const areaMapping = {
+            '颈椎': 'neck',
+            '颈部': 'neck',
+            '肩': 'shoulder',
+            '肩部': 'shoulder',
+            '背': 'upper_back',
+            '背部': 'upper_back',
+            '上背': 'upper_back',
+            '腰': 'lower_back',
+            '腰部': 'lower_back',
+            '下背': 'lower_back',
+            '臀': 'buttocks',
+            '臀部': 'buttocks',
+            '腿': 'thigh',
+            '下肢': 'thigh',
+            '胸': 'chest',
+            '胸部': 'chest',
+            '腹': 'abdomen',
+            '腹部': 'abdomen'
+        };
+
+        const text = primaryFocusInput.value;
+        for (const [keyword, area] of Object.entries(areaMapping)) {
+            if (text.includes(keyword) && !selectedAreas.includes(area)) {
+                selectedAreas.push(area);
+            }
+        }
+    }
+
+    // Initialize Real-Time 3D Anatomy Atlas for tuina
+    const viewer = new RealTime3DAnatomyAtlas('tuinaViewer', {
+        mode: 'tuina',
+        showAcupoints: false,
+        showMuscles: true,
+        showSkeleton: true,
+        enableLayerPeeling: true,
+        enableRealTimeRotation: false,
+        selectedAreas: selectedAreas
+    });
+
+    // Listen for area selection changes
+    document.getElementById('tuinaViewer').addEventListener('areasSelected', function(e) {
+        console.log('治疗区域已选择 | Areas selected:', e.detail.areas);
+
+        // Update form field if exists
+        if (primaryFocusInput) {
+            // Convert area IDs to Chinese names
+            const areaNames = {
+                'chest': '胸部',
+                'abdomen': '腹部',
+                'upper_back': '上背部',
+                'lower_back': '腰部',
+                'buttocks': '臀部',
+                'thigh': '大腿'
+            };
+
+            const areasText = e.detail.areas.map(id => areaNames[id] || id).join(', ');
+            if (!primaryFocusInput.value) {
+                primaryFocusInput.value = areasText;
+            }
+        }
+    });
+
+    console.log('✓ 实时3D解剖图谱已初始化（推拿模式）| Real-Time 3D Anatomy Atlas initialized (Tuina mode)');
+    console.log('✓ Interactive 3D exploration ready');
+});
+</script>
+{% endblock %}

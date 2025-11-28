@@ -16,6 +16,9 @@
         <a href="{% url 'patients:record_update' record.pk %}" class="btn btn-outline-primary">
             <i class="bi bi-pencil"></i> 编辑 | Edit
         </a>
+        <a href="{% url 'prescriptions:export_medical_record_pdf' record.pk %}" class="btn btn-success">
+            <i class="bi bi-file-earmark-pdf"></i> 导出PDF | Export PDF
+        </a>
     </div>
 </div>
 

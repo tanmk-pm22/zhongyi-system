@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-clipboard-check"></i> 体质评估 | Constitution Assessment</h2>
+            <p class="text-muted">通过问卷评估患者体质类型 | Assess patient constitution type through questionnaire</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                此功能即将推出 | This feature is coming soon
+            </div>
+            <div class="text-center py-5">
+                <i class="bi bi-clipboard-data display-1 text-muted"></i>
+                <h4 class="mt-3">体质评估问卷 | Constitution Assessment Questionnaire</h4>
+                <p class="text-muted">完善中... | Under development...</p>
+                <a href="{% url 'constitution:assessment_list' %}" class="btn btn-outline-secondary mt-3">
+                    <i class="bi bi-arrow-left"></i> 返回列表 | Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

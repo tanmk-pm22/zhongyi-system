@@ -5,14 +5,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.http import JsonResponse
+from django.utils import timezone
+from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
 from decimal import Decimal
 
-from patients.models import Patient
+from patients.models import Patient, MedicalRecord
 from .models import (
     Herb, HerbCategory, ClassicFormula,
     Prescription, PrescriptionItem, PatentMedicine
+)
+from .utils import (
+    PrescriptionPDFExporter, PatientDataExcelExporter, MedicalRecordPDFExporter
 )
 
 
@@ -445,3 +449,81 @@ class PatentMedicineDetailView(LoginRequiredMixin, DetailView):
     model = PatentMedicine
     template_name = 'prescriptions/patentmedicine_detail.html'
     context_object_name = 'medicine'
+
+
+# Export Views
+@login_required
+def export_prescription_pdf(request, pk):
+    """
+    Export prescription to PDF format.
+    导出处方为PDF格式
+    """
+    prescription = get_object_or_404(Prescription, pk=pk)
+
+    # Generate PDF
+    exporter = PrescriptionPDFExporter(prescription)
+    pdf_content = exporter.generate()
+
+    # Create response
+    response = HttpResponse(pdf_content, content_type='application/pdf')
+    filename = f"prescription_{prescription.prescription_number}.pdf"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    return response
+
+
+@login_required
+def export_patients_excel(request):
+    """
+    Export all patients data to Excel format.
+    导出所有患者数据为Excel格式
+    """
+    # Check permission
+    if not (request.user.is_staff or request.user.role == 'admin'):
+        messages.error(request, _('您没有权限导出患者数据。| You do not have permission to export patient data.'))
+        return redirect('dashboard')
+
+    # Get all active patients
+    patients = Patient.objects.filter(is_active=True).order_by('last_name', 'first_name')
+
+    # Generate Excel
+    exporter = PatientDataExcelExporter(patients)
+    excel_content = exporter.generate()
+
+    # Create response
+    response = HttpResponse(
+        excel_content,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    filename = f"patients_data_{timezone.now().strftime('%Y%m%d')}.xlsx"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    return response
+
+
+@login_required
+def export_medical_record_pdf(request, pk):
+    """
+    Export medical record to PDF format.
+    导出医疗记录为PDF格式
+    """
+    medical_record = get_object_or_404(MedicalRecord, pk=pk)
+
+    # Check permission
+    if not (request.user.is_staff or
+            request.user.role == 'admin' or
+            medical_record.practitioner == request.user or
+            medical_record.patient.assigned_practitioner == request.user):
+        messages.error(request, _('您没有权限导出此医疗记录。| You do not have permission to export this medical record.'))
+        return redirect('dashboard')
+
+    # Generate PDF
+    exporter = MedicalRecordPDFExporter(medical_record)
+    pdf_content = exporter.generate()
+
+    # Create response
+    response = HttpResponse(pdf_content, content_type='application/pdf')
+    filename = f"medical_record_{medical_record.patient.ic_number}_{medical_record.visit_date.strftime('%Y%m%d')}.pdf"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    return response

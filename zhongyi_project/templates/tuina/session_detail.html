@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-hand-index-thumb"></i> 推拿记录详情 | Tuina Session Details</h2>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'tuina:session_edit' session.pk %}" class="btn btn-primary">
+                <i class="bi bi-pencil"></i> 编辑 | Edit
+            </a>
+            <a href="{% url 'tuina:session_delete' session.pk %}" class="btn btn-danger">
+                <i class="bi bi-trash"></i> 删除 | Delete
+            </a>
+            <a href="{% url 'tuina:session_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> 返回 | Back
+            </a>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="mb-0">患者信息 | Patient Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>患者 | Patient:</strong>
+                        <a href="{% url 'patients:detail' session.patient.pk %}">{{ session.patient.full_name }}</a>
+                        {% if session.patient.chinese_name %}({{ session.patient.chinese_name }}){% endif %}
+                    </p>
+                    <p><strong>治疗日期 | Date:</strong> {{ session.session_date|date:"Y-m-d H:i" }}</p>
+                    <p><strong>医师 | Practitioner:</strong> {{ session.practitioner.get_full_name }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>治疗时长 | Duration:</strong> {{ session.duration_minutes }} 分钟</p>
+                    <p><strong>治疗重点 | Focus:</strong> {{ session.primary_focus|default:"-" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="mb-0">主诉与诊断 | Complaint & Diagnosis</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>主诉 | Chief Complaint:</strong></p>
+            <p>{{ session.chief_complaint }}</p>
+
+            {% if session.tcm_diagnosis %}
+            <p class="mt-3"><strong>中医诊断 | TCM Diagnosis:</strong></p>
+            <p>{{ session.tcm_diagnosis }}</p>
+            {% endif %}
+
+            {% if session.treatment_principle %}
+            <p class="mt-3"><strong>治则 | Treatment Principle:</strong></p>
+            <p>{{ session.treatment_principle }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="mb-0">疼痛评估 | Pain Assessment</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <p><strong>治疗前 | Before:</strong></p>
+                    {% if session.pain_level_before %}
+                    <h3 class="text-danger">{{ session.pain_level_before }}/10</h3>
+                    {% else %}
+                    <p class="text-muted">-</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-3">
+                    <p><strong>治疗后 | After:</strong></p>
+                    {% if session.pain_level_after %}
+                    <h3 class="text-success">{{ session.pain_level_after }}/10</h3>
+                    {% else %}
+                    <p class="text-muted">-</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {% if session.pain_level_before and session.pain_level_after %}
+                    <p><strong>改善程度 | Improvement:</strong></p>
+                    <h3>
+                        <span class="badge bg-success">
+                            -{{ session.pain_level_before|add:session.pain_level_after|floatformat:0|default:"0" }} 分
+                        </span>
+                    </h3>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if session.mobility_before or session.mobility_after %}
+            <hr>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <p><strong>治疗前活动度 | Mobility Before:</strong></p>
+                    <p>{{ session.mobility_before|default:"-" }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>治疗后活动度 | Mobility After:</strong></p>
+                    <p>{{ session.mobility_after|default:"-" }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="mb-0">治疗效果 | Treatment Effect</h5>
+        </div>
+        <div class="card-body">
+            {% if session.patient_sensation %}
+            <p><strong>患者感受 | Patient Sensation:</strong></p>
+            <p>{{ session.patient_sensation }}</p>
+            {% endif %}
+
+            {% if session.immediate_effect %}
+            <p class="mt-3"><strong>即时效果 | Immediate Effect:</strong></p>
+            <p>{{ session.immediate_effect }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if session.home_exercises or session.lifestyle_advice %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="mb-0">建议 | Recommendations</h5>
+        </div>
+        <div class="card-body">
+            {% if session.home_exercises %}
+            <p><strong>家庭练习 | Home Exercises:</strong></p>
+            <p>{{ session.home_exercises }}</p>
+            {% endif %}
+
+            {% if session.lifestyle_advice %}
+            <p class="mt-3"><strong>生活建议 | Lifestyle Advice:</strong></p>
+            <p>{{ session.lifestyle_advice }}</p>
+            {% endif %}
+
+            {% if session.next_session_date %}
+            <p class="mt-3"><strong>下次治疗日期 | Next Session:</strong> {{ session.next_session_date|date:"Y-m-d" }}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if session.notes %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">备注 | Notes</h5>
+        </div>
+        <div class="card-body">
+            <p>{{ session.notes }}</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

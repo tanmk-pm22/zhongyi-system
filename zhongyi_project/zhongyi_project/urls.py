@@ -22,6 +22,11 @@ urlpatterns += i18n_patterns(
     path('diagnosis/', include('diagnosis.urls')),
     path('prescriptions/', include('prescriptions.urls')),
     path('acupuncture/', include('acupuncture.urls')),
+    path('constitution/', include('constitution.urls')),
+    path('cupping/', include('cupping.urls')),
+    path('tuina/', include('tuina.urls')),
+    path('treatment-course/', include('treatment_course.urls')),
+    path('appointments/', include('appointments.urls')),
     path('api/', include('api.urls')),
     prefix_default_language=False,
 )

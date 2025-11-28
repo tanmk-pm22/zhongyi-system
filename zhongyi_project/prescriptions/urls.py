@@ -29,4 +29,9 @@ urlpatterns = [
     # API for AJAX
     path('api/herbs/search/', views.api_herb_search, name='api_herb_search'),
     path('api/ai-recommend/', views.api_ai_prescription_recommend, name='api_ai_recommend'),
+
+    # Export functionality
+    path('<int:pk>/export-pdf/', views.export_prescription_pdf, name='export_pdf'),
+    path('export-patients-excel/', views.export_patients_excel, name='export_patients_excel'),
+    path('medical-record/<int:pk>/export-pdf/', views.export_medical_record_pdf, name='export_medical_record_pdf'),
 ]

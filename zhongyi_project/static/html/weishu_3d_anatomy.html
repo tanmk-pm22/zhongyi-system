@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>胃俞穴 3D 解剖模型 | BL21 Weishu 3D Anatomy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            overflow: hidden;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 350px;
+            font-size: 14px;
+            line-height: 1.6;
+            backdrop-filter: blur(10px);
+        }
+
+        #info-panel h1 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 8px;
+        }
+
+        #info-panel h2 {
+            font-size: 16px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #2196F3;
+        }
+
+        #info-panel .coordinate {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        #info-panel .anatomy-layer {
+            background: rgba(33, 150, 243, 0.2);
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border-left: 3px solid #2196F3;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        #controls button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        #controls button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 15px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4CAF50;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <div id="info-panel">
+        <h1>🎯 BL21 胃俞 | Weishu</h1>
+
+        <div class="coordinate">
+            <strong>3D 坐标 Coordinates:</strong><br>
+            X: <span id="coord-x">+2.2</span> cm (距后正中线)<br>
+            Y: <span id="coord-y">-15.0</span> cm (T12 椎体水平)<br>
+            Z: <span id="coord-z">-2.5</span> cm (竖脊肌层)
+        </div>
+
+        <h2>📍 体表定位 Surface Location</h2>
+        <p>第12胸椎棘突下，旁开1.5寸<br>T12 spinous process, 1.5 cun lateral</p>
+
+        <h2>🔬 解剖层次 Anatomy Layers</h2>
+        <div class="anatomy-layer">
+            <strong>浅层 Superficial (0-2cm):</strong><br>
+            • 皮肤 Skin (2mm)<br>
+            • 浅筋膜 Superficial fascia<br>
+            • 背阔肌 Latissimus dorsi (15mm)
+        </div>
+        <div class="anatomy-layer">
+            <strong>中层 Middle (2-3.5cm):</strong><br>
+            • <span style="color: #ff6b6b;">竖脊肌 Erector spinae (30mm)</span><br>
+            • 最长肌 Longissimus<br>
+            • 髂肋肌 Iliocostalis
+        </div>
+        <div class="anatomy-layer">
+            <strong>深层 Deep (>3.5cm):</strong><br>
+            • <span style="color: #ffd93d;">T12脊神经后支 T12 posterior ramus</span><br>
+            • 胸腰筋膜 Thoracolumbar fascia<br>
+            • 第12肋骨 12th rib
+        </div>
+
+        <h2>💉 针刺参数 Needling</h2>
+        <p>
+            <strong>深度:</strong> 1.5-2.5 cm (安全)<br>
+            <strong>角度:</strong> 斜刺 45-60°<br>
+            <strong>感传:</strong> 向腰腹部放散
+        </p>
+    </div>
+
+    <div class="legend">
+        <h3 style="margin-bottom: 10px;">图例 Legend</h3>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #e8d4b8;"></div>
+            <span>脊柱 Spine</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #8B4513;"></div>
+            <span>斜方肌 Trapezius</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #D2691E;"></div>
+            <span>背阔肌 Latissimus</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #C04040;"></div>
+            <span>竖脊肌 Erector spinae</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #4CAF50;"></div>
+            <span>胃俞穴 BL21</span>
+        </div>
+    </div>
+
+    <div id="controls">
+        <button onclick="resetView()">🔄 重置视图 Reset</button>
+        <button onclick="toggleRotation()">⏯️ 自动旋转 Auto-rotate</button>
+        <button onclick="toggleLayers()">👁️ 切换图层 Toggle Layers</button>
+    </div>
+
+    <div class="loading" id="loading">加载中... Loading...</div>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+    <script>
+        // ==================== 全局变量 Global Variables ====================
+        let scene, camera, renderer, controls;
+        let spineGroup, muscleGroup, acupointMarker;
+        let isRotating = true;
+        let showAllLayers = true;
+
+        // 胃俞穴3D坐标（基于人体中心）
+        // Weishu BL21 3D Coordinates (relative to body center)
+        const WEISHU_COORDS = {
+            x: 2.2,      // 右侧，距后正中线 2.2cm (right side, 2.2cm from midline)
+            y: -15.0,    // T12 椎体水平 (T12 vertebra level)
+            z: -2.5      // 后方，竖脊肌层 (posterior, erector spinae layer)
+        };
+
+        // ==================== 初始化场景 Initialize Scene ====================
+        function initScene() {
+            // 创建场景
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a2e);
+            scene.fog = new THREE.Fog(0x1a1a2e, 20, 50);
+
+            // 创建相机
+            camera = new THREE.PerspectiveCamera(
+                50,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
+            camera.position.set(15, 5, 25);
+            camera.lookAt(0, 0, 0);
+
+            // 创建渲染器
+            const container = document.getElementById('canvas-container');
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // 添加灯光
+            setupLights();
+
+            // 创建简易OrbitControls（鼠标控制）
+            setupSimpleControls();
+
+            // 隐藏加载提示
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // ==================== 灯光设置 Setup Lights ====================
+        function setupLights() {
+            // 主光源
+            const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            keyLight.position.set(10, 20, 10);
+            keyLight.castShadow = true;
+            keyLight.shadow.mapSize.width = 2048;
+            keyLight.shadow.mapSize.height = 2048;
+            scene.add(keyLight);
+
+            // 补光
+            const fillLight = new THREE.DirectionalLight(0xaaccff, 0.6);
+            fillLight.position.set(-10, 10, -10);
+            scene.add(fillLight);
+
+            // 环境光
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+            scene.add(ambientLight);
+
+            // 半球光
+            const hemiLight = new THREE.HemisphereLight(0x8888ff, 0x444444, 0.4);
+            scene.add(hemiLight);
+        }
+
+        // ==================== 创建脊柱 Create Spine ====================
+        function createSpine() {
+            spineGroup = new THREE.Group();
+
+            // 脊柱材质
+            const spineMaterial = new THREE.MeshStandardMaterial({
+                color: 0xe8d4b8,
+                roughness: 0.6,
+                metalness: 0.1
+            });
+
+            // T1-T12 胸椎 (Thoracic vertebrae)
+            for (let i = 0; i < 12; i++) {
+                // 椎体 Vertebral body
+                const bodyGeometry = new THREE.CylinderGeometry(0.8, 0.8, 1.2, 16);
+                const vertebralBody = new THREE.Mesh(bodyGeometry, spineMaterial);
+                vertebralBody.position.y = 12 - (i * 2.5);
+                vertebralBody.castShadow = true;
+                vertebralBody.receiveShadow = true;
+                spineGroup.add(vertebralBody);
+
+                // 棘突 Spinous process
+                const spinousGeometry = new THREE.BoxGeometry(0.3, 0.8, 2);
+                const spinousProcess = new THREE.Mesh(spinousGeometry, spineMaterial);
+                spinousProcess.position.set(0, 12 - (i * 2.5), -1.5);
+                spinousProcess.castShadow = true;
+                spineGroup.add(spinousProcess);
+
+                // 横突 Transverse processes (bilateral)
+                const transverseGeometry = new THREE.BoxGeometry(2, 0.4, 0.6);
+                const transverseProcess = new THREE.Mesh(transverseGeometry, spineMaterial);
+                transverseProcess.position.set(0, 12 - (i * 2.5), -0.5);
+                transverseProcess.castShadow = true;
+                spineGroup.add(transverseProcess);
+
+                // 标注T12椎体（胃俞穴水平）
+                if (i === 11) { // T12
+                    const markerGeometry = new THREE.RingGeometry(1.2, 1.4, 32);
+                    const markerMaterial = new THREE.MeshBasicMaterial({
+                        color: 0xffff00,
+                        side: THREE.DoubleSide,
+                        transparent: true,
+                        opacity: 0.6
+                    });
+                    const t12Marker = new THREE.Mesh(markerGeometry, markerMaterial);
+                    t12Marker.position.set(0, 12 - (i * 2.5), -1.5);
+                    t12Marker.rotation.y = Math.PI / 2;
+                    spineGroup.add(t12Marker);
+
+                    // T12 标签
+                    createTextLabel('T12', 0, 12 - (i * 2.5), -3.5, spineGroup);
+                }
+            }
+
+            // L1-L2 腰椎（部分）
+            for (let i = 0; i < 2; i++) {
+                const bodyGeometry = new THREE.CylinderGeometry(1.0, 1.0, 1.5, 16);
+                const vertebralBody = new THREE.Mesh(bodyGeometry, spineMaterial);
+                vertebralBody.position.y = -18 - (i * 3);
+                vertebralBody.castShadow = true;
+                spineGroup.add(vertebralBody);
+
+                const spinousGeometry = new THREE.BoxGeometry(0.4, 1.0, 2.5);
+                const spinousProcess = new THREE.Mesh(spinousGeometry, spineMaterial);
+                spinousProcess.position.set(0, -18 - (i * 3), -2);
+                spinousProcess.castShadow = true;
+                spineGroup.add(spinousProcess);
+            }
+
+            scene.add(spineGroup);
+        }
+
+        // ==================== 创建背部肌肉 Create Back Muscles ====================
+        function createBackMuscles() {
+            muscleGroup = new THREE.Group();
+
+            // 1. 斜方肌 Trapezius (上背部)
+            const trapeziusMaterial = new THREE.MeshStandardMaterial({
+                color: 0x8B4513,
+                roughness: 0.8,
+                metalness: 0.0,
+                transparent: true,
+                opacity: 0.7,
+                side: THREE.DoubleSide
+            });
+
+            const trapeziusGeometry = new THREE.BoxGeometry(14, 12, 1.5);
+            const trapezius = new THREE.Mesh(trapeziusGeometry, trapeziusMaterial);
+            trapezius.position.set(0, 8, -3);
+            trapezius.castShadow = true;
+            muscleGroup.add(trapezius);
+
+            // 2. 背阔肌 Latissimus Dorsi (中下背部)
+            const latissimusMaterial = new THREE.MeshStandardMaterial({
+                color: 0xD2691E,
+                roughness: 0.8,
+                metalness: 0.0,
+                transparent: true,
+                opacity: 0.7,
+                side: THREE.DoubleSide
+            });
+
+            const latissimusGeometry = new THREE.BoxGeometry(16, 18, 1.5);
+            const latissimus = new THREE.Mesh(latissimusGeometry, latissimusMaterial);
+            latissimus.position.set(0, -6, -4);
+            latissimus.castShadow = true;
+            muscleGroup.add(latissimus);
+
+            // 3. 竖脊肌 Erector Spinae (深层，双侧) - 关键解剖结构
+            const erectorMaterial = new THREE.MeshStandardMaterial({
+                color: 0xC04040,
+                roughness: 0.7,
+                metalness: 0.1,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            // 左侧竖脊肌
+            const erectorLeftGeometry = new THREE.CylinderGeometry(1.5, 1.8, 30, 16);
+            const erectorLeft = new THREE.Mesh(erectorLeftGeometry, erectorMaterial);
+            erectorLeft.position.set(-2.2, 0, -2);
+            erectorLeft.castShadow = true;
+            muscleGroup.add(erectorLeft);
+
+            // 右侧竖脊肌（胃俞穴所在侧）
+            const erectorRight = new THREE.Mesh(erectorLeftGeometry, erectorMaterial);
+            erectorRight.position.set(2.2, 0, -2);
+            erectorRight.castShadow = true;
+            muscleGroup.add(erectorRight);
+
+            // 标注竖脊肌
+            createTextLabel('竖脊肌 Erector Spinae', 5, -10, -2, muscleGroup, 0xff6b6b);
+
+            scene.add(muscleGroup);
+        }
+
+        // ==================== 创建胃俞穴标记 Create Weishu Acupoint Marker ====================
+        function createWeishuMarker() {
+            const markerGroup = new THREE.Group();
+
+            // 主标记点（发光球体）
+            const markerGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+            const markerMaterial = new THREE.MeshStandardMaterial({
+                color: 0x4CAF50,
+                emissive: 0x4CAF50,
+                emissiveIntensity: 0.8,
+                roughness: 0.3,
+                metalness: 0.5
+            });
+            acupointMarker = new THREE.Mesh(markerGeometry, markerMaterial);
+            acupointMarker.position.set(WEISHU_COORDS.x, WEISHU_COORDS.y, WEISHU_COORDS.z);
+            acupointMarker.castShadow = true;
+            markerGroup.add(acupointMarker);
+
+            // 外围光环（脉冲效果）
+            const ringGeometry = new THREE.RingGeometry(0.5, 0.7, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({
+                color: 0x4CAF50,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.5
+            });
+            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+            ring.position.copy(acupointMarker.position);
+            ring.rotation.y = Math.PI / 2;
+            markerGroup.add(ring);
+
+            // 坐标轴线（显示X/Y/Z定位）
+            // X轴线（红色）- 横向
+            const xLineGeometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(0, WEISHU_COORDS.y, WEISHU_COORDS.z),
+                new THREE.Vector3(WEISHU_COORDS.x, WEISHU_COORDS.y, WEISHU_COORDS.z)
+            ]);
+            const xLineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 2 });
+            const xLine = new THREE.Line(xLineGeometry, xLineMaterial);
+            markerGroup.add(xLine);
+
+            // Y轴线（绿色）- 纵向
+            const yLineGeometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(WEISHU_COORDS.x, 0, WEISHU_COORDS.z),
+                new THREE.Vector3(WEISHU_COORDS.x, WEISHU_COORDS.y, WEISHU_COORDS.z)
+            ]);
+            const yLineMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00, linewidth: 2 });
+            const yLine = new THREE.Line(yLineGeometry, yLineMaterial);
+            markerGroup.add(yLine);
+
+            // Z轴线（蓝色）- 深度
+            const zLineGeometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(WEISHU_COORDS.x, WEISHU_COORDS.y, 0),
+                new THREE.Vector3(WEISHU_COORDS.x, WEISHU_COORDS.y, WEISHU_COORDS.z)
+            ]);
+            const zLineMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff, linewidth: 2 });
+            const zLine = new THREE.Line(zLineGeometry, zLineMaterial);
+            markerGroup.add(zLine);
+
+            // 穴位标签
+            createTextLabel('BL21 胃俞', WEISHU_COORDS.x + 1, WEISHU_COORDS.y + 1, WEISHU_COORDS.z, markerGroup, 0x4CAF50);
+
+            // T12脊神经后支标注（深层解剖）
+            const nerveMarkerGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+            const nerveMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffd93d,
+                transparent: true,
+                opacity: 0.8
+            });
+            const nerveMarker = new THREE.Mesh(nerveMarkerGeometry, nerveMaterial);
+            nerveMarker.position.set(WEISHU_COORDS.x - 0.8, WEISHU_COORDS.y, WEISHU_COORDS.z - 1);
+            markerGroup.add(nerveMarker);
+
+            createTextLabel('T12 神经后支', WEISHU_COORDS.x - 2, WEISHU_COORDS.y, WEISHU_COORDS.z - 1, markerGroup, 0xffd93d);
+
+            scene.add(markerGroup);
+        }
+
+        // ==================== 创建文字标签 Create Text Label ====================
+        function createTextLabel(text, x, y, z, parent, color = 0xffffff) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 512;
+            canvas.height = 128;
+
+            context.fillStyle = 'rgba(0, 0, 0, 0)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            context.font = 'Bold 48px Arial, Microsoft YaHei';
+            context.fillStyle = `#${color.toString(16).padStart(6, '0')}`;
+            context.textAlign = 'center';
+            context.fillText(text, canvas.width / 2, canvas.height / 2 + 16);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const spriteMaterial = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true
+            });
+            const sprite = new THREE.Sprite(spriteMaterial);
+            sprite.position.set(x, y, z);
+            sprite.scale.set(4, 1, 1);
+            parent.add(sprite);
+        }
+
+        // ==================== 简易鼠标控制 Simple Mouse Controls ====================
+        function setupSimpleControls() {
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            renderer.domElement.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            renderer.domElement.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaX = e.clientX - previousMousePosition.x;
+                    const deltaY = e.clientY - previousMousePosition.y;
+
+                    camera.position.x += deltaX * 0.05;
+                    camera.position.y -= deltaY * 0.05;
+                    camera.lookAt(0, 0, 0);
+
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                }
+            });
+
+            renderer.domElement.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            renderer.domElement.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY * 0.01;
+                camera.position.z += delta;
+                camera.position.z = Math.max(10, Math.min(50, camera.position.z));
+            });
+        }
+
+        // ==================== 动画循环 Animation Loop ====================
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 自动旋转
+            if (isRotating && spineGroup && muscleGroup) {
+                spineGroup.rotation.y += 0.005;
+                muscleGroup.rotation.y += 0.005;
+                if (acupointMarker.parent) {
+                    acupointMarker.parent.rotation.y += 0.005;
+                }
+            }
+
+            // 穴位脉冲效果
+            if (acupointMarker) {
+                const scale = 1 + Math.sin(Date.now() * 0.003) * 0.2;
+                acupointMarker.scale.set(scale, scale, scale);
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // ==================== 控制函数 Control Functions ====================
+        function resetView() {
+            camera.position.set(15, 5, 25);
+            camera.lookAt(0, 0, 0);
+            if (spineGroup) spineGroup.rotation.y = 0;
+            if (muscleGroup) muscleGroup.rotation.y = 0;
+        }
+
+        function toggleRotation() {
+            isRotating = !isRotating;
+        }
+
+        function toggleLayers() {
+            showAllLayers = !showAllLayers;
+            if (muscleGroup) {
+                muscleGroup.traverse((child) => {
+                    if (child.isMesh && child.material.transparent) {
+                        child.material.opacity = showAllLayers ? 0.7 : 0.2;
+                    }
+                });
+            }
+        }
+
+        // ==================== 窗口调整 Window Resize ====================
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ==================== 初始化 Initialize ====================
+        function init() {
+            initScene();
+            createSpine();
+            createBackMuscles();
+            createWeishuMarker();
+            animate();
+        }
+
+        // 启动应用
+        init();
+    </script>
+</body>
+</html>

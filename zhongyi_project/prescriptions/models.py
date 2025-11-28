@@ -687,3 +687,266 @@ class PrescriptionPatentMedicine(models.Model):
         if self.medicine.price_per_box:
             return self.medicine.price_per_box * self.quantity
         return Decimal('0.00')
+
+
+class DecoctionMethod(models.Model):
+    """
+    Standard decoction methods for herbal medicine (煎药方法).
+    """
+
+    name_cn = models.CharField(
+        _('中文名称 | Chinese Name'),
+        max_length=100,
+    )
+
+    name_en = models.CharField(
+        _('英文名称 | English Name'),
+        max_length=100,
+    )
+
+    code = models.CharField(
+        _('编码 | Code'),
+        max_length=20,
+        unique=True,
+    )
+
+    description = models.TextField(
+        _('描述 | Description'),
+        help_text=_('详细的煎药方法说明'),
+    )
+
+    # Detailed instructions
+    water_amount = models.CharField(
+        _('加水量 | Water Amount'),
+        max_length=100,
+        blank=True,
+        help_text=_('例如：加水至药面上2-3厘米'),
+    )
+
+    soaking_time = models.CharField(
+        _('浸泡时间 | Soaking Time'),
+        max_length=100,
+        blank=True,
+        help_text=_('例如：浸泡20-30分钟'),
+    )
+
+    first_decoction = models.CharField(
+        _('头煎 | First Decoction'),
+        max_length=200,
+        blank=True,
+        help_text=_('例如：大火煮沸后转小火煎煮30分钟'),
+    )
+
+    second_decoction = models.CharField(
+        _('二煎 | Second Decoction'),
+        max_length=200,
+        blank=True,
+        help_text=_('例如：再加水煎煮20分钟'),
+    )
+
+    administration = models.CharField(
+        _('服用方法 | Administration'),
+        max_length=200,
+        blank=True,
+        help_text=_('例如：混合两次煎液，分早晚两次温服'),
+    )
+
+    # Special instructions
+    special_handling = models.TextField(
+        _('特殊处理 | Special Handling'),
+        blank=True,
+        help_text=_('需要先煎、后下、包煎等特殊处理的说明'),
+    )
+
+    # Storage
+    storage_instructions = models.CharField(
+        _('储存说明 | Storage Instructions'),
+        max_length=200,
+        blank=True,
+        help_text=_('例如：冷藏保存，24小时内服用'),
+    )
+
+    is_active = models.BooleanField(_('启用 | Active'), default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('煎药方法 | Decoction Method')
+        verbose_name_plural = _('煎药方法 | Decoction Methods')
+        ordering = ['name_cn']
+
+    def __str__(self):
+        return f"{self.name_cn} | {self.name_en}"
+
+
+class PrescriptionTemplate(models.Model):
+    """
+    Prescription templates for common formulas (处方模板).
+    Allows practitioners to quickly create prescriptions from saved templates.
+    """
+
+    name_cn = models.CharField(
+        _('模板名称(中文) | Template Name (Chinese)'),
+        max_length=200,
+    )
+
+    name_en = models.CharField(
+        _('模板名称(英文) | Template Name (English)'),
+        max_length=200,
+        blank=True,
+    )
+
+    code = models.CharField(
+        _('编码 | Code'),
+        max_length=20,
+        unique=True,
+    )
+
+    # Based on classic formula
+    based_on_formula = models.ForeignKey(
+        ClassicFormula,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='templates',
+        verbose_name=_('基于方剂 | Based on Formula'),
+    )
+
+    category = models.CharField(
+        _('类别 | Category'),
+        max_length=100,
+        blank=True,
+        help_text=_('例如：感冒、咳嗽、失眠等'),
+    )
+
+    description = models.TextField(
+        _('描述 | Description'),
+        blank=True,
+    )
+
+    # Clinical use
+    indications = models.TextField(
+        _('适应症 | Indications'),
+        blank=True,
+    )
+
+    contraindications = models.TextField(
+        _('禁忌症 | Contraindications'),
+        blank=True,
+    )
+
+    # Default decoction method
+    default_decoction_method = models.ForeignKey(
+        DecoctionMethod,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='templates',
+        verbose_name=_('默认煎药方法 | Default Decoction Method'),
+    )
+
+    # Default dosage info
+    default_doses = models.IntegerField(
+        _('默认剂数 | Default Doses'),
+        default=7,
+    )
+
+    # Usage notes
+    modification_notes = models.TextField(
+        _('加减说明 | Modification Notes'),
+        blank=True,
+        help_text=_('常见的加减变化'),
+    )
+
+    usage_notes = models.TextField(
+        _('使用说明 | Usage Notes'),
+        blank=True,
+    )
+
+    # Creator
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='prescription_templates',
+        verbose_name=_('创建者 | Created By'),
+    )
+
+    # Visibility
+    is_public = models.BooleanField(
+        _('公开模板 | Public Template'),
+        default=False,
+        help_text=_('公开模板可被所有医师使用'),
+    )
+
+    is_active = models.BooleanField(_('启用 | Active'), default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('处方模板 | Prescription Template')
+        verbose_name_plural = _('处方模板 | Prescription Templates')
+        ordering = ['category', 'name_cn']
+
+    def __str__(self):
+        return f"{self.name_cn} ({self.code})"
+
+
+class PrescriptionTemplateItem(models.Model):
+    """
+    Herbs in a prescription template (模板中的药物).
+    """
+
+    template = models.ForeignKey(
+        PrescriptionTemplate,
+        on_delete=models.CASCADE,
+        related_name='items',
+        verbose_name=_('模板 | Template'),
+    )
+
+    herb = models.ForeignKey(
+        Herb,
+        on_delete=models.CASCADE,
+        related_name='template_items',
+        verbose_name=_('药材 | Herb'),
+    )
+
+    dosage = models.DecimalField(
+        _('剂量(克) | Dosage (g)'),
+        max_digits=6,
+        decimal_places=2,
+    )
+
+    preparation = models.CharField(
+        _('炮制方法 | Preparation'),
+        max_length=100,
+        blank=True,
+        help_text=_('例如：先煎、后下、包煎'),
+    )
+
+    is_optional = models.BooleanField(
+        _('可选药物 | Optional'),
+        default=False,
+        help_text=_('标记为可选的药物可以根据症状选择性添加'),
+    )
+
+    notes = models.CharField(
+        _('备注 | Notes'),
+        max_length=200,
+        blank=True,
+    )
+
+    sequence = models.IntegerField(
+        _('顺序 | Sequence'),
+        default=0,
+    )
+
+    class Meta:
+        verbose_name = _('模板药物 | Template Item')
+        verbose_name_plural = _('模板药物 | Template Items')
+        ordering = ['sequence', 'herb__name_cn']
+        unique_together = ['template', 'herb']
+
+    def __str__(self):
+        return f"{self.herb.name_cn} {self.dosage}g"
