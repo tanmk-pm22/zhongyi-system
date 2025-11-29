@@ -16,13 +16,26 @@ urlpatterns = [
 # URLs that should be translated
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+
+    # Public Website (公共网站)
+    path('', include('website.urls')),
+
+    # Online Booking (在线预约)
+    path('booking/', include('booking.urls')),
+
+    # Patient Portal (患者门户)
+    path('portal/', include('portal.urls')),
+
+    # Backend Management (后台管理)
     path('accounts/', include('accounts.urls')),
     path('patients/', include('patients.urls')),
     path('diagnosis/', include('diagnosis.urls')),
     path('prescriptions/', include('prescriptions.urls')),
     path('acupuncture/', include('acupuncture.urls')),
+
+    # API
     path('api/', include('api.urls')),
+
     prefix_default_language=False,
 )
 
