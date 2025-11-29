@@ -1,0 +1,32 @@
+{% extends "website_base.html" %}
+{% block title %}在线预约 - 选择医师{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1>在线预约 | Online Booking</h1>
+    <div class="progress mb-4"><div class="progress-bar" style="width: 50%">步骤 2/4 | Step 2/4</div></div>
+    <h3 class="mb-4">选择医师 | Select Practitioner</h3>
+    <form method="post">{% csrf_token %}
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <input type="radio" name="practitioner_id" value="" id="any_practitioner" checked>
+                        <label for="any_practitioner"><h5>不指定医师 | Any Practitioner</h5></label>
+                    </div>
+                </div>
+            </div>
+            {% for p in practitioners %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <input type="radio" name="practitioner_id" value="{{ p.pk }}" id="pract_{{ p.pk }}">
+                            <label for="pract_{{ p.pk }}"><i class="bi bi-person-circle display-4"></i><h5>{{ p.get_full_name }}</h5><p class="text-muted">{{ p.specialization }}</p></label>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg mt-3">下一步 | Next <i class="bi bi-arrow-right"></i></button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "website_base.html" %}
+{% block title %}{{ formula.name_cn }}{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1>{{ formula.name_cn }}</h1><p class="lead">{{ formula.name_pinyin }} | {{ formula.name_en }}</p>
+    <h3>组成 | Composition</h3><p>{{ formula.composition }}</p>
+    <h3>功效 | Functions</h3><p>{{ formula.functions }}</p>
+    <h3>主治 | Indications</h3><p>{{ formula.indications }}</p>
+    {% if formula_herbs %}<h3>方剂组成 | Formula Herbs</h3><div class="table-responsive"><table class="table"><thead><tr><th>中药 | Herb</th><th>用量 | Dosage</th><th>角色 | Role</th></tr></thead><tbody>{% for fh in formula_herbs %}<tr><td>{{ fh.herb.name_cn }}</td><td>{{ fh.dosage }}</td><td>{{ fh.get_role_display }}</td></tr>{% endfor %}</tbody></table></div>{% endif %}
+</div>
+{% endblock %}

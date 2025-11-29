@@ -1,0 +1,60 @@
+{% extends "portal/portal_base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}取消预约 | Cancel Appointment{% endblock %}
+{% block portal_content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'portal:appointments_list' %}">预约管理 | Appointments</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'portal:appointment_detail' appointment.pk %}">{{ appointment.appointment_number }}</a></li>
+        <li class="breadcrumb-item active">取消 | Cancel</li>
+    </ol>
+</nav>
+<h1 class="mb-4 text-danger">取消预约 | Cancel Appointment</h1>
+<div class="row">
+    <div class="col-md-8">
+        <div class="alert alert-warning">
+            <h5><i class="bi bi-exclamation-triangle"></i> 警告 | Warning</h5>
+            <p>您确定要取消此预约吗？此操作不可撤销。<br>Are you sure you want to cancel this appointment? This action cannot be undone.</p>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header"><h5>预约信息 | Appointment Information</h5></div>
+            <div class="card-body">
+                <table class="table">
+                    <tr><th>预约号 | Appointment No.:</th><td>{{ appointment.appointment_number }}</td></tr>
+                    <tr><th>日期时间 | Date & Time:</th><td><strong>{{ appointment.appointment_date|date:"Y-m-d" }} {{ appointment.appointment_time }}</strong></td></tr>
+                    <tr><th>医师 | Practitioner:</th><td>{{ appointment.practitioner.name }}</td></tr>
+                    <tr><th>服务类型 | Service:</th><td>{{ appointment.service_type }}</td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h5>取消原因 | Cancellation Reason</h5></div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> 确认取消 | Confirm Cancellation</button>
+                        <a href="{% url 'portal:appointment_detail' appointment.pk %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> 返回 | Go Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-info">
+            <div class="card-header bg-info text-white"><h6>取消政策 | Cancellation Policy</h6></div>
+            <div class="card-body">
+                <ul class="small">
+                    <li>请至少提前24小时取消预约</li>
+                    <li>Please cancel at least 24 hours in advance</li>
+                    <li>频繁取消可能影响未来预约</li>
+                    <li>Frequent cancellations may affect future bookings</li>
+                    <li>如有疑问请联系诊所</li>
+                    <li>Contact clinic if you have questions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

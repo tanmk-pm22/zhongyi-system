@@ -1,0 +1,22 @@
+{% extends "website_base.html" %}
+{% block title %}预约成功 | Booking Success{% endblock %}
+{% block content %}
+<div class="container my-5 text-center">
+    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+    <h1 class="mt-4">预约成功！| Booking Successful!</h1>
+    <p class="lead">您的预约已提交，我们会尽快与您联系确认。<br>Your appointment has been submitted. We will contact you soon for confirmation.</p>
+    <div class="card mt-4 d-inline-block" style="max-width: 500px;">
+        <div class="card-body text-start">
+            <h5>预约信息 | Appointment Information</h5>
+            <p><strong>预约号 | Number:</strong> {{ appointment.appointment_number }}</p>
+            <p><strong>日期时间 | Date & Time:</strong> {{ appointment.appointment_date }} {{ appointment.appointment_time }}</p>
+            <p><strong>患者 | Patient:</strong> {{ appointment.get_patient_display }}</p>
+            <p><strong>状态 | Status:</strong> <span class="badge bg-warning">{{ appointment.get_status_display }}</span></p>
+        </div>
+    </div>
+    <div class="mt-4">
+        <a href="{% url 'website:home' %}" class="btn btn-primary">返回首页 | Home</a>
+        {% if user.is_authenticated %}<a href="{% url 'portal:appointments_list' %}" class="btn btn-outline-primary">查看我的预约 | My Appointments</a>{% endif %}
+    </div>
+</div>
+{% endblock %}

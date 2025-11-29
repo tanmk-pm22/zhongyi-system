@@ -1,0 +1,33 @@
+{% extends "website_base.html" %}
+{% block title %}在线预约 - 选择时间{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1>在线预约 | Online Booking</h1>
+    <div class="progress mb-4"><div class="progress-bar" style="width: 75%">步骤 3/4 | Step 3/4</div></div>
+    <h3 class="mb-4">选择日期和时间 | Select Date & Time</h3>
+    <form method="post">{% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">选择日期 | Select Date</label>
+            <select class="form-select" name="appointment_date" required>
+                <option value="">-- 请选择 | Please Select --</option>
+                {% for date in available_dates %}
+                    <option value="{{ date|date:'Y-m-d' }}">{{ date|date:'Y-m-d (l)' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">选择时间 | Select Time</label>
+            <select class="form-select" name="appointment_time" required>
+                <option value="">-- 请选择 | Please Select --</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">下一步 | Next <i class="bi bi-arrow-right"></i></button>
+    </form>
+</div>
+{% endblock %}

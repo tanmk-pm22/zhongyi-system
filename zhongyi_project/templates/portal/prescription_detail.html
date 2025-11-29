@@ -1,0 +1,89 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}处方详情 | Prescription Detail{% endblock %}
+{% block portal_content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'portal:prescriptions_list' %}">处方列表 | Prescriptions</a></li>
+        <li class="breadcrumb-item active">{{ prescription.created_at|date:"Y-m-d" }}</li>
+    </ol>
+</nav>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>处方详情 | Prescription Detail</h1>
+    <a href="{% url 'portal:prescription_print' prescription.pk %}" class="btn btn-outline-secondary" target="_blank"><i class="bi bi-printer"></i> 打印 | Print</a>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-header"><h5>基本信息 | Basic Information</h5></div>
+            <div class="card-body">
+                <table class="table">
+                    <tr><th>开方日期 | Date:</th><td>{{ prescription.created_at|date:"Y-m-d" }}</td></tr>
+                    <tr><th>医师 | Practitioner:</th><td>{{ prescription.practitioner.name }}</td></tr>
+                    <tr><th>患者 | Patient:</th><td>{{ prescription.patient.name }}</td></tr>
+                    <tr><th>处方类型 | Type:</th><td>{{ prescription.prescription_type }}</td></tr>
+                    <tr><th>剂数 | Doses:</th><td>{{ prescription.doses }} 剂</td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header"><h5>药材组成 | Herbal Composition</h5></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>药材 | Herb</th>
+                                <th>用量 | Dosage</th>
+                                <th>性味 | Nature</th>
+                                <th>归经 | Meridian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in prescription.herbal_items.all %}
+                            <tr>
+                                <td>{{ item.herb.name_cn }}<br><small class="text-muted">{{ item.herb.name_pinyin }}</small></td>
+                                <td><strong>{{ item.dosage }}{{ item.unit }}</strong></td>
+                                <td>{{ item.herb.get_nature_display }}</td>
+                                <td>{{ item.herb.meridians|default:"—" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header"><h5>用法 | Usage Instructions</h5></div>
+            <div class="card-body"><p>{{ prescription.usage }}</p></div>
+        </div>
+        {% if prescription.notes %}
+        <div class="card mb-3">
+            <div class="card-header"><h5>备注 | Notes</h5></div>
+            <div class="card-body"><p>{{ prescription.notes }}</p></div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header"><h5>处方统计 | Statistics</h5></div>
+            <div class="card-body">
+                <p><strong>总药材数 | Total Herbs:</strong> {{ prescription.herbal_items.count }} 味</p>
+                <p><strong>总剂数 | Total Doses:</strong> {{ prescription.doses }} 剂</p>
+            </div>
+        </div>
+        {% if prescription.medical_record %}
+        <div class="card">
+            <div class="card-header"><h5>相关就诊记录 | Related Record</h5></div>
+            <div class="card-body">
+                <p><strong>就诊日期 | Date:</strong><br>{{ prescription.medical_record.visit_date|date:"Y-m-d" }}</p>
+                <p><strong>诊断 | Diagnosis:</strong><br>{{ prescription.medical_record.diagnosis|truncatewords:20 }}</p>
+                <a href="{% url 'portal:record_detail' prescription.medical_record.pk %}" class="btn btn-sm btn-outline-primary">查看详情 | View Details</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="mt-3">
+    <a href="{% url 'portal:prescriptions_list' %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> 返回列表 | Back to List</a>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "website_base.html" %}
+{% block title %}关于我们 | About Us{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">关于我们 | About Us</h1>
+    {% if clinic_info %}
+        <div class="row">
+            <div class="col-md-8">
+                <h3>诊所简介 | Introduction</h3>
+                <p>{{ clinic_info.about_cn|linebreaks }}</p>
+                <p class="text-muted">{{ clinic_info.about_en|linebreaks }}</p>
+            </div>
+            <div class="col-md-4">
+                {% if clinic_info.logo %}
+                    <img src="{{ clinic_info.logo.url }}" class="img-fluid rounded" alt="Clinic Logo">
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    <h3 class="mt-5 mb-4">专业医师团队 | Our Practitioners</h3>
+    <div class="row">
+        {% for practitioner in practitioners %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-circle display-1 text-primary"></i>
+                        <h5 class="card-title mt-3">{{ practitioner.get_full_name }}</h5>
+                        <p class="text-muted">{{ practitioner.specialization }}</p>
+                        <a href="{% url 'website:practitioner_detail' practitioner.pk %}" class="btn btn-outline-primary btn-sm">查看详情 | Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if testimonials %}
+        <h3 class="mt-5 mb-4">患者评价 | Patient Testimonials</h3>
+        <div class="row">
+            {% for testimonial in testimonials %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-2">
+                                {% for i in "12345" %}
+                                    <i class="bi bi-star{% if forloop.counter <= testimonial.rating %}-fill{% endif %} text-warning"></i>
+                                {% endfor %}
+                            </div>
+                            <p>{{ testimonial.content_cn|default:testimonial.content_en }}</p>
+                            <p class="text-muted mb-0"><small>— {{ testimonial.patient_name }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

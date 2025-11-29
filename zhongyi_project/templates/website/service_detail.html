@@ -1,0 +1,39 @@
+{% extends "website_base.html" %}
+{% block title %}{{ service.name_cn }} | {{ service.name_en }}{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'website:home' %}">首页 | Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'website:services_list' %}">服务 | Services</a></li>
+            <li class="breadcrumb-item active">{{ service.name_cn }}</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="mb-3">{{ service.name_cn }} | {{ service.name_en }}</h1>
+            {% if service.image %}<img src="{{ service.image.url }}" class="img-fluid rounded mb-4" alt="{{ service.name_cn }}">{% endif %}
+            <h3>服务介绍 | Description</h3>
+            <p>{{ service.description_cn|linebreaks }}</p>
+            <p class="text-muted">{{ service.description_en|linebreaks }}</p>
+            {% if service.price_info_cn %}
+                <h3>价格信息 | Pricing</h3>
+                <p class="text-primary"><strong>{{ service.price_info_cn }} | {{ service.price_info_en }}</strong></p>
+            {% endif %}
+            <a href="{% url 'booking:booking_home' %}" class="btn btn-primary btn-lg mt-3"><i class="bi bi-calendar-check"></i> 立即预约 | Book Now</a>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">相关服务 | Related Services</h5>
+                    <ul class="list-unstyled">
+                        {% for related in related_services %}
+                            <li class="mb-2"><a href="{% url 'website:service_detail' related.slug %}">{{ related.name_cn }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}个人信息 | Profile{% endblock %}
+{% block portal_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>个人信息 | Profile</h1>
+    <a href="{% url 'portal:profile_edit' %}" class="btn btn-primary"><i class="bi bi-pencil"></i> 编辑 | Edit</a>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">基本信息 | Basic Information</h5>
+                <table class="table">
+                    <tr><th>姓名 | Name:</th><td>{{ patient.name }}</td></tr>
+                    <tr><th>性别 | Gender:</th><td>{{ patient.get_gender_display }}</td></tr>
+                    <tr><th>出生日期 | Birth Date:</th><td>{{ patient.date_of_birth }}</td></tr>
+                    <tr><th>年龄 | Age:</th><td>{{ patient.age }} 岁 | years</td></tr>
+                    <tr><th>身份证号 | ID Number:</th><td>{{ patient.id_number|default:"未填写 | Not provided" }}</td></tr>
+                </table>
+                <h5 class="card-title mt-4">联系方式 | Contact Information</h5>
+                <table class="table">
+                    <tr><th>电话 | Phone:</th><td>{{ patient.phone }}</td></tr>
+                    <tr><th>邮箱 | Email:</th><td>{{ patient.email|default:"未填写 | Not provided" }}</td></tr>
+                    <tr><th>地址 | Address:</th><td>{{ patient.address|default:"未填写 | Not provided" }}</td></tr>
+                </table>
+                <h5 class="card-title mt-4">医疗信息 | Medical Information</h5>
+                <table class="table">
+                    <tr><th>血型 | Blood Type:</th><td>{{ patient.get_blood_type_display|default:"未知 | Unknown" }}</td></tr>
+                    <tr><th>过敏史 | Allergies:</th><td>{{ patient.allergies|default:"无 | None" }}</td></tr>
+                    <tr><th>既往史 | Medical History:</th><td>{{ patient.medical_history|default:"无 | None" }}</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <i class="bi bi-person-circle" style="font-size: 80px;"></i>
+                <h5 class="mt-3">{{ patient.name }}</h5>
+                <p class="text-muted">患者编号 | Patient ID: {{ patient.patient_number }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h6>账户信息 | Account Info</h6>
+                <p><small class="text-muted">创建时间 | Created:<br>{{ patient.created_at|date:"Y-m-d H:i" }}</small></p>
+                <p><small class="text-muted">最后更新 | Updated:<br>{{ patient.updated_at|date:"Y-m-d H:i" }}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

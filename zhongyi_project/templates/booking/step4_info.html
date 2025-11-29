@@ -1,0 +1,16 @@
+{% extends "website_base.html" %}
+{% block title %}在线预约 - 填写信息{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1>在线预约 | Online Booking</h1>
+    <div class="progress mb-4"><div class="progress-bar" style="width: 100%">步骤 4/4 | Step 4/4</div></div>
+    <h3 class="mb-4">填写患者信息 | Enter Patient Information</h3>
+    <form method="post">{% csrf_token %}
+        <div class="mb-3"><label class="form-label">姓名 | Name *</label><input type="text" class="form-control" name="name" value="{% if patient %}{{ patient.get_full_name }}{% endif %}" required></div>
+        <div class="mb-3"><label class="form-label">联系电话 | Phone *</label><input type="tel" class="form-control" name="phone" value="{% if patient %}{{ patient.phone }}{% endif %}" required></div>
+        <div class="mb-3"><label class="form-label">邮箱 | Email</label><input type="email" class="form-control" name="email" value="{% if patient %}{{ patient.email }}{% endif %}"></div>
+        <div class="mb-3"><label class="form-label">主诉 | Chief Complaint</label><textarea class="form-control" name="chief_complaint" rows="3"></textarea></div>
+        <button type="submit" class="btn btn-primary btn-lg">确认预约 | Confirm Booking</button>
+    </form>
+</div>
+{% endblock %}

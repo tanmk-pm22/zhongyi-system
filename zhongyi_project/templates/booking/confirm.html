@@ -1,0 +1,22 @@
+{% extends "website_base.html" %}
+{% block title %}确认预约 | Confirm Booking{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1>确认预约信息 | Confirm Booking Information</h1>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">预约详情 | Appointment Details</h5>
+            <p><strong>服务类型 | Service:</strong> {{ service_type }}</p>
+            <p><strong>医师 | Practitioner:</strong> {% if practitioner %}{{ practitioner.get_full_name }}{% else %}不指定 | Any{% endif %}</p>
+            <p><strong>日期时间 | Date & Time:</strong> {{ appointment_date }} {{ appointment_time }}</p>
+            <p><strong>患者姓名 | Patient:</strong> {{ name }}</p>
+            <p><strong>联系电话 | Phone:</strong> {{ phone }}</p>
+            {% if chief_complaint %}<p><strong>主诉 | Complaint:</strong> {{ chief_complaint }}</p>{% endif %}
+        </div>
+    </div>
+    <form method="post" class="mt-4">{% csrf_token %}
+        <button type="submit" class="btn btn-success btn-lg"><i class="bi bi-check-circle"></i> 确认提交 | Submit</button>
+        <a href="{% url 'booking:booking_step1' %}" class="btn btn-outline-secondary btn-lg">返回修改 | Back</a>
+    </form>
+</div>
+{% endblock %}

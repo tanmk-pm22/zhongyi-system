@@ -1,0 +1,66 @@
+{% extends "website_base.html" %}
+{% block title %}中医知识库 | TCM Knowledge Base{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4 text-center">中医知识库 | TCM Knowledge Base</h1>
+    <p class="lead text-center text-muted mb-5">探索传统中医智慧 | Explore Traditional Chinese Medicine Wisdom</p>
+    <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-geo-alt display-1 text-primary"></i>
+                    <h5 class="card-title mt-3">穴位图谱 | Acupoints</h5>
+                    <p class="text-muted">{{ acupoint_count }} 个穴位</p>
+                    <a href="{% url 'website:acupoints_list' %}" class="btn btn-outline-primary">浏览 | Browse</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-flower1 display-1 text-success"></i>
+                    <h5 class="card-title mt-3">中药库 | Herbs</h5>
+                    <p class="text-muted">{{ herb_count }} 种中药</p>
+                    <a href="{% url 'website:herbs_list' %}" class="btn btn-outline-success">浏览 | Browse</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-book display-1 text-warning"></i>
+                    <h5 class="card-title mt-3">经典方剂 | Formulas</h5>
+                    <p class="text-muted">{{ formula_count }} 个方剂</p>
+                    <a href="{% url 'website:formulas_list' %}" class="btn btn-outline-warning">浏览 | Browse</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="bi bi-file-text display-1 text-info"></i>
+                    <h5 class="card-title mt-3">健康文章 | Articles</h5>
+                    <p class="text-muted">{{ article_count }} 篇文章</p>
+                    <a href="{% url 'website:articles_list' %}" class="btn btn-outline-info">浏览 | Browse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if recent_articles %}
+        <h3 class="mt-5 mb-4">最新文章 | Recent Articles</h3>
+        <div class="row">
+            {% for article in recent_articles %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.title_cn }}</h5>
+                            <p class="card-text text-muted small">{{ article.summary_cn|truncatewords:15 }}</p>
+                            <a href="{% url 'website:article_detail' article.slug %}" class="btn btn-sm btn-outline-primary">阅读 | Read</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

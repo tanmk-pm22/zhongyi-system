@@ -1,0 +1,49 @@
+{% extends "website_base.html" %}
+{% block title %}{{ acupoint.code }}: {{ acupoint.chinese_name }}{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'website:knowledge_home' %}">知识库</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'website:acupoints_list' %}">穴位</a></li>
+            <li class="breadcrumb-item active">{{ acupoint.code }}</li>
+        </ol>
+    </nav>
+    <h1>{{ acupoint.code }}: {{ acupoint.chinese_name }}</h1>
+    <p class="lead">{{ acupoint.pinyin_name }} | {{ acupoint.english_name }}</p>
+    <span class="badge bg-info mb-4">{{ acupoint.get_meridian_display }}</span>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>定位 | Location</h3>
+            <p>{{ acupoint.location_chinese }}</p>
+            <p class="text-muted">{{ acupoint.location_english }}</p>
+            <h3>主治 | Indications</h3>
+            <p>{{ acupoint.indications }}</p>
+            <h3>功能 | Functions</h3>
+            <p>{{ acupoint.functions }}</p>
+            {% if acupoint.techniques %}
+                <h3>刺灸法 | Techniques</h3>
+                <p>{{ acupoint.techniques }}</p>
+            {% endif %}
+            {% if acupoint.precautions %}
+                <h3>注意事项 | Precautions</h3>
+                <p>{{ acupoint.precautions }}</p>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% if acupoint.image_2d %}<img src="{{ acupoint.image_2d.url }}" class="img-fluid mb-3">{% endif %}
+            {% if acupoint.image_3d %}<img src="{{ acupoint.image_3d.url }}" class="img-fluid mb-3">{% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h5>相关穴位 | Related</h5>
+                    <ul class="list-unstyled">
+                        {% for related in related_acupoints %}
+                            <li><a href="{% url 'website:acupoint_detail' related.code %}">{{ related.code }}: {{ related.chinese_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

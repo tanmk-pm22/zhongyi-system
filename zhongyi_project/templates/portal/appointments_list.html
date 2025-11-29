@@ -1,0 +1,68 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}预约管理 | Appointments{% endblock %}
+{% block portal_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>预约管理 | Appointments</h1>
+    <a href="{% url 'booking:booking_home' %}" class="btn btn-success"><i class="bi bi-plus-circle"></i> 新建预约 | New Booking</a>
+</div>
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link {% if not show_past %}active{% endif %}" href="{% url 'portal:appointments_list' %}">即将到来 | Upcoming</a></li>
+    <li class="nav-item"><a class="nav-link {% if show_past %}active{% endif %}" href="{% url 'portal:appointments_list' %}?show=past">过往预约 | Past</a></li>
+</ul>
+<div class="card">
+    <div class="card-body">
+        {% if appointments %}
+        <div class="row">
+            {% for appointment in appointments %}
+            <div class="col-md-6 mb-3">
+                <div class="card h-100 {% if appointment.status == 'confirmed' %}border-success{% elif appointment.status == 'pending' %}border-warning{% elif appointment.status == 'cancelled' %}border-danger{% endif %}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title">{{ appointment.appointment_date|date:"Y-m-d" }} {{ appointment.appointment_time }}</h5>
+                            <span class="badge bg-{% if appointment.status == 'confirmed' %}success{% elif appointment.status == 'pending' %}warning{% elif appointment.status == 'completed' %}info{% elif appointment.status == 'cancelled' %}danger{% else %}secondary{% endif %}">
+                                {{ appointment.get_status_display }}
+                            </span>
+                        </div>
+                        <p class="mb-2"><i class="bi bi-person"></i> <strong>医师 | Practitioner:</strong> {{ appointment.practitioner.name }}</p>
+                        <p class="mb-2"><i class="bi bi-briefcase"></i> <strong>服务类型 | Service:</strong> {{ appointment.service_type }}</p>
+                        <p class="mb-2"><i class="bi bi-clock"></i> <strong>时长 | Duration:</strong> {{ appointment.duration_minutes }} 分钟 | minutes</p>
+                        {% if appointment.chief_complaint %}
+                        <p class="mb-2"><i class="bi bi-chat-left-text"></i> <strong>主诉 | Complaint:</strong> {{ appointment.chief_complaint|truncatewords:15 }}</p>
+                        {% endif %}
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="{% url 'portal:appointment_detail' appointment.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> 详情 | Details</a>
+                            {% if appointment.can_cancel %}
+                            <a href="{% url 'portal:appointment_cancel' appointment.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-x-circle"></i> 取消 | Cancel</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">
+                        预约号 | Appointment No.: {{ appointment.appointment_number }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_other_pages %}
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if show_past %}&show=past{% endif %}">上一页 | Previous</a></li>
+                {% endif %}
+                <li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if show_past %}&show=past{% endif %}">下一页 | Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-check" style="font-size: 48px; color: #ccc;"></i>
+            <p class="text-muted mt-3">{% if show_past %}暂无过往预约 | No past appointments{% else %}暂无即将到来的预约 | No upcoming appointments{% endif %}</p>
+            <a href="{% url 'booking:booking_home' %}" class="btn btn-success">新建预约 | New Booking</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}患者中心 | Patient Dashboard{% endblock %}
+{% block portal_content %}
+<h1 class="mb-4">欢迎，{{ patient.name }} | Welcome, {{ patient.name }}</h1>
+<div class="row g-4">
+    <div class="col-md-4"><div class="card border-primary"><div class="card-body"><h5 class="card-title"><i class="bi bi-calendar-check text-primary"></i> 即将到来的预约 | Upcoming</h5><h2 class="display-4">{{ upcoming_appointments_count }}</h2><a href="{% url 'portal:appointments_list' %}" class="btn btn-sm btn-outline-primary">查看全部 | View All</a></div></div></div>
+    <div class="col-md-4"><div class="card border-success"><div class="card-body"><h5 class="card-title"><i class="bi bi-prescription2 text-success"></i> 处方 | Prescriptions</h5><h2 class="display-4">{{ prescriptions_count }}</h2><a href="{% url 'portal:prescriptions_list' %}" class="btn btn-sm btn-outline-success">查看全部 | View All</a></div></div></div>
+    <div class="col-md-4"><div class="card border-info"><div class="card-body"><h5 class="card-title"><i class="bi bi-file-medical text-info"></i> 就诊记录 | Records</h5><h2 class="display-4">{{ records_count }}</h2><a href="{% url 'portal:records_list' %}" class="btn btn-sm btn-outline-info">查看全部 | View All</a></div></div></div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-6"><div class="card"><div class="card-header"><h5>最近预约 | Recent Appointments</h5></div><div class="card-body">{% if recent_appointments %}<div class="list-group list-group-flush">{% for apt in recent_appointments %}<div class="list-group-item"><div class="d-flex justify-content-between"><div><strong>{{ apt.appointment_date }}</strong> {{ apt.appointment_time }}<br><small class="text-muted">{{ apt.service_type }} - {{ apt.practitioner.name }}</small></div><span class="badge bg-{{ apt.status }}">{{ apt.get_status_display }}</span></div></div>{% endfor %}</div>{% else %}<p class="text-muted">暂无预约 | No appointments</p>{% endif %}<a href="{% url 'portal:appointments_list' %}" class="btn btn-sm btn-primary mt-3">查看全部 | View All</a></div></div></div>
+    <div class="col-md-6"><div class="card"><div class="card-header"><h5>最近处方 | Recent Prescriptions</h5></div><div class="card-body">{% if recent_prescriptions %}<div class="list-group list-group-flush">{% for rx in recent_prescriptions %}<div class="list-group-item"><strong>{{ rx.created_at|date:"Y-m-d" }}</strong><br><small class="text-muted">{{ rx.practitioner.name }} - {{ rx.herbal_items.count }} 味药 | herbs</small><a href="{% url 'portal:prescription_detail' rx.pk %}" class="btn btn-sm btn-outline-primary float-end">详情 | Details</a></div>{% endfor %}</div>{% else %}<p class="text-muted">暂无处方 | No prescriptions</p>{% endif %}<a href="{% url 'portal:prescriptions_list' %}" class="btn btn-sm btn-primary mt-3">查看全部 | View All</a></div></div></div>
+</div>
+<div class="mt-4"><a href="{% url 'booking:booking_home' %}" class="btn btn-lg btn-success"><i class="bi bi-plus-circle"></i> 新建预约 | New Appointment</a></div>
+{% endblock %}

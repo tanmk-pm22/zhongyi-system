@@ -1,0 +1,22 @@
+{% extends "website_base.html" %}
+{% block title %}{{ herb.name_cn }}{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1>{{ herb.name_cn }}</h1>
+    <p class="lead">{{ herb.name_pinyin }} | {{ herb.name_en }}</p>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>性味归经 | Nature & Meridian</h3>
+            <p><strong>性 | Nature:</strong> {{ herb.get_nature_display }}</p>
+            <p><strong>味 | Taste:</strong> {{ herb.get_tastes_display }}</p>
+            <h3>功效 | Functions</h3><p>{{ herb.functions }}</p>
+            <h3>主治 | Indications</h3><p>{{ herb.indications }}</p>
+            {% if herb.dosage_range %}<h3>用量 | Dosage</h3><p>{{ herb.dosage_range }}</p>{% endif %}
+            {% if herb.contraindications %}<h3>禁忌 | Contraindications</h3><p>{{ herb.contraindications }}</p>{% endif %}
+        </div>
+        <div class="col-md-4">
+            <div class="card"><div class="card-body"><h5>相关中药</h5><ul class="list-unstyled">{% for related in related_herbs %}<li><a href="{% url 'website:herb_detail' related.pk %}">{{ related.name_cn }}</a></li>{% endfor %}</ul></div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

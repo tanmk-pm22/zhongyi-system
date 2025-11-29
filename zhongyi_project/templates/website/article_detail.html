@@ -1,0 +1,12 @@
+{% extends "website_base.html" %}
+{% block title %}{{ article.title_cn }}{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{% url 'website:knowledge_home' %}">知识库</a></li><li class="breadcrumb-item"><a href="{% url 'website:articles_list' %}">文章</a></li><li class="breadcrumb-item active">{{ article.title_cn }}</li></ol></nav>
+    <h1>{{ article.title_cn }}</h1><p class="lead text-muted">{{ article.title_en }}</p>
+    {% if article.featured_image %}<img src="{{ article.featured_image.url }}" class="img-fluid rounded mb-4">{% endif %}
+    <div class="article-meta text-muted mb-4"><small><i class="bi bi-calendar"></i> {{ article.published_date|date:"Y-m-d" }} | <i class="bi bi-eye"></i> {{ article.views_count }} | <i class="bi bi-person"></i> {{ article.author.get_full_name|default:"管理员" }}</small></div>
+    <div class="article-content">{{ article.content_cn|linebreaks }}</div>
+    {% if related_articles %}<h3 class="mt-5">相关文章 | Related Articles</h3><div class="row">{% for related in related_articles %}<div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h6>{{ related.title_cn }}</h6><a href="{% url 'website:article_detail' related.slug %}" class="btn btn-sm btn-outline-primary">阅读</a></div></div></div>{% endfor %}</div>{% endif %}
+</div>
+{% endblock %}

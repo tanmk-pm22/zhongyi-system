@@ -1,0 +1,51 @@
+{% extends "website_base.html" %}
+{% block title %}穴位图谱 | Acupoint Atlas{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">穴位图谱 | Acupoint Atlas</h1>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="搜索穴位 | Search" value="{{ search_query }}">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form method="get">
+                <select class="form-select" name="meridian" onchange="this.form.submit()">
+                    <option value="">所有经络 | All Meridians</option>
+                    {% for key, name in meridian_choices %}
+                        <option value="{{ key }}" {% if selected_meridian == key %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {% for acupoint in page_obj %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ acupoint.code }}: {{ acupoint.chinese_name }}</h5>
+                        <p class="text-muted small">{{ acupoint.pinyin_name }} | {{ acupoint.english_name }}</p>
+                        <p class="small">{{ acupoint.indications|truncatewords:15 }}</p>
+                        <span class="badge bg-info">{{ acupoint.get_meridian_display }}</span>
+                        <a href="{% url 'website:acupoint_detail' acupoint.code %}" class="btn btn-sm btn-outline-primary mt-2">详情 | Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12"><p class="text-center text-muted">未找到穴位 | No acupoints found</p></div>
+        {% endfor %}
+    </div>
+    {% if page_obj.has_other_pages %}
+        <nav><ul class="pagination">
+            {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a></li>{% endif %}
+            <li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a></li>{% endif %}
+        </ul></nav>
+    {% endif %}
+</div>
+{% endblock %}

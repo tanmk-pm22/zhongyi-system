@@ -1,0 +1,59 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}处方列表 | Prescriptions{% endblock %}
+{% block portal_content %}
+<h1 class="mb-4">处方列表 | Prescriptions</h1>
+<div class="card">
+    <div class="card-body">
+        {% if prescriptions %}
+        <div class="row">
+            {% for prescription in prescriptions %}
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title">{{ prescription.created_at|date:"Y-m-d" }}</h5>
+                                <p class="text-muted mb-2"><i class="bi bi-person"></i> {{ prescription.practitioner.name }}</p>
+                            </div>
+                            <span class="badge bg-info">{{ prescription.prescription_type }}</span>
+                        </div>
+                        <p class="card-text">
+                            <strong>药材数量 | Herbs:</strong> {{ prescription.herbal_items.count }} 味<br>
+                            <strong>剂数 | Doses:</strong> {{ prescription.doses }} 剂<br>
+                            <strong>用法 | Usage:</strong> {{ prescription.usage|truncatewords:10 }}
+                        </p>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'portal:prescription_detail' prescription.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> 查看 | View</a>
+                            <a href="{% url 'portal:prescription_print' prescription.pk %}" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="bi bi-printer"></i> 打印 | Print</a>
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">
+                        创建于 | Created: {{ prescription.created_at|date:"Y-m-d H:i" }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_other_pages %}
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页 | Previous</a></li>
+                {% endif %}
+                <li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页 | Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-prescription2" style="font-size: 48px; color: #ccc;"></i>
+            <p class="text-muted mt-3">暂无处方 | No prescriptions yet</p>
+            <a href="{% url 'booking:booking_home' %}" class="btn btn-primary">预约就诊 | Book Appointment</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

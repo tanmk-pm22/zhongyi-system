@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>处方 | Prescription - {{ prescription.created_at|date:"Y-m-d" }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @media print {
+            .no-print { display: none; }
+            body { padding: 20px; }
+        }
+        .prescription-header { border-bottom: 3px double #000; padding-bottom: 20px; margin-bottom: 20px; }
+        .prescription-footer { border-top: 2px solid #000; padding-top: 20px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="no-print mb-3">
+            <button onclick="window.print()" class="btn btn-primary"><i class="bi bi-printer"></i> 打印 | Print</button>
+            <button onclick="window.close()" class="btn btn-secondary">关闭 | Close</button>
+        </div>
+        <div class="prescription-header text-center">
+            <h2>中医处方 | TCM Prescription</h2>
+            <p class="text-muted">Traditional Chinese Medicine Prescription</p>
+        </div>
+        <div class="row mb-4">
+            <div class="col-6">
+                <p><strong>患者姓名 | Patient:</strong> {{ prescription.patient.name }}</p>
+                <p><strong>性别 | Gender:</strong> {{ prescription.patient.get_gender_display }}</p>
+                <p><strong>年龄 | Age:</strong> {{ prescription.patient.age }} 岁</p>
+            </div>
+            <div class="col-6 text-end">
+                <p><strong>处方编号 | Rx No.:</strong> {{ prescription.pk }}</p>
+                <p><strong>开方日期 | Date:</strong> {{ prescription.created_at|date:"Y年m月d日" }}</p>
+                <p><strong>医师 | Practitioner:</strong> {{ prescription.practitioner.name }}</p>
+            </div>
+        </div>
+        {% if prescription.medical_record %}
+        <div class="mb-4">
+            <h5>诊断 | Diagnosis</h5>
+            <p>{{ prescription.medical_record.diagnosis }}</p>
+        </div>
+        {% endif %}
+        <div class="mb-4">
+            <h5>处方 | Prescription ({{ prescription.prescription_type }})</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th width="40%">药材 | Herb</th>
+                        <th width="30%">拼音 | Pinyin</th>
+                        <th width="15%">用量 | Dosage</th>
+                        <th width="15%">单位 | Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in prescription.herbal_items.all %}
+                    <tr>
+                        <td>{{ item.herb.name_cn }}</td>
+                        <td><em>{{ item.herb.name_pinyin }}</em></td>
+                        <td class="text-end">{{ item.dosage }}</td>
+                        <td>{{ item.unit }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p><strong>共 | Total:</strong> {{ prescription.herbal_items.count }} 味药材 | herbs</p>
+            <p><strong>剂数 | Doses:</strong> {{ prescription.doses }} 剂</p>
+        </div>
+        <div class="mb-4">
+            <h5>用法 | Usage Instructions</h5>
+            <p>{{ prescription.usage }}</p>
+        </div>
+        {% if prescription.notes %}
+        <div class="mb-4">
+            <h5>备注 | Notes</h5>
+            <p>{{ prescription.notes }}</p>
+        </div>
+        {% endif %}
+        <div class="prescription-footer">
+            <div class="row">
+                <div class="col-6">
+                    <p>医师签名 | Practitioner Signature: __________________</p>
+                </div>
+                <div class="col-6 text-end">
+                    <p>打印时间 | Print Time: {{ now|date:"Y-m-d H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

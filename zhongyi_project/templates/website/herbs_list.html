@@ -1,0 +1,28 @@
+{% extends "website_base.html" %}
+{% block title %}中药库 | Herb Library{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">中药库 | Herb Library</h1>
+    <div class="row mb-4">
+        <div class="col-md-4"><form method="get"><input type="text" class="form-control" name="search" placeholder="搜索 | Search" value="{{ search_query }}"></form></div>
+        <div class="col-md-4"><form method="get"><select class="form-select" name="nature" onchange="this.form.submit()"><option value="">所有性质 | All Nature</option>{% for key, name in nature_choices %}<option value="{{ key }}" {% if selected_nature == key %}selected{% endif %}>{{ name }}</option>{% endfor %}</select></form></div>
+        <div class="col-md-4"><form method="get"><select class="form-select" name="taste" onchange="this.form.submit()"><option value="">所有味 | All Tastes</option>{% for key, name in taste_choices %}<option value="{{ key }}" {% if selected_taste == key %}selected{% endif %}>{{ name }}</option>{% endfor %}</select></form></div>
+    </div>
+    <div class="row">
+        {% for herb in page_obj %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>{{ herb.name_cn }}</h5>
+                        <p class="text-muted small">{{ herb.name_pinyin }} | {{ herb.name_en }}</p>
+                        <p class="small">{{ herb.functions|truncatewords:10 }}</p>
+                        <span class="badge bg-primary">{{ herb.get_nature_display }}</span>
+                        <a href="{% url 'website:herb_detail' herb.pk %}" class="btn btn-sm btn-outline-primary mt-2">详情</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}<div class="col-12"><p class="text-center text-muted">未找到中药</p></div>{% endfor %}
+    </div>
+    {% if page_obj.has_other_pages %}<nav><ul class="pagination">{% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a></li>{% endif %}<li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>{% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a></li>{% endif %}</ul></nav>{% endif %}
+</div>
+{% endblock %}

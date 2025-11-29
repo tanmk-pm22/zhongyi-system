@@ -1,0 +1,33 @@
+{% extends "portal/portal_base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}编辑个人信息 | Edit Profile{% endblock %}
+{% block portal_content %}
+<h1 class="mb-4">编辑个人信息 | Edit Profile</h1>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> 保存 | Save</button>
+                        <a href="{% url 'portal:profile' %}" class="btn btn-secondary"><i class="bi bi-x-circle"></i> 取消 | Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="alert alert-info">
+            <h6><i class="bi bi-info-circle"></i> 提示 | Tips</h6>
+            <ul class="small mb-0">
+                <li>请确保联系方式准确</li>
+                <li>Please ensure contact info is accurate</li>
+                <li>过敏史和既往史有助于医师诊断</li>
+                <li>Allergy and medical history help diagnosis</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

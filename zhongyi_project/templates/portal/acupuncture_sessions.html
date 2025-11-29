@@ -1,0 +1,97 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}针灸治疗记录 | Acupuncture Sessions{% endblock %}
+{% block portal_content %}
+<h1 class="mb-4">针灸治疗记录 | Acupuncture Sessions</h1>
+<div class="card">
+    <div class="card-body">
+        {% if sessions %}
+        <div class="row">
+            {% for session in sessions %}
+            <div class="col-md-6 mb-3">
+                <div class="card h-100 border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">{{ session.session_date|date:"Y-m-d" }}</h6>
+                            <span class="badge bg-light text-dark">第 {{ forloop.counter }} 次 | Session {{ forloop.counter }}</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2"><i class="bi bi-person"></i> <strong>医师 | Practitioner:</strong> {{ session.practitioner.name }}</p>
+                        <p class="mb-2"><i class="bi bi-clipboard-pulse"></i> <strong>主诉 | Chief Complaint:</strong><br>{{ session.chief_complaint|truncatewords:15 }}</p>
+                        {% if session.syndrome_differentiation %}
+                        <p class="mb-2"><i class="bi bi-diagram-3"></i> <strong>辨证 | Syndrome:</strong><br>{{ session.syndrome_differentiation|truncatewords:10 }}</p>
+                        {% endif %}
+                        <p class="mb-2"><i class="bi bi-bullseye"></i> <strong>取穴 | Acupoints:</strong></p>
+                        <div class="mb-3">
+                            {% for point in session.session_points.all %}
+                            <span class="badge bg-info me-1 mb-1">{{ point.acupoint.code }} {{ point.acupoint.name_cn }}</span>
+                            {% endfor %}
+                        </div>
+                        {% if session.technique_used %}
+                        <p class="mb-2"><i class="bi bi-tools"></i> <strong>手法 | Technique:</strong> {{ session.technique_used }}</p>
+                        {% endif %}
+                        {% if session.notes %}
+                        <div class="card bg-light mt-2">
+                            <div class="card-body p-2">
+                                <small><strong>备注 | Notes:</strong><br>{{ session.notes|truncatewords:20 }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer small text-muted">
+                        时长 | Duration: {{ session.duration_minutes }} 分钟 | minutes
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_other_pages %}
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页 | Previous</a></li>
+                {% endif %}
+                <li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页 | Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-activity" style="font-size: 48px; color: #ccc;"></i>
+            <p class="text-muted mt-3">暂无针灸治疗记录 | No acupuncture sessions yet</p>
+            <a href="{% url 'booking:booking_home' %}" class="btn btn-primary">预约针灸治疗 | Book Acupuncture</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card border-info">
+            <div class="card-header bg-info text-white"><h6>针灸统计 | Acupuncture Statistics</h6></div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h4>{{ total_sessions }}</h4>
+                        <p class="text-muted small">总治疗次数<br>Total Sessions</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>{{ unique_acupoints }}</h4>
+                        <p class="text-muted small">使用穴位数<br>Unique Acupoints</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>{{ total_duration }}</h4>
+                        <p class="text-muted small">总时长（分钟）<br>Total Minutes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>{{ last_session_days }}</h4>
+                        <p class="text-muted small">距上次（天）<br>Days Since Last</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
