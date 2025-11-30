@@ -167,7 +167,7 @@ def acupoints_list(request):
     page_obj = paginator.get_page(page_number)
 
     # 获取所有经络类型 | Get all meridian types
-    meridian_choices = AcupointReference.MERIDIAN_CHOICES
+    meridian_choices = AcupointReference.MeridianType.choices
 
     context = {
         'clinic_info': get_clinic_info(),
@@ -235,8 +235,8 @@ def herbs_list(request):
     page_obj = paginator.get_page(page_number)
 
     # 获取性味选项 | Get nature and taste choices
-    nature_choices = Herb.NATURE_CHOICES
-    taste_choices = Herb.TASTE_CHOICES
+    nature_choices = Herb.Nature.choices
+    taste_choices = Herb.Taste.choices
 
     context = {
         'clinic_info': get_clinic_info(),
